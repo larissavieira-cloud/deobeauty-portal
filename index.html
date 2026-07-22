@@ -114,9 +114,9 @@ main{max-width:1240px;margin:0 auto;padding:0 24px 90px}
 .card:hover{transform:translateY(-7px);box-shadow:var(--sombra-hover)}
 .card:hover::after{border-color:var(--cor,var(--dourado))}
 .card:focus-visible{outline:2px solid var(--dourado);outline-offset:3px}
-.card-foto{aspect-ratio:1/1.05;background:linear-gradient(180deg,#FCFCFB 0%,#F5F4F1 100%);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
-.card-foto::before{content:'';position:absolute;left:50%;bottom:6%;width:60%;height:14%;transform:translateX(-50%);background:radial-gradient(ellipse,rgba(20,20,20,.14) 0%,transparent 72%);filter:blur(2px)}
-.card-foto img{max-height:82%;max-width:62%;object-fit:contain;position:relative;z-index:2;filter:drop-shadow(0 14px 16px rgba(20,20,20,.12));transition:.45s cubic-bezier(.22,1,.36,1)}
+.card-foto{aspect-ratio:1/1.05;background:var(--branco);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.card-foto::before{content:'';position:absolute;left:50%;bottom:7%;width:54%;height:10%;transform:translateX(-50%);background:radial-gradient(ellipse,rgba(20,20,20,.08) 0%,transparent 75%);filter:blur(3px)}
+.card-foto img{max-height:82%;max-width:62%;object-fit:contain;position:relative;z-index:2;filter:drop-shadow(0 10px 12px rgba(20,20,20,.08));transition:.45s cubic-bezier(.22,1,.36,1)}
 .card:hover .card-foto img{transform:scale(1.06) translateY(-4px)}
 .ph{position:relative;z-index:2;text-align:center;color:var(--marrom);padding:0 18px}
 .ph .db-mono{font-family:var(--serif);font-weight:700;font-style:italic;font-size:52px;color:var(--dourado);line-height:1}
@@ -197,6 +197,19 @@ main{max-width:1240px;margin:0 auto;padding:0 24px 90px}
   .vitrine-dica{display:none}
 }
 
+/* ===== PÁGINA DEDICADA DO PRODUTO (nova aba) ===== */
+.pp-topo{display:flex;align-items:center;justify-content:space-between;padding:20px 28px;border-bottom:1px solid rgba(184,149,106,.2);position:sticky;top:0;background:var(--branco);z-index:10}
+.pp-voltar{display:inline-flex;align-items:center;gap:8px;color:var(--preto);text-decoration:none;font-size:13px;font-weight:600;letter-spacing:.6px;text-transform:uppercase;transition:.2s}
+.pp-voltar:hover{color:var(--marrom)}
+.pp-voltar svg{width:17px;height:17px}
+.pp-selo{font-size:11px;letter-spacing:2.4px;text-transform:uppercase;color:var(--dourado);font-weight:600}
+.pp-conteudo{max-width:820px;margin:0 auto;padding:54px 24px 90px}
+.pp-cabecalho{text-align:center;margin-bottom:34px}
+.pp-cabecalho h1{font-family:var(--serif);font-weight:600;font-size:clamp(32px,5vw,48px);margin:14px 0 12px;color:var(--preto)}
+.pp-sub{color:#4a4a4a;font-size:15px;font-weight:300;line-height:1.6;max-width:520px;margin:0 auto}
+.pp-largura .galeria-principal{border-radius:20px;min-height:380px}
+.pp-largura .galeria-vazia{padding:70px 26px}
+
 /* ===== GALERIA MODAL ===== */
 .galeria-box{background:var(--branco);max-width:920px;width:100%;max-height:92vh;overflow:hidden;border-radius:24px;position:relative;display:flex;flex-direction:column}
 .galeria-topo{display:flex;align-items:center;justify-content:space-between;padding:20px 26px;border-bottom:1px solid rgba(184,149,106,.2)}
@@ -270,6 +283,19 @@ footer{border-top:1px solid rgba(184,149,106,.3);background:var(--fundo);margin-
 </style>
 </head>
 <body>
+
+<!-- PÁGINA DEDICADA DA BIBLIOTECA DO PRODUTO (abre em nova aba a partir do Banco de Imagens) -->
+<div id="pagina-produto" style="display:none">
+  <div class="pp-topo">
+    <a href="index.html" class="pp-voltar">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      Central de Recursos
+    </a>
+    <span class="pp-selo">Biblioteca do produto</span>
+  </div>
+  <div class="pp-conteudo" id="pp-conteudo"></div>
+</div>
+
 
 <header>
   <div class="topo">
@@ -625,6 +651,7 @@ async function sincronizarComDrive(){
 
   // Re-renderiza tudo que depende dessas imagens
   renderPerfumes(); renderBanco(); construirHeroMarquee();
+  if(galeriaAlvoEl==="pp-galeria" && galeriaAtual) renderGaleriaEm("pp-galeria");
 }
 function fotoThumbBanco(p){
   const candThumb=[`imagens/thumbs/${p.slug}.png`,`imagens/thumbs/${p.slug}.jpg`];
@@ -638,15 +665,15 @@ function fotoThumbBanco(p){
     onerror="proximaFonte(this)" loading="lazy" referrerpolicy="no-referrer">`;
 }
 
-let galeriaAtual=null, galeriaIndex=0;
+let galeriaAtual=null, galeriaIndex=0, galeriaAlvoEl="galeria-corpo";
 function urlGaleria(id){
   return typeof id==="string" && id.startsWith("http") ? id : driveImg(id);
 }
 function abrirGaleria(slug){
   const p=PERFUMES.find(x=>x.slug===slug); if(!p)return;
-  galeriaAtual=p; galeriaIndex=0;
+  galeriaAtual=p; galeriaIndex=0; galeriaAlvoEl="galeria-corpo";
   document.getElementById("galeria-nome").textContent=p.nome;
-  renderGaleriaCorpo();
+  renderGaleriaEm("galeria-corpo");
   document.getElementById("veu-galeria").classList.add("aberto");
   document.body.style.overflow="hidden";
 }
@@ -658,12 +685,13 @@ function trocarGaleria(i){
   const itens=GALERIA[galeriaAtual.slug]||[];
   if(!itens.length)return;
   galeriaIndex=(i+itens.length)%itens.length;
-  renderGaleriaCorpo();
+  renderGaleriaEm(galeriaAlvoEl);
 }
-function renderGaleriaCorpo(){
+function renderGaleriaEm(elId){
   const p=galeriaAtual;
   const itens=GALERIA[p.slug]||[];
-  const corpo=document.getElementById("galeria-corpo");
+  const corpo=document.getElementById(elId);
+  if(!corpo)return;
   if(!itens.length){
     corpo.innerHTML=`
       <div class="galeria-vazia">
@@ -692,6 +720,32 @@ function renderGaleriaCorpo(){
       <a class="btn cheio" href="${urlBaixar}" target="_blank" rel="noopener"><span class="db">DB</span> Baixar esta imagem</a>
     </div>`;
 }
+
+/* =============== PÁGINA DEDICADA DO PRODUTO (nova aba) =============== */
+function montarPaginaProduto(slug){
+  const p=PERFUMES.find(x=>x.slug===slug);
+  const alvo=document.getElementById("pp-conteudo");
+  if(!p){ alvo.innerHTML="<p>Produto não encontrado.</p>"; return; }
+  document.title=p.nome+" · Biblioteca · DEO BEAUTY";
+  galeriaAtual=p; galeriaIndex=0; galeriaAlvoEl="pp-galeria";
+  alvo.innerHTML=`
+    <div class="pp-cabecalho">
+      <span class="tag cat" style="--tcor:${corCat(p.cat)}">${p.cat}</span>
+      <h1>${p.nome}</h1>
+      <p class="pp-sub">Todas as imagens e artes deste produto na biblioteca DeoBeauty. Novos arquivos adicionados na pasta do Drive aparecem aqui automaticamente.</p>
+    </div>
+    <div class="pp-largura" id="pp-galeria"></div>`;
+  renderGaleriaEm("pp-galeria");
+}
+function ativarPaginaProduto(slug){
+  document.querySelector("header").style.display="none";
+  document.getElementById("sec-hero").style.display="none";
+  document.querySelector("main").style.display="none";
+  document.querySelector("footer").style.display="none";
+  document.getElementById("pagina-produto").style.display="block";
+  montarPaginaProduto(slug);
+}
+
 document.addEventListener("keydown",e=>{
   if(!document.getElementById("veu-galeria").classList.contains("aberto"))return;
   if(e.key==="Escape")fecharGaleria();
@@ -932,11 +986,11 @@ function renderBanco(){
     const n=(GALERIA[p.slug]||[]).length;
     return `
     <div class="item-banco">
-      <div class="quadro" onclick="abrirGaleria('${p.slug}')" role="button" tabindex="0" aria-label="Ver galeria de ${p.nome}"
-        onkeydown="if(event.key==='Enter')abrirGaleria('${p.slug}')">
+      <div class="quadro" onclick="window.open('index.html?produto=${p.slug}','_blank')" role="button" tabindex="0" aria-label="Abrir biblioteca de ${p.nome} em nova aba"
+        onkeydown="if(event.key==='Enter')window.open('index.html?produto=${p.slug}','_blank')">
         ${fotoThumbBanco(p)}
         ${n>1?`<span class="contagem">${n} fotos</span>`:''}
-        <div class="veja"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>Ver galeria</span></div>
+        <div class="veja"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>Ver biblioteca</span></div>
       </div>
       <div class="legenda">
         <b>${p.nome}</b>
@@ -1006,6 +1060,11 @@ construirHeroMarquee();
 sincronizarComDrive();
 montarFiltrosPosts();
 renderPosts();
+
+/* Se a URL tiver ?produto=slug, mostra a página dedicada da biblioteca */
+const parametrosURL=new URLSearchParams(location.search);
+const produtoNaURL=parametrosURL.get("produto");
+if(produtoNaURL) ativarPaginaProduto(produtoNaURL);
 </script>
 </body>
 </html>
