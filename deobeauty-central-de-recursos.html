@@ -661,15 +661,40 @@ const QUIOSQUES=[
   whatsapp:""}
 ];
 
-/* =============== NAVEGAÇÃO =============== */
+/* =============== NAVEGAÇÃO (com histórico do navegador) =============== */
 let filtroAtivo="Todos";
-function irPara(id){
+function aplicarSecao(id){
   document.querySelectorAll(".secao").forEach(s=>s.classList.remove("ativa"));
-  document.getElementById("sec-"+id).classList.add("ativa");
+  const sec=document.getElementById("sec-"+id);
+  if(sec) sec.classList.add("ativa");
   document.querySelectorAll(".aba").forEach(a=>a.classList.toggle("ativa",a.dataset.secao===id));
   document.getElementById("sec-hero").style.display = id==="inicio" ? "block":"none";
-  window.scrollTo({top:0,behavior:"smooth"});
 }
+function irPara(id, semHistorico){
+  aplicarSecao(id);
+  window.scrollTo({top:0,behavior:"smooth"});
+  if(!semHistorico){
+    history.pushState({tipo:"secao",id:id},"","#"+id);
+  }
+}
+/* A seta voltar/avançar do navegador cai aqui */
+window.addEventListener("popstate",function(e){
+  // fecha qualquer modal aberto primeiro
+  const vG=document.getElementById("veu-galeria");
+  const vF=document.getElementById("veu");
+  const vQ=document.getElementById("veu-quiosque");
+  let fechouAlgo=false;
+  if(vG&&vG.classList.contains("aberto")){vG.classList.remove("aberto");fechouAlgo=true;}
+  if(vF&&vF.classList.contains("aberto")){vF.classList.remove("aberto");fechouAlgo=true;}
+  if(vQ&&vQ.classList.contains("aberto")){vQ.classList.remove("aberto");fechouAlgo=true;}
+  document.body.style.overflow="";
+  const st=e.state;
+  if(st&&st.tipo==="quiosque"){ abrirQuiosque(st.i,true); return; }
+  if(st&&st.tipo==="galeria"){ abrirGaleria(st.slug,true); return; }
+  if(st&&st.tipo==="ficha"){ abrirFicha(st.slug,true); return; }
+  if(st&&st.tipo==="secao"){ aplicarSecao(st.id); window.scrollTo({top:0}); return; }
+  if(!fechouAlgo){ aplicarSecao("inicio"); }
+});
 
 /* =============== PERFUMES =============== */
 const CATS=[
@@ -861,17 +886,20 @@ let galeriaAtual=null, galeriaIndex=0, galeriaAlvoEl="galeria-corpo";
 function urlGaleria(id){
   return typeof id==="string" && id.startsWith("http") ? id : driveImg(id);
 }
-function abrirGaleria(slug){
+function abrirGaleria(slug, semHistorico){
   const p=PERFUMES.find(x=>x.slug===slug); if(!p)return;
   galeriaAtual=p; galeriaIndex=0; galeriaAlvoEl="galeria-corpo";
   document.getElementById("galeria-nome").textContent=p.nome;
   renderGaleriaEm("galeria-corpo");
   document.getElementById("veu-galeria").classList.add("aberto");
   document.body.style.overflow="hidden";
+  if(!semHistorico){ history.pushState({tipo:"galeria",slug:slug},"","#galeria-"+slug); }
 }
 function fecharGaleria(){
+  const aberto=document.getElementById("veu-galeria").classList.contains("aberto");
   document.getElementById("veu-galeria").classList.remove("aberto");
   document.body.style.overflow="";
+  if(aberto && history.state && history.state.tipo==="galeria"){ history.back(); }
 }
 function trocarGaleria(i){
   const itens=GALERIA[galeriaAtual.slug]||[];
@@ -991,7 +1019,7 @@ function renderPerfumes(){
 
 /* =============== FICHA (MODAL) =============== */
 let fichaAtual=null;
-function abrirFicha(slug){
+function abrirFicha(slug, semHistorico){
   const p=PERFUMES.find(x=>x.slug===slug); if(!p)return;
   fichaAtual=p;
   document.getElementById("ficha-nome").textContent=p.nome;
@@ -1009,10 +1037,13 @@ function abrirFicha(slug){
   else{dl.href=`imagens/produtos/${p.slug}.png`;dl.download=`deobeauty-${p.slug}.png`;}
   document.getElementById("veu").classList.add("aberto");
   document.body.style.overflow="hidden";
+  if(!semHistorico){ history.pushState({tipo:"ficha",slug:slug},"","#ficha-"+slug); }
 }
 function fecharFicha(){
+  const aberto=document.getElementById("veu").classList.contains("aberto");
   document.getElementById("veu").classList.remove("aberto");
   document.body.style.overflow="";
+  if(aberto && history.state && history.state.tipo==="ficha"){ history.back(); }
 }
 document.addEventListener("keydown",e=>{if(e.key==="Escape")fecharFicha()});
 function copiarFicha(){
@@ -1204,8 +1235,8 @@ function renderBanco(){
     const n=(GALERIA[p.slug]||[]).length;
     return `
     <div class="item-banco">
-      <div class="quadro" onclick="window.open('index.html?produto=${p.slug}','_blank')" role="button" tabindex="0" aria-label="Abrir biblioteca de ${p.nome} em nova aba"
-        onkeydown="if(event.key==='Enter')window.open('index.html?produto=${p.slug}','_blank')">
+      <div class="quadro" onclick="abrirGaleria('${p.slug}')" role="button" tabindex="0" aria-label="Ver galeria de ${p.nome}"
+        onkeydown="if(event.key==='Enter')abrirGaleria('${p.slug}')">
         ${fotoThumbBanco(p)}
         ${n>1?`<span class="contagem">${n} fotos</span>`:''}
         <div class="veja"><span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg>Ver biblioteca</span></div>
@@ -1295,7 +1326,7 @@ function renderQuiosques(){
       <span class="abrir">Ver detalhes →</span>
     </div>`).join("");
 }
-function abrirQuiosque(i){
+function abrirQuiosque(i, semHistorico){
   const q=QUIOSQUES[i]; if(!q)return;
   const linhas=[];
   linhas.push(`
@@ -1327,10 +1358,13 @@ function abrirQuiosque(i){
     </div>`;
   document.getElementById("veu-quiosque").classList.add("aberto");
   document.body.style.overflow="hidden";
+  if(!semHistorico){ history.pushState({tipo:"quiosque",i:i},"","#quiosque-"+i); }
 }
 function fecharQuiosque(){
+  const aberto=document.getElementById("veu-quiosque").classList.contains("aberto");
   document.getElementById("veu-quiosque").classList.remove("aberto");
   document.body.style.overflow="";
+  if(aberto && history.state && history.state.tipo==="quiosque"){ history.back(); }
 }
 document.addEventListener("keydown",e=>{
   if(e.key==="Escape" && document.getElementById("veu-quiosque").classList.contains("aberto")) fecharQuiosque();
@@ -1354,12 +1388,26 @@ sincronizarComDrive();
 montarFiltrosPosts();
 renderPosts();
 renderQuiosques();
-renderQuiosques();
 
-/* Se a URL tiver ?produto=slug, mostra a página dedicada da biblioteca */
+/* Estado inicial no histórico (para a seta voltar ter um ponto de partida) */
+history.replaceState({tipo:"secao",id:"inicio"},"","#inicio");
+
+/* Restaura o estado a partir do #hash da URL (ex: link compartilhado) */
+(function restaurarDoHash(){
+  const h=(location.hash||"").replace("#","");
+  if(!h || h==="inicio") return;
+  if(h.startsWith("galeria-")){ const slug=h.slice(8); irPara("banco",true); abrirGaleria(slug); return; }
+  if(h.startsWith("ficha-")){ const slug=h.slice(6); irPara("perfumes",true); abrirFicha(slug); return; }
+  if(h.startsWith("quiosque-")){ const i=parseInt(h.slice(9),10); irPara("quiosques",true); if(!isNaN(i))abrirQuiosque(i); return; }
+  // senão, é uma seção simples
+  const secoes=["inicio","perfumes","banco","stories","quiosques"];
+  if(secoes.includes(h)) irPara(h,true);
+})();
+
+/* Compatibilidade: link antigo ?produto=slug abre a galeria */
 const parametrosURL=new URLSearchParams(location.search);
 const produtoNaURL=parametrosURL.get("produto");
-if(produtoNaURL) ativarPaginaProduto(produtoNaURL);
+if(produtoNaURL){ irPara("banco",true); abrirGaleria(produtoNaURL); }
 </script>
 </body>
 </html>
