@@ -265,7 +265,11 @@ main{max-width:1240px;margin:0 auto;padding:0 24px 90px}
 .atalho .qtd{display:inline-block;margin-top:14px;font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--dourado);font-weight:600}
 
 footer{border-top:1px solid rgba(184,149,106,.3);background:var(--fundo);margin-top:20px}
-.rodape-site{max-width:1240px;margin:0 auto;padding:26px 24px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:11.5px;letter-spacing:1.6px;text-transform:uppercase;color:var(--marrom)}
+.rodape-site{max-width:1240px;margin:0 auto;padding:26px 24px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;align-items:center;font-size:11.5px;letter-spacing:1.6px;text-transform:uppercase;color:var(--marrom)}
+.rodape-redes{display:flex;gap:10px;flex-wrap:wrap}
+.rodape-redes a{display:inline-flex;align-items:center;gap:7px;text-decoration:none;color:var(--marrom-escuro);border:1px solid rgba(184,149,106,.4);border-radius:999px;padding:7px 14px;font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;transition:.22s}
+.rodape-redes a:hover{background:var(--preto);color:var(--branco);border-color:var(--preto)}
+.rodape-redes svg{width:15px;height:15px}
 .toast{position:fixed;bottom:26px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--preto);color:var(--branco);padding:13px 26px;border-radius:999px;font-size:13px;letter-spacing:1px;opacity:0;pointer-events:none;transition:.3s;z-index:120}
 .toast.mostrar{opacity:1;transform:translateX(-50%) translateY(0)}
 
@@ -431,6 +435,20 @@ footer{border-top:1px solid rgba(184,149,106,.3);background:var(--fundo);margin-
 <footer>
   <div class="rodape-site">
     <span>DEO BEAUTY · Central de Recursos</span>
+    <div class="rodape-redes">
+      <a href="https://www.instagram.com/deobeautyoficial/" target="_blank" rel="noopener" aria-label="Instagram">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+        Instagram
+      </a>
+      <a href="https://www.tiktok.com/@deobeautyoficial" target="_blank" rel="noopener" aria-label="TikTok">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M16 4v.5a4.5 4.5 0 0 0 4.5 4.5V12a7.5 7.5 0 0 1-4.5-1.5V16a5 5 0 1 1-5-5c.35 0 .7.04 1 .1v3.06A2 2 0 1 0 13 16V4h3Z"/></svg>
+        TikTok
+      </a>
+      <a href="https://www.deolanebeauty.com.br/" target="_blank" rel="noopener" aria-label="Site oficial">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/></svg>
+        Site oficial
+      </a>
+    </div>
     <span>Documento interno · Proibida a reprodução externa</span>
   </div>
 </footer>
@@ -585,22 +603,29 @@ function driveDown(id){return "https://drive.google.com/uc?export=download&id="+
    biblioteca do Drive for alimentada com mais imagens, elas entram
    aqui como novos itens do array (id do Drive ou caminho local). */
 const GALERIA={};
-PERFUMES.forEach(p=>{ GALERIA[p.slug] = DRIVE[p.slug] ? [DRIVE[p.slug]] : []; });
+PERFUMES.forEach(p=>{ GALERIA[p.slug] = []; });
 
 /* =============== THUMBNAILS ESTILIZADAS (Banco de Imagens) =============== */
 /* Pasta no Drive: "Banco de imagens thumbnail" — uma imagem 1:1 por
    perfume, renomeada com o mesmo slug. Enquanto a thumbnail de um
    produto não existir, o card usa a foto normal do frasco como reserva. */
 const THUMBS={
+ "valen":"1vLbFEPdBWY2nxrhGvriNZKPtqhZ5RtJE",
+ "bella-seduzione":"1f5czqjXomJwaYypiOFvheYiFGVz14CCm",
+ "delluxe":"1sqljfshN6AJB7II9hPqtJzQAjTbsxahk",
+ "delluxe-rouge":"1yLe9PM_q5X-a_cQaf3it9f2PJ06bioUk",
  "fortune-intense":"1VclgJlp1XabQuVOfWlS4LIUiEQCMNjPl",
- "jump":"1iyRb0ZOlyZLXfSD5hHlOje1sfDqeQfOh",
- "majestic":"1awqAYoDDySIK7m3WmO3_dN_gU6_iwUcG",
- "my-moments":"1x8jAUWdR1rfm_XY-uZeXhENHR0880bLo",
+ "fortune-platinum":"1iunzPh_Od2GNiQ6TgzzSbYObzdzBngm-",
  "mystere":"14uGzvrFTeg0yCaM9GWg2Jv5AogWFv40x",
+ "my-moments":"1x8jAUWdR1rfm_XY-uZeXhENHR0880bLo",
+ "majestic":"1awqAYoDDySIK7m3WmO3_dN_gU6_iwUcG",
+ "la-mia-passione":"1ng0Hii32f6K9IuvxvIds0cpMVjIChx8G",
+ "dynastie":"1o-fb47ba7rBzFsniqo2Q-IkYTGpFW59a",
+ "jump":"1iyRb0ZOlyZLXfSD5hHlOje1sfDqeQfOh",
  "oud-passion":"1h2DOgopftrj9Ksce9tBtmmxOiIGl4J1E",
+ "deo-black":"1W21vAt0DIFHwvJg2QvRBV34NxwAlcetW",
  "pure-attraction":"19vAGThXdxgXCqFa-LtgC94DeHWMumBzN",
- "unic":"1u3-o6GUvXN2CTcm8tR_NfYgAIWZOmF0O",
- "valen":"1vLbFEPdBWY2nxrhGvriNZKPtqhZ5RtJE"
+ "unic":"1u3-o6GUvXN2CTcm8tR_NfYgAIWZOmF0O"
 };
 
 /* =============== SINCRONIZAÇÃO AUTOMÁTICA COM O GOOGLE DRIVE =============== */
@@ -704,10 +729,9 @@ function renderGaleriaEm(elId){
   if(!itens.length){
     corpo.innerHTML=`
       <div class="galeria-vazia">
-        <div class="db-mono">DB</div>
-        <p>Ainda não há imagens extras deste produto na biblioteca.<br>
-        Adicione arquivos na pasta <code>${p.nome}</code> dentro da biblioteca no Drive
-        e eles aparecem aqui automaticamente.</p>
+        <svg viewBox="0 0 24 24" fill="none" stroke="var(--dourado)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" style="width:38px;height:38px;margin:0 auto"><rect x="3" y="5" width="18" height="14" rx="3"/><circle cx="9" cy="10" r="1.6"/><path d="M4 18l5-5 3 3 4-4 4 4"/></svg>
+        <p>O catálogo deste produto ainda está sendo montado.<br>
+        Em breve as imagens e artes aparecem aqui.</p>
       </div>`;
     return;
   }
@@ -741,7 +765,7 @@ function montarPaginaProduto(slug){
     <div class="pp-cabecalho">
       <span class="tag cat" style="--tcor:${corCat(p.cat)}">${p.cat}</span>
       <h1>${p.nome}</h1>
-      <p class="pp-sub">Todas as imagens e artes deste produto na biblioteca DeoBeauty. Novos arquivos adicionados na pasta do Drive aparecem aqui automaticamente.</p>
+      <p class="pp-sub">Catálogo de imagens e artes deste produto.</p>
     </div>
     <div class="pp-largura" id="pp-galeria"></div>`;
   renderGaleriaEm("pp-galeria");
