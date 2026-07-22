@@ -32,7 +32,7 @@ body{background:var(--fundo);color:var(--preto);font-family:var(--sans);font-wei
 header{background:var(--fundo);border-bottom:1px solid rgba(184,149,106,.35);position:sticky;top:0;z-index:50}
 .topo{max-width:1240px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;gap:22px;flex-wrap:wrap}
 .marca{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--preto)}
-.marca img{height:52px;width:auto;max-width:180px;object-fit:contain;display:block}
+.marca img{height:48px;width:auto;max-width:220px;object-fit:contain;display:block}
 .marca .fallback{font-family:var(--serif);font-weight:600;font-size:28px;letter-spacing:2px;display:none;color:var(--preto)}
 .marca .fallback span{display:block;font-family:var(--sans);font-weight:300;font-size:10px;letter-spacing:8px;text-align:center;color:var(--preto)}
 nav{display:flex;gap:6px;flex-wrap:wrap;margin-left:auto}
@@ -210,8 +210,8 @@ main{max-width:1240px;margin:0 auto;padding:0 24px 90px}
 .galeria-topo{display:flex;align-items:center;justify-content:space-between;padding:20px 26px;border-bottom:1px solid rgba(184,149,106,.2)}
 .galeria-topo h2{font-family:var(--serif);font-weight:600;font-size:26px}
 .galeria-topo .rotulo{font-size:11px;letter-spacing:2.4px;text-transform:uppercase;color:var(--dourado);font-weight:600;display:block;margin-bottom:2px}
-.galeria-principal{background:var(--creme-claro);min-height:340px;display:flex;align-items:center;justify-content:center;position:relative;padding:20px}
-.galeria-principal img{max-width:100%;max-height:56vh;object-fit:contain;filter:drop-shadow(0 16px 22px rgba(20,20,20,.18))}
+.galeria-principal{background:var(--creme-claro);min-height:420px;display:flex;align-items:center;justify-content:center;position:relative;padding:24px}
+.galeria-principal img{max-width:100%;max-height:64vh;width:auto;height:auto;object-fit:contain;border-radius:6px;filter:drop-shadow(0 16px 22px rgba(20,20,20,.16))}
 .galeria-nav{position:absolute;top:50%;transform:translateY(-50%);width:42px;height:42px;border-radius:50%;background:var(--branco);border:1px solid rgba(184,149,106,.4);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:.2s}
 .galeria-nav:hover{background:var(--preto);color:var(--branco);border-color:var(--preto)}
 .galeria-nav.esq{left:16px}
@@ -219,7 +219,7 @@ main{max-width:1240px;margin:0 auto;padding:0 24px 90px}
 .galeria-tiras{display:flex;gap:10px;padding:16px 26px;overflow-x:auto}
 .galeria-tiras .mini{width:64px;height:64px;flex-shrink:0;border-radius:10px;overflow:hidden;border:2px solid transparent;cursor:pointer;background:var(--creme-claro);display:flex;align-items:center;justify-content:center;transition:.2s}
 .galeria-tiras .mini.ativa{border-color:var(--dourado)}
-.galeria-tiras .mini img{width:100%;height:100%;object-fit:contain}
+.galeria-tiras .mini img{width:100%;height:100%;object-fit:cover}
 .galeria-rodape{display:flex;align-items:center;justify-content:space-between;padding:16px 26px;border-top:1px solid rgba(184,149,106,.2)}
 .galeria-vazia{padding:50px 26px;text-align:center;color:var(--marrom)}
 .galeria-vazia .db-mono{font-family:var(--serif);font-weight:700;font-style:italic;font-size:44px;color:var(--dourado)}
@@ -283,6 +283,31 @@ main{max-width:1240px;margin:0 auto;padding:0 24px 90px}
   .intro-marca-numeros{gap:32px}
 }
 
+/* ===== QUIOSQUES ===== */
+.grade-quiosques{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px}
+.card-quiosque{background:var(--branco);border:1px solid rgba(184,149,106,.25);border-radius:20px;padding:28px 26px;cursor:pointer;transition:.3s;box-shadow:var(--sombra);display:flex;flex-direction:column;gap:8px}
+.card-quiosque:hover{transform:translateY(-5px);box-shadow:var(--sombra-hover);border-color:var(--dourado)}
+.card-quiosque .pino{width:46px;height:46px;border-radius:50%;background:var(--creme-claro);border:1px solid rgba(184,149,106,.3);display:flex;align-items:center;justify-content:center;color:var(--preto);margin-bottom:6px;transition:.3s}
+.card-quiosque:hover .pino{background:var(--preto);color:var(--branco);border-color:var(--preto)}
+.card-quiosque .pino svg{width:22px;height:22px}
+.card-quiosque h3{font-family:var(--serif);font-size:24px;font-weight:600;color:var(--preto)}
+.card-quiosque .local{font-size:13.5px;color:var(--preto);font-weight:300;line-height:1.5}
+.card-quiosque .abrir{margin-top:8px;font-size:11px;font-weight:600;letter-spacing:1px;text-transform:uppercase;color:var(--dourado)}
+
+.quiosque-box{background:var(--branco);max-width:760px;width:100%;max-height:92vh;overflow:auto;border-radius:24px;position:relative}
+.q-mapa{width:100%;height:300px;border:none;display:block;background:var(--creme-claro)}
+.q-conteudo{padding:34px 40px 40px}
+.q-conteudo .rotulo{font-size:11px;letter-spacing:2.6px;text-transform:uppercase;color:var(--dourado);font-weight:600}
+.q-conteudo h2{font-family:var(--serif);font-weight:600;font-size:clamp(28px,4vw,40px);margin:4px 0 18px;color:var(--preto)}
+.q-linha{display:flex;align-items:flex-start;gap:14px;padding:14px 0;border-top:1px solid rgba(184,149,106,.2)}
+.q-linha .ico{width:38px;height:38px;flex-shrink:0;border-radius:50%;background:var(--creme-claro);display:flex;align-items:center;justify-content:center;color:var(--preto)}
+.q-linha .ico svg{width:18px;height:18px}
+.q-linha .txt{flex:1}
+.q-linha .txt b{display:block;font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--dourado);margin-bottom:2px}
+.q-linha .txt span,.q-linha .txt a{font-size:15px;color:var(--preto);line-height:1.5;text-decoration:none;word-break:break-word}
+.q-linha .txt a:hover{text-decoration:underline}
+.q-acoes{display:flex;gap:12px;flex-wrap:wrap;margin-top:22px}
+
 /* ===== ATALHOS INÍCIO ===== */
 .atalhos{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:22px;margin-top:46px}
 .atalho{background:var(--branco);border:1px solid rgba(184,149,106,.25);border-radius:var(--raio);padding:28px 26px;cursor:pointer;transition:.28s;box-shadow:var(--sombra);text-align:left}
@@ -334,8 +359,8 @@ footer{border-top:1px solid rgba(184,149,106,.3);background:var(--fundo);margin-
 <header>
   <div class="topo">
     <a class="marca" href="#" onclick="irPara('inicio');return false" aria-label="DEO BEAUTY — Início">
-      <img src="assets/logo.png" alt="DEO BEAUTY" id="logo-img" data-fase="0" referrerpolicy="no-referrer"
-        onerror="if(this.dataset.fase==='0'){this.dataset.fase='1';this.src='https://drive.google.com/thumbnail?id=1UHRFcrp4jskqhkZl7058MLjg8gp6D69H&sz=w400';}else{this.style.display='none';this.nextElementSibling.style.display='block';}">
+      <img src="assets/Logo.png" alt="DEO BEAUTY" id="logo-img" data-fase="0" referrerpolicy="no-referrer"
+        onerror="if(this.dataset.fase==='0'){this.dataset.fase='1';this.src='assets/logo.png';}else if(this.dataset.fase==='1'){this.dataset.fase='2';this.src='https://drive.google.com/thumbnail?id=1UHRFcrp4jskqhkZl7058MLjg8gp6D69H&sz=w400';}else{this.style.display='none';this.nextElementSibling.style.display='block';}">
       <div class="fallback">DEO<span>B E A U T Y</span></div>
     </a>
     <nav aria-label="Seções">
@@ -343,6 +368,7 @@ footer{border-top:1px solid rgba(184,149,106,.3);background:var(--fundo);margin-
       <button class="aba" data-secao="perfumes" onclick="irPara('perfumes')">Perfumes</button>
       <button class="aba" data-secao="banco" onclick="irPara('banco')">Banco de Imagens</button>
       <button class="aba" data-secao="stories" onclick="irPara('stories')">Post</button>
+      <button class="aba" data-secao="quiosques" onclick="irPara('quiosques')">Quiosques</button>
     </nav>
   </div>
 </header>
@@ -464,7 +490,27 @@ footer{border-top:1px solid rgba(184,149,106,.3);background:var(--fundo);margin-
   <div class="grade-post" id="grade-posts"></div>
 </section>
 
+<!-- ================= QUIOSQUES ================= -->
+<section class="secao" id="sec-quiosques">
+  <div class="cabecalho-secao">
+    <div>
+      <h2>Quiosques</h2>
+      <div class="filete"></div>
+    </div>
+    <p>Nossas unidades oficiais. Clique em uma unidade para ver endereço, mapa, WhatsApp e Instagram.</p>
+  </div>
+  <div class="grade-quiosques" id="grade-quiosques"></div>
+</section>
+
 </main>
+
+<!-- MODAL QUIOSQUE -->
+<div class="veu" id="veu-quiosque" onclick="if(event.target===this)fecharQuiosque()">
+  <div class="quiosque-box" role="dialog" aria-modal="true" aria-labelledby="quiosque-nome">
+    <button class="fechar" onclick="fecharQuiosque()" aria-label="Fechar">✕</button>
+    <div id="quiosque-corpo"></div>
+  </div>
+</div>
 
 <!-- MODAL -->
 <div class="veu" id="veu" onclick="if(event.target===this)fecharFicha()">
@@ -584,6 +630,37 @@ const INFORMATIVOS=[
  {id:"1-uArrQUmVizqD47G8YOEx3Eu_UIAp8qg",titulo:"Vídeo · Como comprar no TikTok Shop",video:true}
 ];
 
+const QUIOSQUES=[
+ {nome:"Campo Limpo",local:"Unidade Shopping Campo Limpo",
+  endereco:"Estr. do Campo Limpo, 459 - Vila Prel, São Paulo - SP",
+  instagram:"https://www.instagram.com/deobeauty.campolimpo/",
+  whatsapp:"https://api.whatsapp.com/message/BQ7KB5TTHAUQK1?autoload=1&app_absent=0&utm_source=ig"},
+ {nome:"Itaquera",local:"Shopping Metrô Itaquera",
+  endereco:"Av. José Pinheiro Borges - Itaquera, São Paulo - SP, 08420-092",
+  instagram:"https://www.instagram.com/deobeautyitaquera/",
+  whatsapp:"https://api.whatsapp.com/message/7BYIFWQRRWHLG1?autoload=1&app_absent=0&utm_source=ig"},
+ {nome:"Brás",local:"Unidade Brás",
+  endereco:"Rua Miller, 429 - Brás, São Paulo - SP",
+  instagram:"https://www.instagram.com/deobeauty.bras/",
+  whatsapp:"https://api.whatsapp.com/send/?phone=5511957971613&text&type=phone_number&app_absent=0&utm_source=ig"},
+ {nome:"Guarulhos",local:"Shopping Internacional de Guarulhos · 1º piso",
+  endereco:"Av. Engenheiro Camilo Olivetti, 295 - Guarulhos - SP",
+  instagram:"https://www.instagram.com/deobeauty.guarulhos/",
+  whatsapp:"https://api.whatsapp.com/message/HW7YHYFWJXE7G1?autoload=1&app_absent=0&utm_source=ig"},
+ {nome:"Augusta",local:"Unidade Augusta",
+  endereco:"Rua Augusta, 1346 - Consolação, São Paulo - SP",
+  instagram:"https://www.instagram.com/deobeauty.augusta/",
+  whatsapp:""},
+ {nome:"São Bernardo",local:"Shopping Metrópole · SBC",
+  endereco:"Pça. Samuel Sabatini, 200 - Centro, São Bernardo do Campo - SP, 09750-902",
+  instagram:"https://www.instagram.com/deobeautysbcoficial/",
+  whatsapp:""},
+ {nome:"Fortaleza",local:"Unidade RioMar Fortaleza",
+  endereco:"R. Des. Lauro Nogueira, 1500 - Papicu, Fortaleza - CE, 60175-055",
+  instagram:"https://www.instagram.com/deobeauty.riomar/",
+  whatsapp:""}
+];
+
 /* =============== NAVEGAÇÃO =============== */
 let filtroAtivo="Todos";
 function irPara(id){
@@ -668,6 +745,18 @@ function driveDown(id){return "https://drive.google.com/uc?export=download&id="+
    aqui como novos itens do array (id do Drive ou caminho local). */
 const GALERIA={};
 PERFUMES.forEach(p=>{ GALERIA[p.slug] = []; });
+/* Catálogo fixo das galerias (pasta "banco de imagens" no Drive, 1 subpasta por perfume).
+   Fixado por ID porque a listagem automática está bloqueada pela política da conta.
+   Ao adicionar novas imagens, enviar o link da pasta que atualizamos aqui. */
+Object.assign(GALERIA,{
+ "jump":["1nqVbPLWSmy_Lh-PdPRM2Nbw-4ZlfuDO-","1dhfexOQBRvAWbMWX5UKa3tFYIYxthHpK"],
+ "unic":["1fh09lMhwXWPMVPeTB4eKM8Xh83zeGDyF","1bwIO9cUbcosdnUgYGyqFrnPXT-fTKA_U","1RIgTnqcVaS3H15KpgfwkR8RTFOlguV0L"],
+ "my-moments":["1cHxdi9IL5kJlQTbS-JyZMW8BtANysdzz","1F6YuiI8DNDcvvk07miWXlYsYpCn-l8RN"],
+ "delluxe-rouge":["1n7nLfCmx36W1d0YBN5fcqkySlQyUQT_1","13BF4G4bFh_bXbnc4krIdY3BlqSNc_62c"],
+ "delluxe":["1vTMFWCo1l8GUVASoUKXpLPBYcy05WoGy","19X9Cmrp1ANSUqX5c8m6kng90Da-kdc8D","1NAmfKCwhz0tFw2ikNcPB-zLsZ7PsnXiM","13NFSpW8wVJlMM5K3YUONG7RJ5BLSX5v2"],
+ "mystere":["1g0N06KbOlBYm9NOQ6YJsR7z7AYdgLbJO"],
+ "la-mia-passione":["1vHpI8rzsAHj9DLs2IKwHduDO5vSYFyvY"]
+});
 
 /* =============== THUMBNAILS ESTILIZADAS (Banco de Imagens) =============== */
 /* Pasta no Drive: "Banco de imagens thumbnail" — uma imagem 1:1 por
@@ -705,7 +794,7 @@ const DRIVE_API_KEY = "AIzaSyAdXs7oJHaWFQ72BXxUGQxAFpbgXflkjs4"; // Google Drive
 
 const PASTA_PRODUTOS_ID   = "1D-eRfpYN5DDH_VioElO0yO-3mKf-N6jJ"; // imagens/produtos
 const PASTA_THUMBS_ID     = "1XnCZd5k4dWmMwgkal2WwnVD0Z_8DTGTa"; // Banco de imagens thumbnail
-const PASTA_BIBLIOTECA_ID = "1wHaiqE_RAcq4kOSe0Mh3-43e7D0GFqV2"; // pasta com 1 subpasta por perfume
+const PASTA_BIBLIOTECA_ID = "1caU8ScE-tn3MQ5JnWRm3eajVZ7A_PFc4"; // "banco de imagens": 1 subpasta por perfume
 
 async function listarPastaDrive(folderId){
   if(!folderId || !DRIVE_API_KEY) return [];
@@ -1189,6 +1278,64 @@ function phGaleria(img){
   img.replaceWith(div);
 }
 
+/* =============== QUIOSQUES =============== */
+function mapaEmbed(endereco){
+  return "https://www.google.com/maps?q="+encodeURIComponent(endereco)+"&output=embed";
+}
+function mapaLink(endereco){
+  return "https://www.google.com/maps/search/?api=1&query="+encodeURIComponent(endereco);
+}
+function renderQuiosques(){
+  document.getElementById("grade-quiosques").innerHTML=QUIOSQUES.map((q,i)=>`
+    <div class="card-quiosque" onclick="abrirQuiosque(${i})" role="button" tabindex="0"
+      onkeydown="if(event.key==='Enter')abrirQuiosque(${i})" aria-label="Ver detalhes de ${q.nome}">
+      <div class="pino"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg></div>
+      <h3>${q.nome}</h3>
+      <span class="local">${q.local}</span>
+      <span class="abrir">Ver detalhes →</span>
+    </div>`).join("");
+}
+function abrirQuiosque(i){
+  const q=QUIOSQUES[i]; if(!q)return;
+  const linhas=[];
+  linhas.push(`
+    <div class="q-linha">
+      <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg></div>
+      <div class="txt"><b>Endereço</b><a href="${mapaLink(q.endereco)}" target="_blank" rel="noopener">${q.endereco}</a></div>
+    </div>`);
+  if(q.whatsapp) linhas.push(`
+    <div class="q-linha">
+      <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.5 8.5 0 0 1-12.6 7.4L3 21l2.1-5.4A8.5 8.5 0 1 1 21 11.5Z"/><path d="M8.5 8.5c0 4 3 7 6.5 7"/></svg></div>
+      <div class="txt"><b>WhatsApp</b><a href="${q.whatsapp}" target="_blank" rel="noopener">Falar no WhatsApp oficial</a></div>
+    </div>`);
+  if(q.instagram) linhas.push(`
+    <div class="q-linha">
+      <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></div>
+      <div class="txt"><b>Instagram</b><a href="${q.instagram}" target="_blank" rel="noopener">${q.instagram.replace('https://www.instagram.com/','@').replace(/\/$/,'')}</a></div>
+    </div>`);
+  document.getElementById("quiosque-corpo").innerHTML=`
+    <iframe class="q-mapa" src="${mapaEmbed(q.endereco)}" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade" title="Mapa ${q.nome}"></iframe>
+    <div class="q-conteudo">
+      <span class="rotulo">Unidade DeoBeauty</span>
+      <h2>${q.nome}</h2>
+      <p style="color:var(--preto);font-weight:300;margin:-8px 0 14px">${q.local}</p>
+      ${linhas.join("")}
+      <div class="q-acoes">
+        <a class="btn cheio" href="${mapaLink(q.endereco)}" target="_blank" rel="noopener"><span class="db">DB</span> Como chegar</a>
+        ${q.whatsapp?`<a class="btn vazado" href="${q.whatsapp}" target="_blank" rel="noopener">WhatsApp</a>`:''}
+      </div>
+    </div>`;
+  document.getElementById("veu-quiosque").classList.add("aberto");
+  document.body.style.overflow="hidden";
+}
+function fecharQuiosque(){
+  document.getElementById("veu-quiosque").classList.remove("aberto");
+  document.body.style.overflow="";
+}
+document.addEventListener("keydown",e=>{
+  if(e.key==="Escape" && document.getElementById("veu-quiosque").classList.contains("aberto")) fecharQuiosque();
+});
+
 /* =============== TOAST =============== */
 let tTimer=null;
 function toast(msg){
@@ -1206,6 +1353,8 @@ construirHeroMarquee();
 sincronizarComDrive();
 montarFiltrosPosts();
 renderPosts();
+renderQuiosques();
+renderQuiosques();
 
 /* Se a URL tiver ?produto=slug, mostra a página dedicada da biblioteca */
 const parametrosURL=new URLSearchParams(location.search);
