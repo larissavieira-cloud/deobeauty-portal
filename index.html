@@ -75,20 +75,22 @@ nav{display:flex;gap:6px;flex-wrap:wrap;margin-left:auto}
 .hero h1 em{font-style:italic;color:var(--preto)}
 .hero p{max-width:500px;color:var(--preto);font-size:16px;line-height:1.7;font-weight:300}
 .hero-acoes{display:flex;gap:14px;margin:32px 0 8px;flex-wrap:wrap;justify-content:center}
-.btn{position:relative;display:inline-flex;align-items:center;gap:10px;border-radius:999px;padding:14px 28px;font-family:var(--sans);font-size:12.5px;font-weight:600;letter-spacing:1.6px;text-transform:uppercase;cursor:pointer;transition:transform .25s cubic-bezier(.22,1,.36,1),box-shadow .25s,background .25s,color .25s,border-color .25s;border:1px solid var(--preto);overflow:hidden;isolation:isolate}
-/* reflexo de vidro líquido no topo */
-.btn::before{content:'';position:absolute;inset:0;border-radius:inherit;background:linear-gradient(180deg,rgba(255,255,255,.35) 0%,rgba(255,255,255,.08) 32%,transparent 55%);pointer-events:none;z-index:1;opacity:.9}
-/* brilho que varre ao passar o mouse */
-.btn::after{content:'';position:absolute;top:0;left:-120%;width:70%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.45),transparent);transform:skewX(-18deg);pointer-events:none;z-index:2;transition:left .6s cubic-bezier(.22,1,.36,1)}
-.btn:hover::after{left:130%}
-.btn>*{position:relative;z-index:3}
-.btn.cheio{background:linear-gradient(180deg,#2a2a2a 0%,var(--preto) 60%);color:var(--branco);box-shadow:0 6px 18px -8px rgba(20,20,20,.5),inset 0 1px 1px rgba(255,255,255,.18),inset 0 -2px 4px rgba(0,0,0,.3)}
-.btn.cheio:hover{background:linear-gradient(180deg,#4a382c 0%,var(--marrom) 70%);border-color:var(--marrom);transform:translateY(-2px);box-shadow:0 12px 26px -10px rgba(107,78,61,.6),inset 0 1px 1px rgba(255,255,255,.25),inset 0 -2px 4px rgba(0,0,0,.25)}
-.btn.cheio:active{transform:translateY(0) scale(.98)}
-.btn.vazado{background:linear-gradient(180deg,rgba(255,255,255,.6),rgba(255,255,255,.15));color:var(--preto);border-color:var(--preto);backdrop-filter:blur(4px);box-shadow:0 4px 12px -6px rgba(20,20,20,.25),inset 0 1px 1px rgba(255,255,255,.5)}
-.btn.vazado:hover{background:var(--preto);color:var(--branco);transform:translateY(-2px)}
-.btn.vazado:active{transform:translateY(0) scale(.98)}
-.btn .db{font-family:var(--serif);font-weight:700;font-style:italic;font-size:15px;line-height:1}
+.btn{position:relative;display:inline-flex;align-items:center;gap:10px;border-radius:999px;padding:15px 32px;font-family:var(--sans);font-size:12.5px;font-weight:600;letter-spacing:1.8px;text-transform:uppercase;cursor:pointer;transition:transform .3s cubic-bezier(.22,1,.36,1),box-shadow .3s,filter .3s;border:none;overflow:hidden;isolation:isolate}
+/* camada de vidro: reflexo superior forte */
+.btn::before{content:'';position:absolute;inset:0;border-radius:inherit;background:linear-gradient(180deg,rgba(255,255,255,.55) 0%,rgba(255,255,255,.12) 28%,transparent 50%,rgba(0,0,0,.08) 100%);pointer-events:none;z-index:2}
+/* brilho contínuo que varre sozinho + intensifica no hover */
+.btn::after{content:'';position:absolute;top:-50%;left:-150%;width:80%;height:200%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.7),transparent);transform:skewX(-20deg);pointer-events:none;z-index:3;animation:btn-brilho 4.5s ease-in-out infinite}
+.btn:hover::after{animation:btn-brilho-rapido 1.1s ease-in-out infinite}
+@keyframes btn-brilho{0%,100%{left:-150%}55%,70%{left:150%}}
+@keyframes btn-brilho-rapido{0%{left:-150%}100%{left:150%}}
+.btn>*{position:relative;z-index:4}
+.btn.cheio{background:linear-gradient(180deg,#3a3a3a 0%,var(--preto) 55%,#000 100%);color:var(--branco);box-shadow:0 8px 22px -8px rgba(20,20,20,.55),inset 0 1.5px 1px rgba(255,255,255,.28),inset 0 -3px 6px rgba(0,0,0,.4)}
+.btn.cheio:hover{transform:translateY(-3px) scale(1.03);filter:brightness(1.12);box-shadow:0 16px 34px -10px rgba(184,149,106,.7),0 0 0 1px rgba(184,149,106,.4),inset 0 1.5px 1px rgba(255,255,255,.35),inset 0 -3px 6px rgba(0,0,0,.35)}
+.btn.cheio:active{transform:translateY(-1px) scale(.99);filter:brightness(.95)}
+.btn.vazado{background:linear-gradient(180deg,rgba(255,255,255,.75),rgba(255,255,255,.25));color:var(--preto);border:1px solid rgba(184,149,106,.5);backdrop-filter:blur(6px);box-shadow:0 6px 18px -8px rgba(20,20,20,.3),inset 0 1.5px 1px rgba(255,255,255,.8),inset 0 -2px 4px rgba(184,149,106,.15)}
+.btn.vazado:hover{background:linear-gradient(180deg,#2a2a2a,var(--preto));color:var(--branco);border-color:var(--preto);transform:translateY(-3px) scale(1.03);box-shadow:0 16px 32px -10px rgba(20,20,20,.5),inset 0 1.5px 1px rgba(255,255,255,.2)}
+.btn.vazado:active{transform:translateY(-1px) scale(.99)}
+.btn .db{font-family:var(--serif);font-weight:700;font-style:italic;font-size:16px;line-height:1}
 .marca-dagua{display:none}
 
 /* ===== CARROSSEL DA HERO (faixa delicada de imagens embaixo) ===== */
