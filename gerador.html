@@ -6,7 +6,7 @@
 <title>DeoBeauty · Gerador de Estáticos</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Jost:wght@300;400;500;600;700&family=Caveat:wght@500;700&family=Archivo+Black&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Jost:wght@300;400;500;600;700&family=Caveat:wght@500;700&family=Oswald:wght@500;600;700&family=Archivo+Black&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <style>
@@ -142,133 +142,164 @@ button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit
 /* marca d'água de logo */
 .dbLogo{font-family:'Cormorant Garamond',serif;letter-spacing:.34em;font-weight:600}
 
-/* ===== CRIATIVO 1 — comparativo ===== */
-#t1{background:linear-gradient(170deg,#FBF8F2 0%,#F1E7D6 100%);padding:58px 62px;display:flex;flex-direction:column}
-#t1 .topo{display:flex;justify-content:space-between;align-items:center;margin-bottom:46px}
-#t1 .topo .marca{font-size:31px;letter-spacing:.34em;font-weight:600}
-#t1 .topo .site{font-family:'Jost';font-size:17px;letter-spacing:.2em;color:var(--marrom)}
-#t1 .kick{font-family:'Jost';font-weight:600;font-size:21px;letter-spacing:.2em;color:var(--vermelho);margin-bottom:10px}
+/* ===== CRIATIVO 1 — confronto ===== */
+#t1{background:#F8F2DA;padding:54px 56px;display:flex;flex-direction:column}
+#t1 .topo{display:flex;justify-content:space-between;align-items:center;margin-bottom:34px}
+#t1 .topo .marca{font-size:29px;letter-spacing:.34em;font-weight:600}
+#t1 .topo .site{font-family:'Jost';font-size:16px;font-weight:600;letter-spacing:.16em;color:var(--preto)}
+#t1 .kick{font-family:'Jost';font-weight:700;font-size:23px;letter-spacing:.06em;color:var(--vermelho);margin-bottom:4px}
 #t1 h2{
-  font-family:'Archivo Black',sans-serif;font-size:82px;line-height:.94;
-  margin:0 0 40px;letter-spacing:-.018em;text-transform:uppercase;max-width:15ch;
+  font-family:'Archivo Black',sans-serif;font-size:96px;line-height:.9;
+  margin:0 0 18px;letter-spacing:-.03em;text-transform:uppercase;
 }
-#t1 .comp{display:grid;grid-template-columns:1fr 1fr;gap:0;border:2px solid var(--preto);background:var(--branco)}
-#t1 .comp .col{padding:24px 26px}
-#t1 .comp .col:first-child{border-right:2px solid var(--preto);background:#F3EFE7;color:#6E6459}
-#t1 .comp .ch{font-family:'Jost';font-weight:700;font-size:24px;letter-spacing:.03em;margin-bottom:16px;line-height:1.2}
-#t1 .comp .li{font-family:'Jost';font-size:23px;padding:9px 0;line-height:1.35}
-#t1 .comp .col:first-child .li{text-decoration:line-through;text-decoration-thickness:1px}
-#t1 .comp .col:last-child .li{font-weight:500}
-#t1 .comp .col:last-child .li::before{content:"✓ ";color:#2E7D32;font-weight:700}
-#t1 .meio{display:flex;align-items:flex-end;gap:30px;margin-top:38px;flex:1}
-#t1 .frasco{flex:1;display:flex;align-items:flex-end;justify-content:center;height:100%;min-height:0}
-#t1 .frasco img{max-height:430px;max-width:100%;object-fit:contain;filter:drop-shadow(0 22px 30px rgba(0,0,0,.22))}
+#t1 .arena{flex:1;display:grid;grid-template-columns:1fr 1.25fr 1fr;align-items:start;min-height:0;position:relative}
+#t1 .lado{padding-top:26px}
+#t1 .lado .rot{display:block;font-family:'Jost';font-weight:700;font-size:20px;letter-spacing:.09em;margin-bottom:2px}
+#t1 .esq .rot{color:#6E6459}
+#t1 .dir .rot{color:var(--vermelho)}
+#t1 .lado .pre{display:block;font-family:'Archivo Black',sans-serif;font-size:52px;line-height:1.05;letter-spacing:-.02em;margin-bottom:18px}
+#t1 .esq .pre{color:#6E6459}
+#t1 .lado .li{font-family:'Jost';font-size:22px;font-weight:500;padding:5px 0;line-height:1.3}
+#t1 .esq .li{color:#7A7065}
+#t1 .esq .li::before{content:"×";color:#A89C8E;font-weight:700;margin-right:9px}
+#t1 .dir .li::after{content:" ✓";color:#2E7D32;font-weight:700}
+#t1 .frascoBox{display:flex;align-items:flex-start;justify-content:center;height:100%;min-height:0;padding-top:4px}
+#t1 .frascoBox img{max-height:560px;max-width:100%;object-fit:contain;filter:drop-shadow(0 26px 34px rgba(0,0,0,.24))}
 #t1 .selo{
-  width:212px;height:212px;border-radius:50%;background:var(--vermelho);color:#fff;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  font-family:'Jost';transform:rotate(-9deg);flex:none;box-shadow:0 14px 34px rgba(0,0,0,.28);
+  position:absolute;right:0;bottom:24px;width:186px;height:186px;border-radius:50%;
+  background:var(--vermelho);color:#fff;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;font-family:'Jost';box-shadow:0 12px 28px rgba(0,0,0,.2);
 }
-#t1 .selo b{font-size:58px;line-height:1;font-weight:700}
-#t1 .selo span{font-size:19px;margin-top:6px;text-align:center;line-height:1.25;padding:0 14px}
-#t1 .rodape{margin-top:34px;text-align:center}
+#t1 .selo b{font-size:48px;line-height:1;font-weight:700}
+#t1 .selo span{font-size:17px;margin-top:3px}
+#t1 .rodape{margin-top:26px;text-align:center}
 #t1 .cta{
-  display:inline-block;background:var(--preto);color:var(--creme);font-family:'Jost';
-  font-weight:600;font-size:26px;letter-spacing:.14em;padding:19px 62px;border-radius:999px;
+  display:inline-block;background:#fff;color:var(--preto);font-family:'Jost';
+  font-weight:700;font-size:27px;letter-spacing:.05em;padding:20px 66px;border-radius:999px;
+  box-shadow:0 6px 20px rgba(0,0,0,.09);
 }
-#t1 .legal{font-family:'Jost';font-size:16px;color:#7A6F63;margin-top:16px;letter-spacing:.02em}
+#t1 .tag{font-family:'Jost';font-size:20px;color:#5F564C;margin-top:20px}
+#t1 .legal{font-family:'Jost';font-size:16px;color:#8A8074;margin-top:14px}
 
-/* ===== CRIATIVO 2 — conversa ===== */
-#t2{background:#ECE4DB;display:flex;flex-direction:column}
-#t2 .barra{background:var(--branco);padding:26px 30px;display:flex;align-items:center;gap:18px;border-bottom:1px solid #DED5CA}
-#t2 .voltar{font-size:38px;color:#9A8B7D;line-height:1}
-#t2 .av{width:74px;height:74px;border-radius:50%;background:var(--marrom);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Jost';font-size:30px;font-weight:600;overflow:hidden}
+/* ===== CRIATIVO 2 — print ===== */
+#t2{background:#F4F1EA;display:flex;flex-direction:column}
+#t2 .barra{background:#F6F4F1;padding:20px 26px;display:flex;align-items:center;gap:14px;border-bottom:1px solid #E2DCD3}
+#t2 .voltar{font-size:30px;color:#8C8378;line-height:1;margin-right:2px}
+#t2 .av{width:56px;height:56px;border-radius:50%;background:#C3BCD4;color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Jost';font-size:23px;font-weight:600;overflow:hidden;flex:none}
 #t2 .av img{width:100%;height:100%;object-fit:cover}
-#t2 .quem{font-family:'Jost'}
-#t2 .quem b{display:block;font-size:31px;font-weight:600}
-#t2 .quem span{font-size:20px;color:#67A867}
-#t2 .fluxo{flex:1;padding:28px 30px;display:flex;flex-direction:column;gap:14px;overflow:hidden;background:#E9E0D6}
-#t2 .bal{max-width:74%;padding:16px 20px 26px;border-radius:16px;position:relative;font-family:'Jost';font-size:26px;line-height:1.38}
-#t2 .bal .hr{position:absolute;right:14px;bottom:7px;font-size:16px;color:#8A8177}
-#t2 .rec{background:var(--branco);align-self:flex-start;border-top-left-radius:4px}
-#t2 .env{background:#D9EFD0;align-self:flex-end;border-top-right-radius:4px}
-#t2 .env .hr{color:#6C8C63}
-#t2 .env .hr::after{content:" ✓✓";color:#3B8FD6}
-#t2 .bal.foto{padding:12px 12px 26px;background:#D9EFD0;align-self:flex-end;max-width:46%}
-#t2 .bal.foto img{width:100%;border-radius:10px;display:block;background:#fff}
-#t2 .encenacao{align-self:center;background:rgba(20,20,20,.72);color:#F3EDE4;font-family:'Jost';font-size:19px;letter-spacing:.05em;padding:9px 22px;border-radius:999px;margin-bottom:4px}
-#t2 .pe{background:var(--creme);padding:26px 30px 32px;text-align:center;border-top:1px solid #DED5CA}
-#t2 .pe .marca{font-size:26px;letter-spacing:.34em;margin-bottom:16px;display:block}
-#t2 .cta{display:block;background:var(--preto);color:var(--creme);font-family:'Jost';font-weight:600;font-size:26px;letter-spacing:.14em;padding:19px;border-radius:999px}
+#t2 .quem{font-family:'Jost';line-height:1.15}
+#t2 .quem b{display:block;font-size:26px;font-weight:600;color:#17150F}
+#t2 .quem span{font-size:17px;color:#8C8378}
+#t2 .fluxo{
+  flex:1;padding:24px 26px 20px;display:flex;flex-direction:column;justify-content:flex-end;gap:11px;overflow:hidden;
+  background-color:#D8D0C4;
+  background-image:radial-gradient(circle at 12% 18%,rgba(255,255,255,.4) 2.5px,transparent 3px),
+                   radial-gradient(circle at 68% 42%,rgba(255,255,255,.34) 2px,transparent 2.5px),
+                   radial-gradient(circle at 34% 78%,rgba(255,255,255,.3) 2.5px,transparent 3px);
+  background-size:230px 260px,190px 210px,270px 240px;
+}
+#t2 .bal{
+  max-width:66%;padding:14px 17px 24px;border-radius:11px;position:relative;
+  font-family:'Jost';font-size:25px;line-height:1.36;color:#17150F;
+  box-shadow:0 1px 1px rgba(0,0,0,.09);
+}
+#t2 .bal .hr{position:absolute;right:13px;bottom:6px;font-size:15px;color:#9A9287}
+#t2 .rec{background:#FFFFFF;align-self:flex-start;border-top-left-radius:3px}
+#t2 .env{background:#E4F2D2;align-self:flex-end;border-top-right-radius:3px}
+#t2 .env .hr{color:#8A9A78}
+#t2 .env .hr::after{content:" ✓✓";color:#4D9FE0;letter-spacing:-.12em}
+#t2 .bal.foto{padding:7px 7px 24px;background:#E4F2D2;align-self:flex-end;max-width:40%}
+#t2 .bal.foto img{width:100%;border-radius:7px;display:block;background:#fff;aspect-ratio:1/1.14;object-fit:contain}
+#t2 .encenacao{align-self:center;background:rgba(23,21,15,.62);color:#F3EDE4;font-family:'Jost';font-size:17px;letter-spacing:.05em;padding:6px 18px;border-radius:999px;margin-bottom:6px}
+#t2 .pe{background:#F4F1EA;padding:20px 40px 30px;text-align:center}
+#t2 .pe .marca{font-size:22px;letter-spacing:.34em;margin-bottom:14px;display:block;color:#3A342C}
+#t2 .cta{display:block;background:#17150F;color:#F4F1EA;font-family:'Jost';font-weight:600;font-size:26px;letter-spacing:.12em;padding:20px;border-radius:999px}
 
-/* ===== CRIATIVO 3 — Deo News ===== */
-#t3{background:var(--creme);display:flex;flex-direction:column}
-#t3 .cab{background:var(--preto);color:var(--creme);padding:22px 34px;display:flex;justify-content:space-between;align-items:center}
-#t3 .cab .esq{display:flex;align-items:baseline;gap:16px}
-#t3 .cab .marca{font-size:28px;letter-spacing:.3em}
-#t3 .cab .news{font-family:'Jost';font-size:24px;letter-spacing:.4em;font-weight:500}
-#t3 .cab .data{font-family:'Jost';font-size:15px;letter-spacing:.12em;color:#9A8B7D}
-#t3 .corpo{padding:34px 40px 0;flex:1;display:flex;flex-direction:column}
-#t3 .ed{font-family:'Jost';font-weight:700;font-size:19px;letter-spacing:.2em;color:var(--vermelho);margin-bottom:14px}
+/* ===== CRIATIVO 3 — manchete ===== */
+#t3{background:#F2EFE8;display:flex;flex-direction:column;padding:44px 40px 40px}
+#t3 .cab{background:#111110;color:#F2EFE8;padding:20px 28px;display:flex;justify-content:space-between;align-items:center;flex:none}
+#t3 .cab .esq{display:flex;align-items:center;gap:18px}
+#t3 .cab .marca{font-size:26px;letter-spacing:.3em}
+#t3 .cab .news{font-family:'Jost';font-size:26px;letter-spacing:.42em;font-weight:600}
+#t3 .cab .data{font-family:'Jost';font-size:15px;letter-spacing:.1em;color:#BDB4A6}
+#t3 .corpo{padding:30px 0 0;flex:1;display:flex;flex-direction:column;min-height:0}
+#t3 .ed{font-family:'Jost';font-weight:700;font-size:18px;letter-spacing:.16em;color:#C62828;margin-bottom:14px}
 #t3 h2{
-  font-family:'Archivo Black',sans-serif;font-size:58px;line-height:1.02;margin:0 0 26px;
-  text-transform:uppercase;letter-spacing:-.015em;
+  font-family:'Oswald',sans-serif;font-weight:700;font-size:64px;line-height:1.04;
+  margin:0 0 22px;text-transform:uppercase;letter-spacing:-.005em;color:#141210;
 }
-#t3 .foto{background:#EDE6DA;border-radius:4px;flex:1;min-height:0;display:flex;align-items:center;justify-content:center;overflow:hidden}
-#t3 .foto img{max-height:100%;max-width:70%;object-fit:contain;filter:drop-shadow(0 18px 26px rgba(0,0,0,.2))}
-#t3 .cred{font-family:'Jost';font-size:15px;color:#8A7F72;margin:12px 0 18px}
-#t3 .lead{font-family:'Jost';font-size:25px;line-height:1.5;max-width:62ch}
-#t3 .lead b{font-weight:600}
-#t3 .pe{padding:26px 40px 34px}
-#t3 .cta{display:block;background:var(--preto);color:var(--creme);text-align:center;font-family:'Jost';font-weight:600;font-size:26px;letter-spacing:.14em;padding:19px;border-radius:999px}
+#t3 .risco{height:1px;background:#CFC7B9;margin-bottom:24px;flex:none}
+#t3 .foto{background:#E7E2D8;flex:1;min-height:0;display:flex;align-items:center;justify-content:center;overflow:hidden;padding:26px}
+#t3 .foto img{max-height:100%;max-width:62%;object-fit:contain;filter:drop-shadow(0 16px 24px rgba(0,0,0,.18))}
+#t3 .cred{font-family:'Jost';font-size:15.5px;color:#8C8577;margin:14px 0 18px;line-height:1.4}
+#t3 .lead{font-family:'Jost';font-size:23px;line-height:1.58;color:#39352E;max-width:66ch}
+#t3 .lead b{font-weight:600;color:#141210}
+#t3 .pe{padding:26px 0 0;flex:none}
+#t3 .cta{display:block;background:#111110;color:#F2EFE8;text-align:center;font-family:'Jost';font-weight:600;font-size:25px;letter-spacing:.16em;padding:22px;border-radius:999px}
 
-/* ===== CRIATIVO 4 — fumaça do box ===== */
-#t4{background:#4A4440;position:relative;overflow:hidden}
+/* ===== CRIATIVO 4 — vapor ===== */
+#t4{background:#6E6862;position:relative;overflow:hidden}
 #t4 .bg{position:absolute;inset:0;background-size:cover;background-position:center}
-#t4 .veu{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.18) 0%,rgba(0,0,0,.05) 45%,rgba(0,0,0,.42) 100%)}
-#t4 .cont{position:absolute;inset:0;padding:66px 58px;display:flex;flex-direction:column}
-#t4 h2{
-  font-family:'Caveat',cursive;font-size:96px;line-height:1.02;margin:0;font-weight:700;
-  color:rgba(255,255,255,.92);text-shadow:0 2px 18px rgba(0,0,0,.35);max-width:17ch;
-  transform:rotate(-1.4deg);
+#t4 .veu{position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.1) 0%,rgba(255,255,255,.03) 40%,rgba(0,0,0,.34) 100%)}
+#t4 .cont{position:absolute;inset:0;padding:78px 58px 0;display:flex;flex-direction:column}
+#t4 h2{margin:0;display:flex;flex-direction:column;align-items:flex-start;gap:6px}
+#t4 h2 .ln{
+  font-family:'Caveat',cursive;font-weight:700;text-transform:uppercase;
+  color:rgba(38,33,29,.84);line-height:1.02;letter-spacing:.012em;
+  text-shadow:0 1px 0 rgba(255,255,255,.34), 0 0 14px rgba(255,255,255,.22);
 }
+#t4 h2 .ln:nth-child(odd){font-size:88px;transform:rotate(-1.6deg)}
+#t4 h2 .ln:nth-child(even){font-size:76px;transform:rotate(-.6deg) translateX(14px)}
+#t4 h2 .ln u{text-decoration:underline;text-decoration-thickness:4px;text-underline-offset:6px}
 #t4 .nota{
-  background:#FBF7EC;color:#2B2622;width:475px;padding:30px 32px;margin-top:auto;
-  font-family:'Jost';box-shadow:0 20px 44px rgba(0,0,0,.4);transform:rotate(-2.2deg);
+  background:#FAF7F0;color:#2B2622;width:452px;padding:24px 26px 20px;margin-top:38px;
+  font-family:'Jost';box-shadow:0 18px 40px rgba(0,0,0,.36);transform:rotate(-2.4deg);position:relative;
 }
-#t4 .nota .l{margin-bottom:15px;font-size:23px;line-height:1.4}
-#t4 .nota .l:last-child{margin-bottom:0}
-#t4 .nota b{font-weight:700;display:block;margin-bottom:2px}
-#t4 .nota .de{text-decoration:line-through;color:#8A7F72;margin-right:12px}
-#t4 .nota .por{font-size:38px;font-weight:700}
-#t4 .frasco{position:absolute;right:52px;bottom:120px;width:300px}
-#t4 .frasco img{width:100%;filter:drop-shadow(0 24px 34px rgba(0,0,0,.55))}
+#t4 .nota .rot{font-size:15px;font-weight:700;letter-spacing:.13em;color:#C62828;text-transform:uppercase;margin-bottom:3px}
+#t4 .nota .tx{font-size:21px;line-height:1.38;margin-bottom:15px}
+#t4 .nota .fio{height:1px;background:#DED6C7;margin:4px 0 13px}
+#t4 .nota .val{display:flex;align-items:baseline;gap:12px}
+#t4 .nota .de{text-decoration:line-through;color:#9A9083;font-size:20px}
+#t4 .nota .por{font-size:34px;font-weight:700;line-height:1}
+#t4 .nota .db{position:absolute;right:20px;bottom:16px;font-family:'Cormorant Garamond',serif;font-size:14px;letter-spacing:.3em;color:#B0A695}
+#t4 .frasco{position:absolute;right:56px;bottom:168px;width:290px}
+#t4 .frasco img{width:100%;filter:drop-shadow(0 26px 34px rgba(0,0,0,.52))}
 #t4 .cta{
-  position:absolute;left:58px;right:58px;bottom:46px;background:var(--preto);color:var(--creme);
-  text-align:center;font-family:'Jost';font-weight:600;font-size:26px;letter-spacing:.14em;
-  padding:19px;border-radius:999px;
+  position:absolute;left:58px;bottom:58px;background:#14120F;color:#F4F1EA;
+  text-align:center;font-family:'Jost';font-weight:600;font-size:24px;letter-spacing:.14em;
+  padding:19px 62px;border-radius:999px;
 }
 
-/* ===== CRIATIVO 5 — fileira ===== */
-#t5{background:radial-gradient(120% 80% at 50% 0%,#2E241D 0%,#141010 72%);color:var(--creme);padding:56px 50px;display:flex;flex-direction:column;align-items:center;text-align:center}
-#t5 .marca{font-size:29px;letter-spacing:.36em;margin-bottom:44px;color:var(--dourado)}
-#t5 .fila{display:flex;justify-content:center;align-items:flex-end;gap:34px;width:100%}
-#t5 .fila .it{flex:1;max-width:266px}
-#t5 .fila .it img{width:100%;height:330px;object-fit:contain;filter:drop-shadow(0 20px 28px rgba(0,0,0,.6))}
-#t5 .fila .it span{display:block;font-family:'Jost';font-size:16px;letter-spacing:.18em;color:var(--dourado);margin-top:16px}
-#t5 h2{font-size:78px;line-height:1.04;margin:46px 0 14px;font-weight:600;font-style:italic;max-width:16ch}
-#t5 h2 em{color:var(--dourado);font-style:italic}
-#t5 .sub{font-family:'Jost';font-size:24px;color:#C9BBA9;line-height:1.5;max-width:44ch}
-#t5 .sub b{color:var(--creme);font-weight:500}
-#t5 .fundo{display:flex;justify-content:center;align-items:flex-end;gap:16px;margin-top:auto;width:100%;opacity:.55}
-#t5 .fundo img{width:120px;height:190px;object-fit:contain}
+/* ===== CRIATIVO 5 — vitrine ===== */
+#t5{background:#0A0908;color:#F2ECE1;display:flex;flex-direction:column;align-items:center;text-align:center;overflow:hidden;position:relative}
+#t5::before{content:"";position:absolute;inset:0;background:radial-gradient(75% 46% at 50% 4%,rgba(184,149,106,.2) 0%,transparent 68%);pointer-events:none}
+#t5 .marca{font-size:25px;letter-spacing:.42em;color:#C9A227;margin:52px 0 40px;position:relative}
+#t5 .fila{display:flex;justify-content:center;align-items:flex-end;gap:30px;width:100%;padding:0 56px;position:relative}
+#t5 .fila .it{flex:1;max-width:250px}
+#t5 .fila .it img{width:100%;height:340px;object-fit:contain;filter:drop-shadow(0 16px 26px rgba(0,0,0,.8)) drop-shadow(0 0 30px rgba(201,162,39,.14))}
+#t5 .fila .it span{display:block;font-family:'Jost';font-size:14px;letter-spacing:.2em;color:#B79355;margin-top:18px;text-transform:uppercase}
+#t5 h2{font-size:70px;line-height:1.12;margin:52px 0 20px;font-weight:600;font-style:italic;max-width:17ch;position:relative}
+#t5 h2 em{color:#C9A227;font-style:italic}
+#t5 .sub{font-family:'Jost';font-size:21px;color:#9D9487;line-height:1.55;max-width:46ch;padding:0 40px;position:relative}
+#t5 .sub b{display:block;color:#F2ECE1;font-weight:600;margin-top:9px;font-size:22px}
+#t5 .fundo{display:flex;justify-content:center;align-items:flex-end;margin-top:auto;width:100%;position:relative}
+#t5 .fundo img{width:168px;height:270px;object-fit:contain;margin:0 -16px;filter:drop-shadow(0 -6px 22px rgba(0,0,0,.9))}
+#t5 .fundo img:nth-child(even){margin-bottom:-26px}
 #t5 .selo{
-  position:absolute;right:62px;bottom:250px;width:200px;height:200px;border-radius:50%;
-  background:var(--dourado);color:#2A1E14;display:flex;flex-direction:column;align-items:center;
-  justify-content:center;font-family:'Jost';transform:rotate(-11deg);box-shadow:0 14px 34px rgba(0,0,0,.5);
+  position:absolute;right:52px;bottom:196px;width:212px;height:212px;
+  background:linear-gradient(145deg,#E3C25C 0%,#C9A227 46%,#A5811A 100%);
+  clip-path:polygon(50.0% 0.0%, 55.8% 9.9%, 64.1% 2.0%, 66.8% 13.2%, 77.0% 7.9%, 76.5% 19.4%, 87.8% 17.3%, 84.1% 28.1%, 95.5% 29.2%, 88.9% 38.6%, 99.5% 42.9%, 90.5% 50.0%, 99.5% 57.1%, 88.9% 61.4%, 95.5% 70.8%, 84.1% 71.9%, 87.8% 82.7%, 76.5% 80.6%, 77.0% 92.1%, 66.8% 86.8%, 64.1% 98.0%, 55.8% 90.1%, 50.0% 100.0%, 44.2% 90.1%, 35.9% 98.0%, 33.2% 86.8%, 23.0% 92.1%, 23.5% 80.6%, 12.2% 82.7%, 15.9% 71.9%, 4.5% 70.8%, 11.1% 61.4%, 0.5% 57.1%, 9.5% 50.0%, 0.5% 42.9%, 11.1% 38.6%, 4.5% 29.2%, 15.9% 28.1%, 12.2% 17.3%, 23.5% 19.4%, 23.0% 7.9%, 33.2% 13.2%, 35.9% 2.0%, 44.2% 9.9%);
+  color:#241B08;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  font-family:'Jost';transform:rotate(-9deg);z-index:3;
 }
-#t5 .selo small{font-size:19px;letter-spacing:.1em}
-#t5 .selo b{font-size:50px;line-height:1;font-weight:700}
-#t5 .cta{margin-top:26px;background:var(--creme);color:var(--preto);font-family:'Jost';font-weight:600;font-size:25px;letter-spacing:.14em;padding:18px 60px;border-radius:999px}
+#t5 .selo small{font-size:19px;letter-spacing:.14em;font-weight:600}
+#t5 .selo b{font-size:40px;line-height:1.02;font-weight:700;margin:1px 0}
+#t5 .selo i{font-style:normal;font-size:16px;letter-spacing:.18em;font-weight:600}
+#t5 .cta{
+  position:absolute;left:50%;transform:translateX(-50%);bottom:40px;z-index:4;
+  background:#F2ECE1;color:#0A0908;font-family:'Jost';font-weight:700;font-size:23px;
+  letter-spacing:.14em;padding:17px 54px;border-radius:999px;
+}
 
 /* ===== CRIATIVO 6 — stories orgânico ===== */
 #t6{background:#3B342E;position:relative;overflow:hidden}
@@ -428,42 +459,55 @@ button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit
 #setup button{background:none;border:none;color:var(--dourado);cursor:pointer;font-size:12.5px;text-decoration:underline;padding:0;white-space:nowrap}
 
 /* ---------- AJUSTES POR FORMATO ---------- */
-.f916 #t1{padding:84px 66px}
-.f916 #t1 h2{font-size:100px;margin-bottom:52px}
-.f916 #t1 .kick{font-size:25px}
-.f916 #t1 .comp .ch{font-size:28px}
-.f916 #t1 .comp .li{font-size:27px;padding:12px 0}
-.f916 #t1 .frasco img{max-height:620px}
-.f916 #t1 .selo{width:250px;height:250px}
-.f916 #t1 .selo b{font-size:68px}
-.f916 #t1 .cta{font-size:30px;padding:23px 72px}
+.f916 #t1{padding:92px 62px}
+.f916 #t1 h2{font-size:118px;margin-bottom:26px}
+.f916 #t1 .kick{font-size:27px}
+.f916 #t1 .lado .pre{font-size:62px}
+.f916 #t1 .lado .li{font-size:26px;padding:8px 0}
+.f916 #t1 .lado .rot{font-size:23px}
+.f916 #t1 .frascoBox img{max-height:760px}
+.f916 #t1 .selo{width:216px;height:216px;bottom:60px}
+.f916 #t1 .selo b{font-size:56px}
+.f916 #t1 .cta{font-size:32px;padding:24px 78px}
+.f916 #t1 .tag{font-size:24px}
 
-.f916 #t2 .bal{font-size:29px}
-.f916 #t2 .fluxo{gap:18px;padding:36px 34px}
+.f916 #t2 .bal{font-size:27px}
+.f916 #t2 .fluxo{gap:14px;padding:30px 28px 0}
+.f916 #t2 .bal.foto{max-width:44%}
 
-.f916 #t3 h2{font-size:72px}
-.f916 #t3 .lead{font-size:29px}
-.f916 #t3 .corpo{padding:44px 46px 0}
-.f916 #t3 .cta{font-size:30px;padding:23px}
+.f916 #t3{padding:56px 46px 50px}
+.f916 #t3 h2{font-size:84px;margin-bottom:28px}
+.f916 #t3 .lead{font-size:27px}
+.f916 #t3 .ed{font-size:21px}
+.f916 #t3 .cred{font-size:18px}
+.f916 #t3 .cta{font-size:29px;padding:26px}
 
-.f916 #t5{padding:76px 54px}
-.f916 #t5 .fila .it img{height:430px}
-.f916 #t5 h2{font-size:92px;margin-top:62px}
-.f916 #t5 .sub{font-size:28px}
-.f916 #t5 .selo{bottom:330px}
+.f916 #t5 .marca{margin:76px 0 56px}
+.f916 #t5 .fila .it img{height:450px}
+.f916 #t5 h2{font-size:86px;margin:74px 0 26px}
+.f916 #t5 .sub{font-size:25px}
+.f916 #t5 .sub b{font-size:26px}
+.f916 #t5 .fundo img{width:198px;height:330px}
+.f916 #t5 .selo{width:250px;height:250px;bottom:270px}
+.f916 #t5 .selo b{font-size:46px}
 
-.f45 #t4 .cont{padding:54px 50px}
-.f45 #t4 h2{font-size:78px}
-.f45 #t4 .nota{width:430px;padding:26px 28px}
-.f45 #t4 .frasco{width:250px;bottom:108px;right:44px}
+.f45 #t4 .cont{padding:56px 50px 0}
+.f45 #t4 h2 .ln:nth-child(odd){font-size:72px}
+.f45 #t4 h2 .ln:nth-child(even){font-size:62px}
+.f45 #t4 .nota{width:410px;padding:22px 24px 18px;margin-top:28px}
+.f45 #t4 .frasco{width:246px;bottom:132px;right:44px}
+.f45 #t4 .cta{bottom:46px;padding:17px 52px;font-size:22px}
 
 .f45 #t6 .cont{padding:130px 58px 170px}
 .f45 #t6 h2{font-size:54px}
 .f45 #t6 .sub{font-size:30px;margin-top:26px}
 
 .f11 #t6 .cont{padding:90px 58px 120px}
-.f11 #t4 .cont{padding:48px 46px}
-.f11 #t4 h2{font-size:68px}
+.f11 #t4 .cont{padding:46px 46px 0}
+.f11 #t4 h2 .ln:nth-child(odd){font-size:62px}
+.f11 #t4 h2 .ln:nth-child(even){font-size:54px}
+.f11 #t4 .nota{width:380px;margin-top:22px}
+.f11 #t4 .frasco{width:210px;bottom:130px}
 
 @media (max-width:1100px){
   body{grid-template-columns:1fr;overflow:auto}
@@ -556,22 +600,23 @@ button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit
           <div class="topo"><span class="marca dbLogo">DEOBEAUTY</span><span class="site" data-f="site"></span></div>
           <div class="kick" data-f="kick"></div>
           <h2 data-f="head"></h2>
-          <div class="comp">
-            <div class="col">
-              <div class="ch" data-f="colA"></div>
+          <div class="arena">
+            <div class="lado esq">
+              <span class="rot" data-f="colA"></span>
+              <span class="pre" data-f="preA"></span>
               <div class="li" data-f="a1"></div><div class="li" data-f="a2"></div><div class="li" data-f="a3"></div>
             </div>
-            <div class="col">
-              <div class="ch" data-f="colB"></div>
+            <div class="frascoBox"><img data-img="frasco" alt=""></div>
+            <div class="lado dir">
+              <span class="rot" data-f="colB"></span>
+              <span class="pre" data-f="preB"></span>
               <div class="li" data-f="b1"></div><div class="li" data-f="b2"></div><div class="li" data-f="b3"></div>
             </div>
-          </div>
-          <div class="meio">
-            <div class="frasco"><img data-img="frasco" alt=""></div>
             <div class="selo"><b data-f="seloOff"></b><span data-f="seloTxt"></span></div>
           </div>
           <div class="rodape">
             <div class="cta" data-f="cta"></div>
+            <div class="tag" data-f="tag"></div>
             <div class="legal" data-f="legal"></div>
           </div>
         </section>
@@ -599,6 +644,7 @@ button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit
           <div class="corpo">
             <div class="ed" data-f="editoria"></div>
             <h2 data-f="head"></h2>
+            <div class="risco"></div>
             <div class="foto"><img data-img="frasco" alt=""></div>
             <div class="cred" data-f="cred"></div>
             <div class="lead" data-f="lead"></div>
@@ -614,9 +660,14 @@ button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit
           <div class="cont">
             <h2 data-f="head"></h2>
             <div class="nota">
-              <div class="l"><b data-f="r1t"></b><span data-f="r1"></span></div>
-              <div class="l"><b data-f="r2t"></b><span data-f="r2"></span></div>
-              <div class="l"><b data-f="r3t"></b><span class="de" data-f="de"></span><span class="por" data-f="por"></span></div>
+              <div class="rot" data-f="r1t"></div>
+              <div class="tx" data-f="r1"></div>
+              <div class="rot" data-f="r2t"></div>
+              <div class="tx" data-f="r2"></div>
+              <div class="fio"></div>
+              <div class="rot" data-f="r3t"></div>
+              <div class="val"><span class="de" data-f="de"></span><span class="por" data-f="por"></span></div>
+              <span class="db">DEOBEAUTY</span>
             </div>
           </div>
           <div class="cta" data-f="cta"></div>
@@ -628,8 +679,8 @@ button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit
           <div class="fila" id="t5fila"></div>
           <h2 data-f="head"></h2>
           <div class="sub" data-f="sub"></div>
-          <div class="selo"><small>APENAS</small><b data-f="selo"></b></div>
           <div class="fundo" id="t5fundo"></div>
+          <div class="selo"><small>SÓ</small><b data-f="selo"></b><i>CADA</i></div>
           <div class="cta" data-f="cta"></div>
         </section>
 
@@ -702,26 +753,27 @@ const D={
   volume:'100ml', essencia:'20%', categ:'eau de parfum',
   de:'359,99', por:'99,90', off:'72%', precos:{}, padrao:{de:'359,99',por:'99,90'},
   cta:'COMPRAR AGORA', heads3:null, escala:1,
-  t1:{site:'DEOBEAUTY.ME',kick:'EAU DE PARFUM · {ESSENCIA} DE ESSÊNCIA',
-      head:'Padrão de qualidade internacional pelo preço daqui',
-      colA:'O que vendem por aí',a1:'Deo colônia',a2:'Cerca de 5% de essência',a3:'100ml por R$ 199,90',
-      colB:'{PERFUME}',b1:'Eau de parfum',b2:'{ESSENCIA} de essência',b3:'{VOLUME} por R$ {POR}',
-      cta:'COMPRAR AGORA',legal:'de R$ {DE} por R$ {POR} · eau de parfum {VOLUME}'},
+  t1:{site:'DEOBEAUTY.ME',kick:'POR QUE PAGAR',
+      head:'R$ 800 num perfume?',
+      colA:'IMPORTADO',preA:'R$ 800+',a1:'100ml cheio',a2:'Entrega no Brasil',a3:'Menos de R$ 100',
+      colB:'{PERFUME}',preB:'R$ {POR}',b1:'{VOLUME} cheio',b2:'Entrega no Brasil',b3:'Menos de R$ 100',
+      tag:'presença de perfume caro, sem o preço de perfume caro',
+      legal:'de R$ {DE} por R$ {POR} · {CATEG} {VOLUME}'},
   t2:{amiga:'Duda',horaIni:'21:46',encenacao:true,
       cta:'COMPRAR AGORA',
       msgs:'r: amiga, qual perfume você tava usando hoje na festa?\nr: eu amei\ne: {PERFUME}, da DeoBeauty\ne: [foto]\nr: caro?\ne: R$ {POR} kkk\nr: MANDA O LINK\ne: é só tocar aqui em "comprar agora"'},
-  t3:{editoria:'PERFUMARIA',headIdx:3,headLivre:'',
+  t3:{editoria:'PERFUMARIA',chapeu:'BELEZA',headIdx:3,headLivre:'',
       lead:'O {PERFUME} é {CATEG} com {ESSENCIA} de essência, o mesmo padrão dos importados. Está de R$ {DE} por R$ {POR} — {OFF} de desconto, com entrega pra todo o Brasil.',
       cta:'COMPRAR AGORA'},
-  t4:{head:'não use esse produto se não quer ser notada',
-      r1t:'Efeitos observados:',r1:'elogio no elevador, gente chegando mais perto.',
-      r2t:'Para quem não serve:',r2:'quem prefere passar despercebida.',
-      r3t:'Valor:',cta:'COMPRAR AGORA',
-      prompt:'interior de box de banheiro, vidro embaçado pelo vapor, luz quente suave vinda de cima, azulejos bege claro, atmosfera íntima e premium, sem pessoas, sem texto, fotografia realista vertical'},
+  t4:{head:'parei de comprar\nperfume caro!!!\nesse aqui é _R$ {POR}_\ne todo mundo\npergunta qual é',
+      r1t:'Efeitos observados',r1:'Perguntas sobre o nome. Elogio no elevador. Gente chegando mais perto.',
+      r2t:'Para quem não serve',r2:'Quem prefere passar despercebida.',
+      r3t:'Valor',
+      prompt:'foto vertical de celular dentro de um box de banheiro, vidro totalmente embaçado pelo vapor com gotas escorrendo, azulejos bege claros ao fundo desfocados, luz quente do teto, clima íntimo e caseiro, sem pessoas, sem texto, sem letras, aparência de foto real sem produção'},
   t5:{p1:'majestic',p2:'delluxe-rouge',p3:'la-mia-passione',
       head:'Cheiro de quem gastou uma <em>fortuna</em>',
-      sub:'E ninguém precisa saber que custou menos de cem reais. <b>Eau de parfum {VOLUME} com {ESSENCIA} de essência.</b>',
-      selo:'R$ {POR}',cta:'COMPRAR AGORA'},
+      sub:'E ninguém precisa saber que custou menos de cem reais.<b>{CATEG} {VOLUME} com {ESSENCIA} de essência.</b>',
+      selo:'R$ {POR}'},
   t6:{head:'Meu segredo pra cheirar bem o dia inteiro',
       sub:'{PERFUME} da DeoBeauty — {ESSENCIA} de essência, fixa desde cedo',
       lbl:'Compre nesse link aqui:',cta:'deobeauty.me',
@@ -747,7 +799,7 @@ function salvar(){try{localStorage.setItem('db_gerador',JSON.stringify(limpo()))
 function carregar(){try{const r=localStorage.getItem('db_gerador');if(r)Object.assign(D,JSON.parse(r));}catch(e){}}
 
 /* ==================== ABAS ==================== */
-const NOMES=['Comparativo','Conversa','Deo News','Box embaçado','Fileira','Stories'];
+const NOMES=['Confronto','Print','Manchete','Vapor','Vitrine','Flagra'];
 NOMES.forEach((n,i)=>{
   const b=document.createElement('button');
   b.className='aba';b.textContent=(i+1)+'. '+n;b.setAttribute('role','tab');
@@ -769,18 +821,24 @@ function selPerf(id,val,path){
 function montarEspec(){
   const e=$('#espec'); let h='';
   if(D.tpl===1){
-    h=`<h2>Comparativo</h2>
+    h=`<h2>Confronto</h2>
     ${campoTxt('c1k','Kicker',D.t1.kick,'t1.kick')}
     ${campoArea('c1h','Headline',D.t1.head,'t1.head')}
-    <div class="avisoBox">Comparar com número de concorrente (5%, R$199,90) exige prova. Se não tiver a fonte guardada, troque por algo genérico tipo “importados que passam de R$ 500”.</div>
-    ${campoTxt('c1ca','Coluna esquerda · título',D.t1.colA,'t1.colA')}
-    ${campoTxt('c1a1','Linha 1',D.t1.a1,'t1.a1')}
-    ${campoTxt('c1a2','Linha 2',D.t1.a2,'t1.a2')}
-    ${campoTxt('c1a3','Linha 3',D.t1.a3,'t1.a3')}
-    ${campoTxt('c1cb','Coluna direita · título',D.t1.colB,'t1.colB')}
-    ${campoTxt('c1b1','Linha 1',D.t1.b1,'t1.b1')}
-    ${campoTxt('c1b2','Linha 2',D.t1.b2,'t1.b2')}
-    ${campoTxt('c1b3','Linha 3',D.t1.b3,'t1.b3')}
+    <div class="avisoBox">Comparar com número de concorrente exige prova. Se não tiver a fonte guardada, use faixa em vez de valor exato.</div>
+    <h2 style="margin-top:20px">Lado esquerdo</h2>
+    ${campoTxt('c1ca','Rótulo',D.t1.colA,'t1.colA')}
+    ${campoTxt('c1pa','Preço',D.t1.preA,'t1.preA')}
+    ${campoTxt('c1a1','Item 1',D.t1.a1,'t1.a1')}
+    ${campoTxt('c1a2','Item 2',D.t1.a2,'t1.a2')}
+    ${campoTxt('c1a3','Item 3',D.t1.a3,'t1.a3')}
+    <h2 style="margin-top:20px">Lado direito</h2>
+    ${campoTxt('c1cb','Rótulo',D.t1.colB,'t1.colB')}
+    ${campoTxt('c1pb','Preço',D.t1.preB,'t1.preB')}
+    ${campoTxt('c1b1','Item 1',D.t1.b1,'t1.b1')}
+    ${campoTxt('c1b2','Item 2',D.t1.b2,'t1.b2')}
+    ${campoTxt('c1b3','Item 3',D.t1.b3,'t1.b3')}
+    <h2 style="margin-top:20px">Rodapé</h2>
+    ${campoTxt('c1tg','Frase de apoio',D.t1.tag,'t1.tag')}
     ${campoTxt('c1lg','Linha legal',D.t1.legal,'t1.legal')}`;
   }
   if(D.tpl===2){
@@ -789,6 +847,7 @@ function montarEspec(){
       ${campoTxt('c2am','Nome da amiga',D.t2.amiga,'t2.amiga')}
       ${campoTxt('c2hi','Hora inicial',D.t2.horaIni,'t2.horaIni')}
     </div>
+    <p class="dica" style="margin:-4px 0 12px">Pode usar emoji no nome, como na referência. Os horários avançam de dois em dois balões a partir da hora inicial.</p>
     <button class="btn vazado" id="btnAvatar">Enviar foto da amiga</button>
     <input type="file" id="fAvatar" accept="image/*" hidden>
     <label class="check" style="margin-top:12px"><input type="checkbox" id="c2enc" ${D.t2.encenacao?'checked':''}> Mostrar selo “encenação”</label>
@@ -797,8 +856,11 @@ function montarEspec(){
     `;
   }
   if(D.tpl===3){
-    h=`<h2>Deo News</h2>
-    ${campoTxt('c3ed','Editoria',D.t3.editoria,'t3.editoria')}
+    h=`<h2>Manchete</h2>
+    <div class="dupla">
+      ${campoTxt('c3ch','Chapéu da barra',D.t3.chapeu,'t3.chapeu')}
+      ${campoTxt('c3ed','Editoria',D.t3.editoria,'t3.editoria')}
+    </div>
     <div class="campo"><label for="c3hi">Headline</label><select id="c3hi" data-bind="t3.headIdx">
       ${heads().map((t,i)=>`<option value="${i}"${i==D.t3.headIdx?' selected':''}>${i+1}. ${esc(t.slice(0,46))}…</option>`).join('')}
       <option value="-1"${D.t3.headIdx==-1?' selected':''}>Escrever outra</option>
@@ -809,8 +871,8 @@ function montarEspec(){
     <p class="dica">Gera um par de arquivos por headline, com o perfume selecionado.</p>`;
   }
   if(D.tpl===4){
-    h=`<h2>Box embaçado</h2>
-    ${campoArea('c4h','Headline (letra de mão)',D.t4.head,'t4.head')}
+    h=`<h2>Vapor</h2>
+    ${campoArea('c4h','Escrita no vidro',D.t4.head,'t4.head','Uma frase por linha — as linhas alternam de tamanho sozinhas. Use <code>_assim_</code> para sublinhar, como no preço.')}
     ${campoTxt('c4r1t','Rótulo 1',D.t4.r1t,'t4.r1t')}
     ${campoTxt('c4r1','Texto 1',D.t4.r1,'t4.r1')}
     ${campoTxt('c4r2t','Rótulo 2',D.t4.r2t,'t4.r2t')}
@@ -823,7 +885,7 @@ function montarEspec(){
     <input type="file" id="fBg4" accept="image/*" hidden>`;
   }
   if(D.tpl===5){
-    h=`<h2>Fileira</h2>
+    h=`<h2>Vitrine</h2>
     <div class="campo"><label>Frasco 1</label>${selPerf('c5p1',D.t5.p1,'t5.p1')}</div>
     <div class="campo"><label>Frasco 2</label>${selPerf('c5p2',D.t5.p2,'t5.p2')}</div>
     <div class="campo"><label>Frasco 3</label>${selPerf('c5p3',D.t5.p3,'t5.p3')}</div>
@@ -887,7 +949,7 @@ function pintar(){
   // 1
   set('#t1 [data-f=site]',D.t1.site); set('#t1 [data-f=kick]',D.t1.kick);
   set('#t1 [data-f=head]',D.t1.head);
-  ['colA','a1','a2','a3','colB','b1','b2','b3','legal'].forEach(k=>set(`#t1 [data-f=${k}]`,D.t1[k]));
+  ['colA','preA','a1','a2','a3','colB','preB','b1','b2','b3','tag','legal'].forEach(k=>set(`#t1 [data-f=${k}]`,D.t1[k]));
   set('#t1 [data-f=cta]',D.cta);
   set('#t1 [data-f=seloOff]','-'+D.off.replace('%','')+'%');
   set('#t1 [data-f=seloTxt]','de R$ '+D.de);
@@ -923,10 +985,12 @@ function pintar(){
   set('#t3 [data-f=lead]',D.t3.lead);
   set('#t3 [data-f=cred]',`${p.n}, ${D.categ} de ${D.volume}, da DeoBeauty · Foto: divulgação`);
   set('#t3 [data-f=cta]',D.cta);
-  $('#t3 [data-f=data]').textContent='BELEZA · '+new Date().toLocaleDateString('pt-BR',{day:'numeric',month:'long',year:'numeric'}).toUpperCase();
+  $('#t3 [data-f=data]').textContent=(D.t3.chapeu||'BELEZA')+' · '+new Date().toLocaleDateString('pt-BR',{day:'numeric',month:'long',year:'numeric'}).toUpperCase();
 
   // 4
-  ['head','r1t','r1','r2t','r2','r3t'].forEach(k=>set(`#t4 [data-f=${k}]`,D.t4[k]));
+  ['r1t','r1','r2t','r2','r3t'].forEach(k=>set(`#t4 [data-f=${k}]`,D.t4[k]));
+  $('#t4 [data-f=head]').innerHTML=vars(D.t4.head).split('\n').filter(l=>l.trim())
+    .map(l=>`<span class="ln">${esc(l).replace(/_(.+?)_/g,'<u>$1</u>')}</span>`).join('');
   set('#t4 [data-f=cta]',D.cta);
   set('#t4 [data-f=de]','R$ '+D.de); set('#t4 [data-f=por]','R$ '+D.por);
   $('#t4 .bg').style.backgroundImage = D.bg4?`url(${D.bg4})`:'none';
@@ -1583,10 +1647,17 @@ function aplicarBriefing(txt){
     const pares=sub.filter(l=>l.includes('|')).map(l=>l.split('|').map(x=>x.trim()));
     if(pares.length>=2){
       D.t1.colA=pares[0][0]||D.t1.colA; D.t1.colB=pares[0][1]||D.t1.colB;
-      ['a1','a2','a3'].forEach((k,i)=>{ if(pares[i+1]) D.t1[k]=pares[i+1][0]||''; });
-      ['b1','b2','b3'].forEach((k,i)=>{ if(pares[i+1]) D.t1[k]=pares[i+1][1]||''; });
-      pegou.push('tabela comparativa');
-    } else if(sub.length) faltou.push('tabela do comparativo — separe as colunas com |');
+      const itens=pares.slice(1);
+      const comPreco=itens.filter(l=>/r\$|\{POR\}|\{DE\}/i.test(l.join(' ')));
+      const semPreco=itens.filter(l=>!/r\$|\{POR\}|\{DE\}/i.test(l.join(' ')));
+      if(comPreco.length){
+        D.t1.preA=(comPreco[0][0]||'').replace(/^.*?(r\$\s*[\d.,]+|\{POR\}|\{DE\}).*$/i,'$1');
+        D.t1.preB=(comPreco[0][1]||'').replace(/^.*?(r\$\s*[\d.,]+|\{POR\}|\{DE\}).*$/i,'$1')||'R$ {POR}';
+      }
+      ['a1','a2','a3'].forEach((k,i)=>{ D.t1[k]=semPreco[i]?semPreco[i][0]:''; });
+      ['b1','b2','b3'].forEach((k,i)=>{ D.t1[k]=semPreco[i]?semPreco[i][1]:''; });
+      pegou.push('confronto de preços');
+    } else if(sub.length) faltou.push('tabela do confronto — separe as colunas com |');
   }
 
   if(D.tpl===2){
@@ -1691,15 +1762,15 @@ $('#btnBrief').onclick=modalBriefing;
 
 /* ==================== MODO SIMPLES ==================== */
 const GUIA=[
- {n:'Comparativo de preço',d:'Explica por que custa menos que o importado. É o criativo que convence quem nunca ouviu falar da marca.',
+ {n:'Confronto',d:'Frasco no centro, o importado de um lado e o seu do outro. Explica o preço em dois segundos, pra quem nunca ouviu falar da marca.',
   tags:['público frio','convence pelo preço']},
- {n:'Conversa de amigas',d:'Simula um papo no WhatsApp. Funciona porque parece indicação, não anúncio.',
+ {n:'Print',d:'Simula um print de conversa. Funciona porque parece indicação de amiga, não anúncio.',
   tags:['parece indicação','prende a atenção']},
- {n:'Notícia (Deo News)',d:'Parece matéria de revista. É o melhor pra testar muitas frases diferentes e descobrir qual vende.',
+ {n:'Manchete',d:'Parece matéria de portal de notícia. É o melhor pra testar muitas frases e descobrir qual vende.',
   tags:['testar frases','público frio']},
- {n:'Box embaçado',d:'Cena de banheiro com frase escrita no vidro. Parece foto de cliente.',
+ {n:'Vapor',d:'Frase escrita com o dedo no vidro embaçado do box. Parece foto de cliente, não anúncio.',
   tags:['orgânico','precisa de fundo']},
- {n:'Fileira de frascos',d:'Mostra três perfumes juntos. Bom pra quem já conhece a marca e está escolhendo qual comprar.',
+ {n:'Vitrine',d:'A linha inteira em fundo escuro, com brilho dourado. Pra quem já conhece a marca e está escolhendo qual comprar.',
   tags:['público morno','mostra a linha']},
  {n:'Stories espontâneo',d:'Parece stories de pessoa comum, gravado no dia a dia.',
   tags:['orgânico','precisa de fundo']}
