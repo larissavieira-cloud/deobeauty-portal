@@ -1,0 +1,1873 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DeoBeauty · Gerador de Estáticos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Jost:wght@300;400;500;600;700&family=Caveat:wght@500;700&family=Archivo+Black&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<style>
+:root{
+  /* marca */
+  --dourado:#B8956A;
+  --marrom:#6B4E3D;
+  --preto:#141414;
+  --creme:#F8F5EE;
+  --marfim:#EFE8DC;
+  --rosa:#E8C9C4;
+  --branco:#FFFFFF;
+  --vermelho:#B22222;
+  /* chrome do app */
+  --app-bg:#171311;
+  --app-panel:#201A17;
+  --app-linha:#312823;
+  --app-txt:#EDE4D9;
+  --app-txt-fraco:#9A8B7D;
+}
+*{box-sizing:border-box}
+html,body{margin:0;height:100%}
+body{
+  background:var(--app-bg);
+  color:var(--app-txt);
+  font-family:'Jost',system-ui,sans-serif;
+  font-size:14px;
+  display:grid;
+  grid-template-columns:372px 1fr;
+  overflow:hidden;
+}
+button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--dourado);outline-offset:2px}
+
+/* ---------- RAIL ---------- */
+#rail{
+  background:var(--app-panel);
+  border-right:1px solid var(--app-linha);
+  height:100vh;display:flex;flex-direction:column;
+}
+#railTopo{padding:18px 20px 14px;border-bottom:1px solid var(--app-linha)}
+#railTopo h1{
+  margin:0;font-family:'Cormorant Garamond',Georgia,serif;
+  font-size:24px;font-weight:600;letter-spacing:.14em;color:var(--creme);
+}
+#railTopo p{margin:3px 0 0;color:var(--app-txt-fraco);font-size:12.5px;letter-spacing:.04em}
+
+#abas{display:flex;flex-wrap:wrap;gap:6px;padding:14px 20px;border-bottom:1px solid var(--app-linha)}
+.aba{
+  background:transparent;border:1px solid var(--app-linha);color:var(--app-txt-fraco);
+  border-radius:999px;padding:6px 13px;cursor:pointer;font-size:12.5px;transition:.15s;
+}
+.aba:hover{border-color:var(--dourado);color:var(--creme)}
+.aba[aria-selected="true"]{background:var(--dourado);border-color:var(--dourado);color:#2A1E14;font-weight:600}
+
+#campos{flex:1;overflow-y:auto;padding:16px 20px 26px}
+#campos::-webkit-scrollbar{width:9px}
+#campos::-webkit-scrollbar-thumb{background:var(--app-linha);border-radius:9px}
+
+.grupo{margin-bottom:22px}
+.grupo > h2{
+  margin:0 0 11px;font-size:11px;letter-spacing:.18em;font-weight:600;
+  color:var(--dourado);text-transform:uppercase;
+}
+.campo{margin-bottom:11px}
+.campo label{display:block;margin-bottom:4px;color:var(--app-txt-fraco);font-size:12px}
+.campo input[type=text],.campo input[type=number],.campo select,.campo textarea{
+  width:100%;background:#120E0C;border:1px solid var(--app-linha);
+  border-radius:7px;padding:8px 10px;transition:border-color .15s;
+}
+.campo textarea{min-height:128px;resize:vertical;line-height:1.55;font-size:13px}
+.campo input:focus,.campo select:focus,.campo textarea:focus{border-color:var(--dourado);outline:none}
+.dupla{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.tripla{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px}
+.dica{color:var(--app-txt-fraco);font-size:11.5px;line-height:1.5;margin:6px 0 0}
+.check{display:flex;align-items:center;gap:8px;margin-bottom:9px;cursor:pointer;color:var(--app-txt-fraco)}
+.check input{accent-color:var(--dourado);width:15px;height:15px}
+
+.btn{
+  width:100%;background:var(--dourado);color:#2A1E14;border:none;border-radius:7px;
+  padding:10px;font-weight:600;cursor:pointer;letter-spacing:.03em;transition:.15s;
+}
+.btn:hover{filter:brightness(1.08)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.btn.vazado{background:transparent;border:1px solid var(--app-linha);color:var(--app-txt)}
+.btn.vazado:hover{border-color:var(--dourado);filter:none}
+.btn + .btn{margin-top:8px}
+
+.avisoBox{
+  background:#2A1E14;border:1px solid #47331F;border-radius:8px;
+  padding:10px 12px;font-size:12px;line-height:1.55;color:#E3CDA9;margin-bottom:14px;
+}
+
+/* ---------- PALCO ---------- */
+#palco{height:100vh;display:flex;flex-direction:column;overflow:hidden}
+#barra{
+  display:flex;align-items:center;gap:10px;padding:12px 22px;
+  border-bottom:1px solid var(--app-linha);background:var(--app-panel);flex-wrap:wrap;
+}
+#barra select,#barra button{
+  background:#120E0C;border:1px solid var(--app-linha);border-radius:7px;padding:7px 11px;cursor:pointer;
+}
+#barra button:hover{border-color:var(--dourado)}
+#barra .spacer{flex:1}
+#barra .primario{background:var(--dourado);border-color:var(--dourado);color:#2A1E14;font-weight:600}
+#zoomLbl{color:var(--app-txt-fraco);font-size:12px;min-width:42px;text-align:center}
+
+#area{flex:1;overflow:auto;display:flex;align-items:flex-start;justify-content:center;padding:36px}
+#area::-webkit-scrollbar{width:11px;height:11px}
+#area::-webkit-scrollbar-thumb{background:var(--app-linha);border-radius:9px}
+#moldura{transform-origin:top center;transition:transform .12s}
+
+/* ---------- CANVAS ---------- */
+#canvas{
+  width:1080px;position:relative;overflow:hidden;background:var(--creme);
+  box-shadow:0 26px 70px rgba(0,0,0,.6);
+  font-family:'Cormorant Garamond',Georgia,serif;color:var(--preto);
+}
+#canvas.f45{height:1350px}
+#canvas.f11{height:1080px}
+#canvas.f916{height:1920px}
+.tpl{display:none;position:absolute;inset:0}
+.tpl.on{display:block}
+
+/* safezones */
+#safe{position:absolute;inset:0;pointer-events:none;z-index:90;display:none}
+#safe.on{display:block}
+#safe div{position:absolute;left:0;right:0;background:rgba(178,34,34,.13);border-color:rgba(178,34,34,.55);border-style:dashed}
+#safe .topo{top:0;border-bottom-width:2px;border-width:0 0 2px}
+#safe .base{bottom:0;border-top-width:2px;border-width:2px 0 0}
+#safe span{position:absolute;right:16px;font-family:'Jost';font-size:19px;letter-spacing:.14em;color:rgba(178,34,34,.85)}
+
+/* marca d'água de logo */
+.dbLogo{font-family:'Cormorant Garamond',serif;letter-spacing:.34em;font-weight:600}
+
+/* ===== CRIATIVO 1 — comparativo ===== */
+#t1{background:linear-gradient(170deg,#FBF8F2 0%,#F1E7D6 100%);padding:58px 62px;display:flex;flex-direction:column}
+#t1 .topo{display:flex;justify-content:space-between;align-items:center;margin-bottom:46px}
+#t1 .topo .marca{font-size:31px;letter-spacing:.34em;font-weight:600}
+#t1 .topo .site{font-family:'Jost';font-size:17px;letter-spacing:.2em;color:var(--marrom)}
+#t1 .kick{font-family:'Jost';font-weight:600;font-size:21px;letter-spacing:.2em;color:var(--vermelho);margin-bottom:10px}
+#t1 h2{
+  font-family:'Archivo Black',sans-serif;font-size:82px;line-height:.94;
+  margin:0 0 40px;letter-spacing:-.018em;text-transform:uppercase;max-width:15ch;
+}
+#t1 .comp{display:grid;grid-template-columns:1fr 1fr;gap:0;border:2px solid var(--preto);background:var(--branco)}
+#t1 .comp .col{padding:24px 26px}
+#t1 .comp .col:first-child{border-right:2px solid var(--preto);background:#F3EFE7;color:#6E6459}
+#t1 .comp .ch{font-family:'Jost';font-weight:700;font-size:24px;letter-spacing:.03em;margin-bottom:16px;line-height:1.2}
+#t1 .comp .li{font-family:'Jost';font-size:23px;padding:9px 0;line-height:1.35}
+#t1 .comp .col:first-child .li{text-decoration:line-through;text-decoration-thickness:1px}
+#t1 .comp .col:last-child .li{font-weight:500}
+#t1 .comp .col:last-child .li::before{content:"✓ ";color:#2E7D32;font-weight:700}
+#t1 .meio{display:flex;align-items:flex-end;gap:30px;margin-top:38px;flex:1}
+#t1 .frasco{flex:1;display:flex;align-items:flex-end;justify-content:center;height:100%;min-height:0}
+#t1 .frasco img{max-height:430px;max-width:100%;object-fit:contain;filter:drop-shadow(0 22px 30px rgba(0,0,0,.22))}
+#t1 .selo{
+  width:212px;height:212px;border-radius:50%;background:var(--vermelho);color:#fff;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  font-family:'Jost';transform:rotate(-9deg);flex:none;box-shadow:0 14px 34px rgba(0,0,0,.28);
+}
+#t1 .selo b{font-size:58px;line-height:1;font-weight:700}
+#t1 .selo span{font-size:19px;margin-top:6px;text-align:center;line-height:1.25;padding:0 14px}
+#t1 .rodape{margin-top:34px;text-align:center}
+#t1 .cta{
+  display:inline-block;background:var(--preto);color:var(--creme);font-family:'Jost';
+  font-weight:600;font-size:26px;letter-spacing:.14em;padding:19px 62px;border-radius:999px;
+}
+#t1 .legal{font-family:'Jost';font-size:16px;color:#7A6F63;margin-top:16px;letter-spacing:.02em}
+
+/* ===== CRIATIVO 2 — conversa ===== */
+#t2{background:#ECE4DB;display:flex;flex-direction:column}
+#t2 .barra{background:var(--branco);padding:26px 30px;display:flex;align-items:center;gap:18px;border-bottom:1px solid #DED5CA}
+#t2 .voltar{font-size:38px;color:#9A8B7D;line-height:1}
+#t2 .av{width:74px;height:74px;border-radius:50%;background:var(--marrom);color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Jost';font-size:30px;font-weight:600;overflow:hidden}
+#t2 .av img{width:100%;height:100%;object-fit:cover}
+#t2 .quem{font-family:'Jost'}
+#t2 .quem b{display:block;font-size:31px;font-weight:600}
+#t2 .quem span{font-size:20px;color:#67A867}
+#t2 .fluxo{flex:1;padding:28px 30px;display:flex;flex-direction:column;gap:14px;overflow:hidden;background:#E9E0D6}
+#t2 .bal{max-width:74%;padding:16px 20px 26px;border-radius:16px;position:relative;font-family:'Jost';font-size:26px;line-height:1.38}
+#t2 .bal .hr{position:absolute;right:14px;bottom:7px;font-size:16px;color:#8A8177}
+#t2 .rec{background:var(--branco);align-self:flex-start;border-top-left-radius:4px}
+#t2 .env{background:#D9EFD0;align-self:flex-end;border-top-right-radius:4px}
+#t2 .env .hr{color:#6C8C63}
+#t2 .env .hr::after{content:" ✓✓";color:#3B8FD6}
+#t2 .bal.foto{padding:12px 12px 26px;background:#D9EFD0;align-self:flex-end;max-width:46%}
+#t2 .bal.foto img{width:100%;border-radius:10px;display:block;background:#fff}
+#t2 .encenacao{align-self:center;background:rgba(20,20,20,.72);color:#F3EDE4;font-family:'Jost';font-size:19px;letter-spacing:.05em;padding:9px 22px;border-radius:999px;margin-bottom:4px}
+#t2 .pe{background:var(--creme);padding:26px 30px 32px;text-align:center;border-top:1px solid #DED5CA}
+#t2 .pe .marca{font-size:26px;letter-spacing:.34em;margin-bottom:16px;display:block}
+#t2 .cta{display:block;background:var(--preto);color:var(--creme);font-family:'Jost';font-weight:600;font-size:26px;letter-spacing:.14em;padding:19px;border-radius:999px}
+
+/* ===== CRIATIVO 3 — Deo News ===== */
+#t3{background:var(--creme);display:flex;flex-direction:column}
+#t3 .cab{background:var(--preto);color:var(--creme);padding:22px 34px;display:flex;justify-content:space-between;align-items:center}
+#t3 .cab .esq{display:flex;align-items:baseline;gap:16px}
+#t3 .cab .marca{font-size:28px;letter-spacing:.3em}
+#t3 .cab .news{font-family:'Jost';font-size:24px;letter-spacing:.4em;font-weight:500}
+#t3 .cab .data{font-family:'Jost';font-size:15px;letter-spacing:.12em;color:#9A8B7D}
+#t3 .corpo{padding:34px 40px 0;flex:1;display:flex;flex-direction:column}
+#t3 .ed{font-family:'Jost';font-weight:700;font-size:19px;letter-spacing:.2em;color:var(--vermelho);margin-bottom:14px}
+#t3 h2{
+  font-family:'Archivo Black',sans-serif;font-size:58px;line-height:1.02;margin:0 0 26px;
+  text-transform:uppercase;letter-spacing:-.015em;
+}
+#t3 .foto{background:#EDE6DA;border-radius:4px;flex:1;min-height:0;display:flex;align-items:center;justify-content:center;overflow:hidden}
+#t3 .foto img{max-height:100%;max-width:70%;object-fit:contain;filter:drop-shadow(0 18px 26px rgba(0,0,0,.2))}
+#t3 .cred{font-family:'Jost';font-size:15px;color:#8A7F72;margin:12px 0 18px}
+#t3 .lead{font-family:'Jost';font-size:25px;line-height:1.5;max-width:62ch}
+#t3 .lead b{font-weight:600}
+#t3 .pe{padding:26px 40px 34px}
+#t3 .cta{display:block;background:var(--preto);color:var(--creme);text-align:center;font-family:'Jost';font-weight:600;font-size:26px;letter-spacing:.14em;padding:19px;border-radius:999px}
+
+/* ===== CRIATIVO 4 — fumaça do box ===== */
+#t4{background:#4A4440;position:relative;overflow:hidden}
+#t4 .bg{position:absolute;inset:0;background-size:cover;background-position:center}
+#t4 .veu{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.18) 0%,rgba(0,0,0,.05) 45%,rgba(0,0,0,.42) 100%)}
+#t4 .cont{position:absolute;inset:0;padding:66px 58px;display:flex;flex-direction:column}
+#t4 h2{
+  font-family:'Caveat',cursive;font-size:96px;line-height:1.02;margin:0;font-weight:700;
+  color:rgba(255,255,255,.92);text-shadow:0 2px 18px rgba(0,0,0,.35);max-width:17ch;
+  transform:rotate(-1.4deg);
+}
+#t4 .nota{
+  background:#FBF7EC;color:#2B2622;width:475px;padding:30px 32px;margin-top:auto;
+  font-family:'Jost';box-shadow:0 20px 44px rgba(0,0,0,.4);transform:rotate(-2.2deg);
+}
+#t4 .nota .l{margin-bottom:15px;font-size:23px;line-height:1.4}
+#t4 .nota .l:last-child{margin-bottom:0}
+#t4 .nota b{font-weight:700;display:block;margin-bottom:2px}
+#t4 .nota .de{text-decoration:line-through;color:#8A7F72;margin-right:12px}
+#t4 .nota .por{font-size:38px;font-weight:700}
+#t4 .frasco{position:absolute;right:52px;bottom:120px;width:300px}
+#t4 .frasco img{width:100%;filter:drop-shadow(0 24px 34px rgba(0,0,0,.55))}
+#t4 .cta{
+  position:absolute;left:58px;right:58px;bottom:46px;background:var(--preto);color:var(--creme);
+  text-align:center;font-family:'Jost';font-weight:600;font-size:26px;letter-spacing:.14em;
+  padding:19px;border-radius:999px;
+}
+
+/* ===== CRIATIVO 5 — fileira ===== */
+#t5{background:radial-gradient(120% 80% at 50% 0%,#2E241D 0%,#141010 72%);color:var(--creme);padding:56px 50px;display:flex;flex-direction:column;align-items:center;text-align:center}
+#t5 .marca{font-size:29px;letter-spacing:.36em;margin-bottom:44px;color:var(--dourado)}
+#t5 .fila{display:flex;justify-content:center;align-items:flex-end;gap:34px;width:100%}
+#t5 .fila .it{flex:1;max-width:266px}
+#t5 .fila .it img{width:100%;height:330px;object-fit:contain;filter:drop-shadow(0 20px 28px rgba(0,0,0,.6))}
+#t5 .fila .it span{display:block;font-family:'Jost';font-size:16px;letter-spacing:.18em;color:var(--dourado);margin-top:16px}
+#t5 h2{font-size:78px;line-height:1.04;margin:46px 0 14px;font-weight:600;font-style:italic;max-width:16ch}
+#t5 h2 em{color:var(--dourado);font-style:italic}
+#t5 .sub{font-family:'Jost';font-size:24px;color:#C9BBA9;line-height:1.5;max-width:44ch}
+#t5 .sub b{color:var(--creme);font-weight:500}
+#t5 .fundo{display:flex;justify-content:center;align-items:flex-end;gap:16px;margin-top:auto;width:100%;opacity:.55}
+#t5 .fundo img{width:120px;height:190px;object-fit:contain}
+#t5 .selo{
+  position:absolute;right:62px;bottom:250px;width:200px;height:200px;border-radius:50%;
+  background:var(--dourado);color:#2A1E14;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;font-family:'Jost';transform:rotate(-11deg);box-shadow:0 14px 34px rgba(0,0,0,.5);
+}
+#t5 .selo small{font-size:19px;letter-spacing:.1em}
+#t5 .selo b{font-size:50px;line-height:1;font-weight:700}
+#t5 .cta{margin-top:26px;background:var(--creme);color:var(--preto);font-family:'Jost';font-weight:600;font-size:25px;letter-spacing:.14em;padding:18px 60px;border-radius:999px}
+
+/* ===== CRIATIVO 6 — stories orgânico ===== */
+#t6{background:#3B342E;position:relative;overflow:hidden}
+#t6 .bg{position:absolute;inset:0;background-size:cover;background-position:center}
+#t6 .veu{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.42) 0%,rgba(0,0,0,0) 40%,rgba(0,0,0,.5) 100%)}
+#t6 .cont{position:absolute;inset:0;padding:270px 68px 300px;display:flex;flex-direction:column}
+#t6 h2{
+  font-family:'Jost';font-style:italic;font-weight:700;font-size:62px;line-height:1.14;
+  color:#fff;margin:0;text-shadow:0 3px 16px rgba(0,0,0,.5);max-width:16ch;
+}
+#t6 .sub{
+  font-family:'Jost';font-style:italic;font-weight:600;font-size:34px;line-height:1.3;
+  color:#fff;margin-top:34px;max-width:22ch;text-shadow:0 3px 14px rgba(0,0,0,.5);
+}
+#t6 .link{margin-top:auto}
+#t6 .link .lbl{font-family:'Jost';font-size:26px;color:#fff;margin-bottom:14px;text-shadow:0 2px 10px rgba(0,0,0,.5)}
+#t6 .link .btn6{
+  display:flex;align-items:center;gap:14px;background:rgba(255,255,255,.92);color:#141414;
+  border-radius:14px;padding:18px 24px;font-family:'Jost';font-size:27px;font-weight:500;width:fit-content;
+}
+#t6 .link .btn6 i{font-style:normal;font-size:24px}
+
+/* ---------- MODAL ---------- */
+#modal{position:fixed;inset:0;background:rgba(10,7,6,.82);display:none;align-items:center;justify-content:center;z-index:200;padding:24px}
+#modal.on{display:flex}
+#modalCx{background:var(--app-panel);border:1px solid var(--app-linha);border-radius:12px;max-width:760px;width:100%;max-height:86vh;overflow-y:auto;padding:26px 30px}
+#modalCx h3{margin:0 0 6px;font-family:'Cormorant Garamond',serif;font-size:25px;letter-spacing:.06em}
+#modalCx p{color:var(--app-txt-fraco);line-height:1.6;font-size:13px}
+#modalCx pre{background:#120E0C;border:1px solid var(--app-linha);border-radius:8px;padding:14px;overflow-x:auto;font-size:11.5px;line-height:1.55;color:#CFC3B4}
+#modalCx ol{color:var(--app-txt-fraco);line-height:1.75;font-size:13px;padding-left:18px}
+#modalCx code{background:#120E0C;padding:2px 5px;border-radius:4px;font-size:12px}
+.fechar{float:right;background:none;border:none;font-size:22px;color:var(--app-txt-fraco);cursor:pointer;line-height:1}
+
+#toast{
+  position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(120%);
+  background:var(--dourado);color:#2A1E14;padding:12px 26px;border-radius:999px;font-weight:600;
+  z-index:300;transition:transform .25s;box-shadow:0 10px 30px rgba(0,0,0,.45);
+}
+#toast.on{transform:translateX(-50%) translateY(0)}
+
+/* ---------- LOTE / TABELAS ---------- */
+.chips{display:flex;flex-wrap:wrap;gap:7px;margin:8px 0 4px}
+.chip{
+  background:#120E0C;border:1px solid var(--app-linha);border-radius:7px;padding:6px 11px;
+  cursor:pointer;font-size:12.5px;color:var(--app-txt-fraco);transition:.13s;user-select:none;
+}
+.chip:hover{border-color:var(--dourado)}
+.chip.on{background:var(--dourado);border-color:var(--dourado);color:#2A1E14;font-weight:600}
+.minis{display:flex;gap:7px;margin-bottom:10px}
+.minis button{background:none;border:none;color:var(--dourado);cursor:pointer;font-size:12px;padding:0;text-decoration:underline}
+.tabela{width:100%;border-collapse:collapse;font-size:13px}
+.tabela th{text-align:left;color:var(--app-txt-fraco);font-weight:500;font-size:11.5px;letter-spacing:.1em;padding:0 8px 8px;text-transform:uppercase}
+.tabela td{padding:4px 8px 4px 0;border-bottom:1px solid #251E1A}
+.tabela td:first-child{color:var(--app-txt);width:44%}
+.tabela input{width:100%;background:#120E0C;border:1px solid var(--app-linha);border-radius:6px;padding:6px 8px;font-size:13px}
+.tabela input:focus{border-color:var(--dourado);outline:none}
+.tabela .semfoto{color:#8A6A4A;font-size:11px}
+.barraProg{height:6px;background:#120E0C;border-radius:9px;overflow:hidden;margin:12px 0 6px}
+.barraProg i{display:block;height:100%;background:var(--dourado);width:0;transition:width .2s}
+.linhaPreset{display:flex;align-items:center;gap:8px;padding:8px 0;border-bottom:1px solid #251E1A}
+.linhaPreset b{flex:1;font-weight:500}
+.linhaPreset button{background:none;border:none;color:var(--app-txt-fraco);cursor:pointer;font-size:12px;text-decoration:underline}
+.linhaPreset button:hover{color:var(--dourado)}
+#modalCx .abasM{display:flex;gap:6px;margin:14px 0 18px;flex-wrap:wrap}
+
+/* ---------- MODO SIMPLES ---------- */
+.fotoPasso{
+  display:flex;align-items:center;gap:13px;margin-top:10px;padding:11px;
+  background:#120E0C;border:1px solid var(--app-linha);border-radius:8px;
+}
+.fotoPasso .mini{
+  width:60px;height:74px;flex:none;border-radius:6px;background:#1C1613;
+  display:flex;align-items:center;justify-content:center;overflow:hidden;
+}
+.fotoPasso .mini img{max-width:100%;max-height:100%;object-fit:contain}
+.fotoPasso .mini span{color:#6B5B4C;font-size:10.5px;text-align:center;line-height:1.3;padding:4px}
+.fotoPasso .info{flex:1;font-size:12.5px;line-height:1.5;color:var(--app-txt-fraco)}
+.fotoPasso .info b{display:block;color:var(--creme);font-weight:500;margin-bottom:2px}
+.fotoPasso button{
+  background:none;border:none;color:var(--dourado);text-decoration:underline;
+  cursor:pointer;font-size:12.5px;padding:0;white-space:nowrap;
+}
+.solta{
+  border:1.5px dashed var(--app-linha);border-radius:9px;padding:24px 18px;text-align:center;
+  color:var(--app-txt-fraco);font-size:13px;line-height:1.55;cursor:pointer;transition:.14s;margin-bottom:6px;
+}
+.solta:hover,.solta.quente{border-color:var(--dourado);background:#1C1512;color:var(--creme)}
+.solta b{display:block;color:var(--creme);font-weight:500;margin-bottom:4px}
+
+#modoBar{display:flex;gap:6px;padding:12px 20px 0}
+#modoBar button{
+  flex:1;background:#120E0C;border:1px solid var(--app-linha);color:var(--app-txt-fraco);
+  border-radius:7px;padding:8px;cursor:pointer;font-size:12.5px;transition:.14s;
+}
+#modoBar button.on{background:var(--dourado);border-color:var(--dourado);color:#2A1E14;font-weight:600}
+#modoBar button:hover:not(.on){border-color:var(--dourado);color:var(--creme)}
+
+#simples{padding:16px 20px 30px;overflow-y:auto;flex:1}
+#simples::-webkit-scrollbar{width:9px}
+#simples::-webkit-scrollbar-thumb{background:var(--app-linha);border-radius:9px}
+
+.passo{margin-bottom:26px}
+.passo > .cab{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.passo .num{
+  width:23px;height:23px;border-radius:50%;background:var(--dourado);color:#2A1E14;
+  display:flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:700;flex:none;
+}
+.passo .cab b{font-size:14.5px;font-weight:500;color:var(--creme)}
+.passo .exp{color:var(--app-txt-fraco);font-size:12.5px;line-height:1.55;margin:-4px 0 12px 33px}
+
+#sPerf{width:100%;background:#120E0C;border:1px solid var(--app-linha);border-radius:7px;padding:11px;font-size:15px}
+#sPerf:focus{border-color:var(--dourado);outline:none}
+#sPreco{
+  display:flex;align-items:baseline;gap:10px;margin-top:10px;padding:11px 13px;
+  background:#120E0C;border:1px solid var(--app-linha);border-radius:7px;
+}
+#sPreco .de{text-decoration:line-through;color:var(--app-txt-fraco);font-size:13px}
+#sPreco .por{font-size:21px;font-weight:600;color:var(--creme)}
+#sPreco .off{margin-left:auto;background:var(--dourado);color:#2A1E14;font-size:12px;font-weight:700;padding:3px 9px;border-radius:5px}
+#sPreco .falta{color:#D89A5C;font-size:12.5px;line-height:1.5}
+
+.cartao{
+  width:100%;text-align:left;background:#120E0C;border:1px solid var(--app-linha);
+  border-radius:9px;padding:13px 15px;cursor:pointer;margin-bottom:8px;transition:.14s;color:inherit;
+}
+.cartao:hover{border-color:var(--dourado)}
+.cartao.on{border-color:var(--dourado);background:#241B13}
+.cartao b{display:block;font-size:14px;font-weight:600;margin-bottom:4px;color:var(--creme)}
+.cartao p{margin:0;color:var(--app-txt-fraco);font-size:12.5px;line-height:1.5}
+.cartao .tags{display:flex;gap:6px;margin-top:9px;flex-wrap:wrap}
+.cartao .tags span{background:#1E1714;border:1px solid var(--app-linha);color:#9A8B7D;font-size:11px;padding:2px 8px;border-radius:5px}
+.cartao.on .tags span{border-color:#4A3826}
+
+.btnGrande{
+  width:100%;background:var(--dourado);color:#2A1E14;border:none;border-radius:9px;
+  padding:15px;font-size:15px;font-weight:600;cursor:pointer;letter-spacing:.02em;transition:.14s;
+}
+.btnGrande:hover{filter:brightness(1.08)}
+.btnGrande:disabled{opacity:.45;cursor:not-allowed}
+.linkTxt{
+  display:block;width:100%;background:none;border:none;color:var(--app-txt-fraco);
+  text-align:center;padding:11px 0 0;cursor:pointer;font-size:12.5px;text-decoration:underline;
+}
+.linkTxt:hover{color:var(--dourado)}
+
+#setup{
+  background:#251B13;border:1px solid #47331F;border-radius:9px;padding:15px 17px;margin-bottom:22px;
+}
+#setup h3{margin:0 0 5px;font-size:14px;font-weight:600;color:#F0DDBE;font-family:inherit}
+#setup p{margin:0 0 12px;color:#C4A87F;font-size:12.5px;line-height:1.55}
+#setup .item{display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-top:1px solid #3A2A1B}
+#setup .mk{width:19px;height:19px;border-radius:50%;flex:none;display:flex;align-items:center;justify-content:center;font-size:11px;margin-top:1px}
+#setup .mk.ok{background:#3E6B40;color:#DFF0DA}
+#setup .mk.no{background:#4A3826;color:#C4A87F}
+#setup .txt{flex:1;font-size:12.5px;line-height:1.5;color:#D9C4A4}
+#setup .txt small{display:block;color:#9C815E;margin-top:2px;font-size:11.5px}
+#setup button{background:none;border:none;color:var(--dourado);cursor:pointer;font-size:12.5px;text-decoration:underline;padding:0;white-space:nowrap}
+
+/* ---------- AJUSTES POR FORMATO ---------- */
+.f916 #t1{padding:84px 66px}
+.f916 #t1 h2{font-size:100px;margin-bottom:52px}
+.f916 #t1 .kick{font-size:25px}
+.f916 #t1 .comp .ch{font-size:28px}
+.f916 #t1 .comp .li{font-size:27px;padding:12px 0}
+.f916 #t1 .frasco img{max-height:620px}
+.f916 #t1 .selo{width:250px;height:250px}
+.f916 #t1 .selo b{font-size:68px}
+.f916 #t1 .cta{font-size:30px;padding:23px 72px}
+
+.f916 #t2 .bal{font-size:29px}
+.f916 #t2 .fluxo{gap:18px;padding:36px 34px}
+
+.f916 #t3 h2{font-size:72px}
+.f916 #t3 .lead{font-size:29px}
+.f916 #t3 .corpo{padding:44px 46px 0}
+.f916 #t3 .cta{font-size:30px;padding:23px}
+
+.f916 #t5{padding:76px 54px}
+.f916 #t5 .fila .it img{height:430px}
+.f916 #t5 h2{font-size:92px;margin-top:62px}
+.f916 #t5 .sub{font-size:28px}
+.f916 #t5 .selo{bottom:330px}
+
+.f45 #t4 .cont{padding:54px 50px}
+.f45 #t4 h2{font-size:78px}
+.f45 #t4 .nota{width:430px;padding:26px 28px}
+.f45 #t4 .frasco{width:250px;bottom:108px;right:44px}
+
+.f45 #t6 .cont{padding:130px 58px 170px}
+.f45 #t6 h2{font-size:54px}
+.f45 #t6 .sub{font-size:30px;margin-top:26px}
+
+.f11 #t6 .cont{padding:90px 58px 120px}
+.f11 #t4 .cont{padding:48px 46px}
+.f11 #t4 h2{font-size:68px}
+
+@media (max-width:1100px){
+  body{grid-template-columns:1fr;overflow:auto}
+  #rail{height:auto;position:static}
+  #palco{height:auto}
+  #area{padding:20px}
+}
+</style>
+</head>
+<body>
+
+<aside id="rail">
+  <div id="railTopo">
+    <h1>DEOBEAUTY</h1>
+    <p>Gerador de estáticos para tráfego</p>
+  </div>
+
+  <div id="modoBar">
+    <button id="mSimples" class="on">Passo a passo</button>
+    <button id="mCompleto">Tudo aberto</button>
+  </div>
+
+  <div id="simples"></div>
+
+  <div id="abas" role="tablist"></div>
+
+  <div id="campos">
+    <!-- BASE -->
+    <div class="grupo">
+      <h2>Produto</h2>
+      <div class="campo">
+        <label for="fPerfume">Perfume</label>
+        <select id="fPerfume"></select>
+      </div>
+      <div class="campo">
+        <label for="fFoto">Foto do frasco</label>
+        <button class="btn vazado" id="btnFoto">Enviar imagem só para esta peça</button>
+        <p class="dica" id="fotoStatus">Usando a thumb do Drive. Se o download do PNG falhar, envie a imagem aqui.</p>
+        <input type="file" id="fFoto" accept="image/*" hidden>
+      </div>
+      <div class="tripla">
+        <div class="campo"><label for="fVolume">Volume</label><input type="text" id="fVolume" value="100ml"></div>
+        <div class="campo"><label for="fEssencia">Essência</label><input type="text" id="fEssencia" value="20%"></div>
+        <div class="campo"><label for="fCateg">Categoria</label><input type="text" id="fCateg" value="eau de parfum"></div>
+      </div>
+      <div class="tripla">
+        <div class="campo"><label for="fDe">De R$</label><input type="text" id="fDe" value="359,99"></div>
+        <div class="campo"><label for="fPor">Por R$</label><input type="text" id="fPor" value="99,90"></div>
+        <div class="campo"><label for="fOff">Desconto</label><input type="text" id="fOff" value="72%"></div>
+      </div>
+      <div class="campo"><label for="fCta">CTA · vale para todos os criativos</label><input type="text" id="fCta" value="COMPRAR AGORA"></div>
+      <p class="dica">O desconto recalcula sozinho quando você muda os preços. Dá pra sobrescrever.</p>
+    </div>
+
+    <!-- específicos -->
+    <div class="grupo" id="espec"></div>
+  </div>
+</aside>
+
+<main id="palco">
+  <div id="barra">
+    <select id="fFormato" class="soCompleto">
+      <option value="f45">1080 × 1350 · feed 4:5</option>
+      <option value="f11">1080 × 1080 · feed 1:1</option>
+      <option value="f916">1080 × 1920 · stories 9:16</option>
+    </select>
+    <select id="fEscala" title="Resolução do arquivo exportado">
+      <option value="1">Padrão · 1080px</option>
+      <option value="2">Alta · 2160px</option>
+    </select>
+    <button id="btnSafe" class="soCompleto">Safezones</button>
+    <button id="menos">−</button><span id="zoomLbl">45%</span><button id="mais">+</button>
+    <div class="spacer"></div>
+    <button id="btnBrief">Colar briefing</button>
+    <button id="btnAjuda">Ajuda</button>
+    <button id="btnPresets" class="soCompleto">Campanhas</button>
+    <button id="btnPrecos" class="soCompleto">Preços</button>
+    <button id="btnFrascos" class="soCompleto">Frascos</button>
+    <button id="btnFreepik" class="soCompleto">Freepik</button>
+    <button id="btnPng" class="soCompleto">Baixar PNG</button>
+    <button class="primario" id="btnLoteG">Produzir em lote</button>
+  </div>
+
+  <div id="area">
+    <div id="moldura">
+      <div id="canvas" class="f45">
+
+        <!-- 1 -->
+        <section class="tpl" id="t1">
+          <div class="topo"><span class="marca dbLogo">DEOBEAUTY</span><span class="site" data-f="site"></span></div>
+          <div class="kick" data-f="kick"></div>
+          <h2 data-f="head"></h2>
+          <div class="comp">
+            <div class="col">
+              <div class="ch" data-f="colA"></div>
+              <div class="li" data-f="a1"></div><div class="li" data-f="a2"></div><div class="li" data-f="a3"></div>
+            </div>
+            <div class="col">
+              <div class="ch" data-f="colB"></div>
+              <div class="li" data-f="b1"></div><div class="li" data-f="b2"></div><div class="li" data-f="b3"></div>
+            </div>
+          </div>
+          <div class="meio">
+            <div class="frasco"><img data-img="frasco" alt=""></div>
+            <div class="selo"><b data-f="seloOff"></b><span data-f="seloTxt"></span></div>
+          </div>
+          <div class="rodape">
+            <div class="cta" data-f="cta"></div>
+            <div class="legal" data-f="legal"></div>
+          </div>
+        </section>
+
+        <!-- 2 -->
+        <section class="tpl" id="t2">
+          <div class="barra">
+            <span class="voltar">‹</span>
+            <div class="av" data-f="avatar"></div>
+            <div class="quem"><b data-f="amiga"></b><span>online</span></div>
+          </div>
+          <div class="fluxo" id="t2fluxo"></div>
+          <div class="pe">
+            <span class="marca dbLogo">DEOBEAUTY</span>
+            <div class="cta" data-f="cta"></div>
+          </div>
+        </section>
+
+        <!-- 3 -->
+        <section class="tpl" id="t3">
+          <div class="cab">
+            <div class="esq"><span class="marca dbLogo">DEO</span><span class="news">NEWS</span></div>
+            <span class="data" data-f="data"></span>
+          </div>
+          <div class="corpo">
+            <div class="ed" data-f="editoria"></div>
+            <h2 data-f="head"></h2>
+            <div class="foto"><img data-img="frasco" alt=""></div>
+            <div class="cred" data-f="cred"></div>
+            <div class="lead" data-f="lead"></div>
+          </div>
+          <div class="pe"><div class="cta" data-f="cta"></div></div>
+        </section>
+
+        <!-- 4 -->
+        <section class="tpl" id="t4">
+          <div class="bg" data-img="bg4"></div>
+          <div class="veu"></div>
+          <div class="frasco"><img data-img="frasco" alt=""></div>
+          <div class="cont">
+            <h2 data-f="head"></h2>
+            <div class="nota">
+              <div class="l"><b data-f="r1t"></b><span data-f="r1"></span></div>
+              <div class="l"><b data-f="r2t"></b><span data-f="r2"></span></div>
+              <div class="l"><b data-f="r3t"></b><span class="de" data-f="de"></span><span class="por" data-f="por"></span></div>
+            </div>
+          </div>
+          <div class="cta" data-f="cta"></div>
+        </section>
+
+        <!-- 5 -->
+        <section class="tpl" id="t5">
+          <span class="marca dbLogo">DEOBEAUTY</span>
+          <div class="fila" id="t5fila"></div>
+          <h2 data-f="head"></h2>
+          <div class="sub" data-f="sub"></div>
+          <div class="selo"><small>APENAS</small><b data-f="selo"></b></div>
+          <div class="fundo" id="t5fundo"></div>
+          <div class="cta" data-f="cta"></div>
+        </section>
+
+        <!-- 6 -->
+        <section class="tpl" id="t6">
+          <div class="bg" data-img="bg6"></div>
+          <div class="veu"></div>
+          <div class="cont">
+            <h2 data-f="head"></h2>
+            <div class="sub" data-f="sub"></div>
+            <div class="link">
+              <div class="lbl" data-f="lbl"></div>
+              <div class="btn6"><i>🔗</i><span data-f="cta"></span></div>
+            </div>
+          </div>
+        </section>
+
+        <div id="safe"><div class="topo"><span></span></div><div class="base"><span></span></div></div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div id="modal"><div id="modalCx"></div></div>
+<div id="toast"></div>
+
+<script>
+/* ==================== CATÁLOGO ==================== */
+const PERFUMES=[
+ {s:'valen',n:'Valen',i:'Oriana',c:'Feminino',f:'Floral Frutado',t:'1vLbFEPdBWY2nxrhGvriNZKPtqhZ5RtJE'},
+ {s:'bella-seduzione',n:'Bella Seduzione',i:'Delina',c:'Feminino',f:'Floral Adocicado',t:'1f5czqjXomJwaYypiOFvheYiFGVz14CCm'},
+ {s:'delluxe',n:"Del'Luxe",i:'La Vie Est Belle',c:'Feminino',f:'Floral Adocicado',t:'1sqljfshN6AJB7II9hPqtJzQAjTbsxahk'},
+ {s:'delluxe-rouge',n:"Del'Luxe Rouge",i:"L'Interdit Rouge",c:'Feminino',f:'Floral Intenso',t:'1yLe9PM_q5X-a_cQaf3it9f2PJ06bioUk'},
+ {s:'fortune',n:'Fortune',i:'Prada Paradoxe',c:'Feminino',f:'Floral Doce',t:'1zAt4sYGDpsoFoImFoUJErwJoJN2Pw3AO'},
+ {s:'fortune-intense',n:'Fortune Intense',i:'Prada Paradoxe Intense',c:'Feminino',f:'Floral Intenso',t:'1VclgJlp1XabQuVOfWlS4LIUiEQCMNjPl'},
+ {s:'fortune-platinum',n:'Fortune Platinum',i:"J'adore",c:'Feminino',f:'Floral Frutado',t:'1iunzPh_Od2GNiQ6TgzzSbYObzdzBngm-'},
+ {s:'mystere',n:'Mystère',i:'Scandal',c:'Feminino',f:'Doce Gourmand',t:'14uGzvrFTeg0yCaM9GWg2Jv5AogWFv40x'},
+ {s:'my-moments',n:'My Moments',i:'Chance Chanel',c:'Feminino',f:'Cítrico Floral',t:'1x8jAUWdR1rfm_XY-uZeXhENHR0880bLo'},
+ {s:'majestic',n:'Majestic',i:'Alien',c:'Feminino',f:'Oriental Sofisticado',t:'1awqAYoDDySIK7m3WmO3_dN_gU6_iwUcG'},
+ {s:'la-mia-passione',n:'La Mia Passione',i:'Baccarat Rouge',c:'Feminino',f:'Âmbar Luxuoso',t:'1ng0Hii32f6K9IuvxvIds0cpMVjIChx8G'},
+ {s:'dynastie',n:'Dynastie',i:'Libre YSL',c:'Feminino',f:'Floral Poderoso',t:'1o-fb47ba7rBzFsniqo2Q-IkYTGpFW59a'},
+ {s:'deo-rare',n:'Deo Rare',i:'Amouage',c:'Feminino',f:'Floral Sofisticado',t:'14adburXMcCpqkZwFBrIKFvtQrg4G08A9'},
+ {s:'jump',n:'Jump',i:'Good Girl',c:'Feminino',f:'Oriental Floral',t:'1iyRb0ZOlyZLXfSD5hHlOje1sfDqeQfOh'},
+ {s:'ese-light-arabe',n:'E se Light Árabe',i:'Valaya',c:'Linha Árabe',f:'Oriental Leve',t:'10_2GEexMvcVauBYdMPSR1TPL5BkySqxt'},
+ {s:'ese-vermelho',n:'E se Vermelho',i:'Sí Passione',c:'Linha Árabe',f:'Floral Doce',t:'1LkUgS9wPCuzVN9arzp8b7oSuISLEzE9o'},
+ {s:'ese-pure-arabe',n:'E se Pure Árabe',i:'Erba Pura Árabe',c:'Linha Árabe',f:'Oriental Intenso',t:''},
+ {s:'oud-passion',n:'Oud Passion',i:'Ombre Nomade',c:'Feminino',f:'Amadeirado Oriental',t:'1h2DOgopftrj9Ksce9tBtmmxOiIGl4J1E'},
+ {s:'deo-black',n:'Deo Black',i:'MYSLF YSL',c:'Masculino',f:'Aromático Intenso',t:'1W21vAt0DIFHwvJg2QvRBV34NxwAlcetW'},
+ {s:'pure-attraction',n:'Pure Attraction',i:'Bleu de Chanel',c:'Masculino',f:'Amadeirado Aromático',t:'19vAGThXdxgXCqFa-LtgC94DeHWMumBzN'},
+ {s:'unic',n:'UNIC',i:'',c:'Feminino',f:'',t:'1u3-o6GUvXN2CTcm8tR_NfYgAIWZOmF0O'}
+];
+const drive = id => id ? `https://drive.google.com/thumbnail?id=${id}&sz=w1200` : '';
+
+const HEADLINES3=[
+ 'Padrão internacional com preço daqui: o perfume que está esvaziando o estoque',
+ 'Perfume com {ESSENCIA} de essência por R$ {POR}: o que as mulheres estão usando pra sair de casa',
+ 'Marca brasileira coloca eau de parfum a R$ {POR} e vira sensação entre as mulheres',
+ 'O perfume que todo mundo quer usar sai por R$ {POR} com {OFF} de desconto',
+ 'O perfume que está fazendo mulheres trocarem o importado de R$ 800',
+ 'O perfume que está esvaziando prateleiras e custa apenas R$ {POR}',
+ 'O perfume de R$ {POR} que toda mulher quer usar'
+];
+
+const heads=()=>(D.heads3&&D.heads3.length)?D.heads3:HEADLINES3;
+
+/* ==================== ESTADO ==================== */
+const D={
+  tpl:1, modo:'simples', formato:'f45', safe:false, zoom:.45,
+  perfume:'fortune-intense', fotoCustom:'', bg4:'', bg6:'', avatarCustom:'',
+  volume:'100ml', essencia:'20%', categ:'eau de parfum',
+  de:'359,99', por:'99,90', off:'72%', precos:{}, padrao:{de:'359,99',por:'99,90'},
+  cta:'COMPRAR AGORA', heads3:null, escala:1,
+  t1:{site:'DEOBEAUTY.ME',kick:'EAU DE PARFUM · {ESSENCIA} DE ESSÊNCIA',
+      head:'Padrão de qualidade internacional pelo preço daqui',
+      colA:'O que vendem por aí',a1:'Deo colônia',a2:'Cerca de 5% de essência',a3:'100ml por R$ 199,90',
+      colB:'{PERFUME}',b1:'Eau de parfum',b2:'{ESSENCIA} de essência',b3:'{VOLUME} por R$ {POR}',
+      cta:'COMPRAR AGORA',legal:'de R$ {DE} por R$ {POR} · eau de parfum {VOLUME}'},
+  t2:{amiga:'Duda',horaIni:'21:46',encenacao:true,
+      cta:'COMPRAR AGORA',
+      msgs:'r: amiga, qual perfume você tava usando hoje na festa?\nr: eu amei\ne: {PERFUME}, da DeoBeauty\ne: [foto]\nr: caro?\ne: R$ {POR} kkk\nr: MANDA O LINK\ne: é só tocar aqui em "comprar agora"'},
+  t3:{editoria:'PERFUMARIA',headIdx:3,headLivre:'',
+      lead:'O {PERFUME} é {CATEG} com {ESSENCIA} de essência, o mesmo padrão dos importados. Está de R$ {DE} por R$ {POR} — {OFF} de desconto, com entrega pra todo o Brasil.',
+      cta:'COMPRAR AGORA'},
+  t4:{head:'não use esse produto se não quer ser notada',
+      r1t:'Efeitos observados:',r1:'elogio no elevador, gente chegando mais perto.',
+      r2t:'Para quem não serve:',r2:'quem prefere passar despercebida.',
+      r3t:'Valor:',cta:'COMPRAR AGORA',
+      prompt:'interior de box de banheiro, vidro embaçado pelo vapor, luz quente suave vinda de cima, azulejos bege claro, atmosfera íntima e premium, sem pessoas, sem texto, fotografia realista vertical'},
+  t5:{p1:'majestic',p2:'delluxe-rouge',p3:'la-mia-passione',
+      head:'Cheiro de quem gastou uma <em>fortuna</em>',
+      sub:'E ninguém precisa saber que custou menos de cem reais. <b>Eau de parfum {VOLUME} com {ESSENCIA} de essência.</b>',
+      selo:'R$ {POR}',cta:'COMPRAR AGORA'},
+  t6:{head:'Meu segredo pra cheirar bem o dia inteiro',
+      sub:'{PERFUME} da DeoBeauty — {ESSENCIA} de essência, fixa desde cedo',
+      lbl:'Compre nesse link aqui:',cta:'deobeauty.me',
+      prompt:'foto orgânica estilo stories, bolsa de couro no banco do carro com frasco de perfume aparecendo, luz natural do fim de tarde, clima aspiracional despojado, sem texto, vertical'}
+};
+
+const $=s=>document.querySelector(s);
+const $$=s=>[...document.querySelectorAll(s)];
+const perf=()=>PERFUMES.find(p=>p.s===D.perfume)||PERFUMES[0];
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+
+function vars(txt){
+  const p=perf();
+  return String(txt||'')
+    .replace(/\{PERFUME\}/g,p.n).replace(/\{INSPIRACAO\}/g,p.i||'—')
+    .replace(/\{FAMILIA\}/g,p.f||'—').replace(/\{CATEG\}/g,D.categ)
+    .replace(/\{VOLUME\}/g,D.volume).replace(/\{ESSENCIA\}/g,D.essencia)
+    .replace(/\{DE\}/g,D.de).replace(/\{POR\}/g,D.por).replace(/\{OFF\}/g,D.off);
+}
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(t._z);t._z=setTimeout(()=>t.classList.remove('on'),2600);}
+function limpo(){const c=JSON.parse(JSON.stringify(D));c.bg4='';c.bg6='';c.fotoCustom='';c.avatarCustom='';return c;}
+function salvar(){try{localStorage.setItem('db_gerador',JSON.stringify(limpo()));}catch(e){}}
+function carregar(){try{const r=localStorage.getItem('db_gerador');if(r)Object.assign(D,JSON.parse(r));}catch(e){}}
+
+/* ==================== ABAS ==================== */
+const NOMES=['Comparativo','Conversa','Deo News','Box embaçado','Fileira','Stories'];
+NOMES.forEach((n,i)=>{
+  const b=document.createElement('button');
+  b.className='aba';b.textContent=(i+1)+'. '+n;b.setAttribute('role','tab');
+  b.onclick=()=>{D.tpl=i+1;render();};
+  $('#abas').appendChild(b);
+});
+
+/* ==================== CAMPOS ESPECÍFICOS ==================== */
+function campoTxt(id,lbl,val,path){
+  return `<div class="campo"><label for="${id}">${lbl}</label><input type="text" id="${id}" value="${esc(val)}" data-bind="${path}"></div>`;
+}
+function campoArea(id,lbl,val,path,dica){
+  return `<div class="campo"><label for="${id}">${lbl}</label><textarea id="${id}" data-bind="${path}">${esc(val)}</textarea>${dica?`<p class="dica">${dica}</p>`:''}</div>`;
+}
+function selPerf(id,val,path){
+  return `<select id="${id}" data-bind="${path}">`+PERFUMES.map(p=>`<option value="${p.s}"${p.s===val?' selected':''}>${p.n}</option>`).join('')+`</select>`;
+}
+
+function montarEspec(){
+  const e=$('#espec'); let h='';
+  if(D.tpl===1){
+    h=`<h2>Comparativo</h2>
+    ${campoTxt('c1k','Kicker',D.t1.kick,'t1.kick')}
+    ${campoArea('c1h','Headline',D.t1.head,'t1.head')}
+    <div class="avisoBox">Comparar com número de concorrente (5%, R$199,90) exige prova. Se não tiver a fonte guardada, troque por algo genérico tipo “importados que passam de R$ 500”.</div>
+    ${campoTxt('c1ca','Coluna esquerda · título',D.t1.colA,'t1.colA')}
+    ${campoTxt('c1a1','Linha 1',D.t1.a1,'t1.a1')}
+    ${campoTxt('c1a2','Linha 2',D.t1.a2,'t1.a2')}
+    ${campoTxt('c1a3','Linha 3',D.t1.a3,'t1.a3')}
+    ${campoTxt('c1cb','Coluna direita · título',D.t1.colB,'t1.colB')}
+    ${campoTxt('c1b1','Linha 1',D.t1.b1,'t1.b1')}
+    ${campoTxt('c1b2','Linha 2',D.t1.b2,'t1.b2')}
+    ${campoTxt('c1b3','Linha 3',D.t1.b3,'t1.b3')}
+    ${campoTxt('c1lg','Linha legal',D.t1.legal,'t1.legal')}`;
+  }
+  if(D.tpl===2){
+    h=`<h2>Conversa</h2>
+    <div class="dupla">
+      ${campoTxt('c2am','Nome da amiga',D.t2.amiga,'t2.amiga')}
+      ${campoTxt('c2hi','Hora inicial',D.t2.horaIni,'t2.horaIni')}
+    </div>
+    <button class="btn vazado" id="btnAvatar">Enviar foto da amiga</button>
+    <input type="file" id="fAvatar" accept="image/*" hidden>
+    <label class="check" style="margin-top:12px"><input type="checkbox" id="c2enc" ${D.t2.encenacao?'checked':''}> Mostrar selo “encenação”</label>
+    <div class="avisoBox">Conversa fabricada funciona como depoimento falso — vai contra a regra da marca de não usar prova social e é o tipo de peça que dá problema no CONAR. O selo de encenação resolve.</div>
+    ${campoArea('c2ms','Balões',D.t2.msgs,'t2.msgs','Uma por linha. <code>r:</code> recebida · <code>e:</code> enviada · <code>e: [foto]</code> insere o frasco.')}
+    `;
+  }
+  if(D.tpl===3){
+    h=`<h2>Deo News</h2>
+    ${campoTxt('c3ed','Editoria',D.t3.editoria,'t3.editoria')}
+    <div class="campo"><label for="c3hi">Headline</label><select id="c3hi" data-bind="t3.headIdx">
+      ${heads().map((t,i)=>`<option value="${i}"${i==D.t3.headIdx?' selected':''}>${i+1}. ${esc(t.slice(0,46))}…</option>`).join('')}
+      <option value="-1"${D.t3.headIdx==-1?' selected':''}>Escrever outra</option>
+    </select></div>
+    ${D.t3.headIdx==-1?campoArea('c3hl','Headline livre',D.t3.headLivre,'t3.headLivre'):''}
+    ${campoArea('c3ld','Subheadline',D.t3.lead,'t3.lead')}
+    <button class="btn vazado" id="btnLote">Baixar todas as headlines</button>
+    <p class="dica">Gera um par de arquivos por headline, com o perfume selecionado.</p>`;
+  }
+  if(D.tpl===4){
+    h=`<h2>Box embaçado</h2>
+    ${campoArea('c4h','Headline (letra de mão)',D.t4.head,'t4.head')}
+    ${campoTxt('c4r1t','Rótulo 1',D.t4.r1t,'t4.r1t')}
+    ${campoTxt('c4r1','Texto 1',D.t4.r1,'t4.r1')}
+    ${campoTxt('c4r2t','Rótulo 2',D.t4.r2t,'t4.r2t')}
+    ${campoTxt('c4r2','Texto 2',D.t4.r2,'t4.r2')}
+    ${campoTxt('c4r3t','Rótulo 3',D.t4.r3t,'t4.r3t')}
+    <h2 style="margin-top:22px">Fundo</h2>
+    ${campoArea('c4p','Prompt da cena',D.t4.prompt,'t4.prompt')}
+    <button class="btn" id="btnIA4">Gerar fundo com Freepik</button>
+    <button class="btn vazado" id="btnBg4">Enviar imagem de fundo</button>
+    <input type="file" id="fBg4" accept="image/*" hidden>`;
+  }
+  if(D.tpl===5){
+    h=`<h2>Fileira</h2>
+    <div class="campo"><label>Frasco 1</label>${selPerf('c5p1',D.t5.p1,'t5.p1')}</div>
+    <div class="campo"><label>Frasco 2</label>${selPerf('c5p2',D.t5.p2,'t5.p2')}</div>
+    <div class="campo"><label>Frasco 3</label>${selPerf('c5p3',D.t5.p3,'t5.p3')}</div>
+    ${campoArea('c5h','Headline',D.t5.head,'t5.head','Use <code>&lt;em&gt;palavra&lt;/em&gt;</code> pra dourar um trecho.')}
+    ${campoArea('c5s','Subheadline',D.t5.sub,'t5.sub')}
+    ${campoTxt('c5se','Selo',D.t5.selo,'t5.selo')}`;
+  }
+  if(D.tpl===6){
+    h=`<h2>Stories</h2>
+    ${campoArea('c6h','Headline',D.t6.head,'t6.head')}
+    ${campoArea('c6s','Subheadline',D.t6.sub,'t6.sub')}
+    ${campoTxt('c6l','Chamada do link',D.t6.lbl,'t6.lbl')}
+    ${campoTxt('c6cta','Texto do botão',D.t6.cta,'t6.cta')}
+    <h2 style="margin-top:22px">Fundo</h2>
+    ${campoArea('c6p','Prompt da cena',D.t6.prompt,'t6.prompt')}
+    <button class="btn" id="btnIA6">Gerar fundo com Freepik</button>
+    <button class="btn vazado" id="btnBg6">Enviar imagem de fundo</button>
+    <input type="file" id="fBg6" accept="image/*" hidden>
+    <p class="dica">Stories 9:16 é o formato natural aqui. Ligue as safezones pra não perder texto na barra do Instagram.</p>`;
+  }
+  e.innerHTML=h;
+  ligarBinds();
+}
+
+function ligarBinds(){
+  $$('[data-bind]').forEach(el=>{
+    el.oninput=()=>{
+      const [a,b]=el.dataset.bind.split('.');
+      const v=(b==='headIdx')?parseInt(el.value,10):el.value;
+      if(b) D[a][b]=v; else D[a]=v;
+      if(b==='headIdx') montarEspec();
+      pintar();salvar();
+    };
+    if(el.tagName==='SELECT') el.onchange=el.oninput;
+  });
+  const enc=$('#c2enc'); if(enc) enc.onchange=()=>{D.t2.encenacao=enc.checked;pintar();salvar();};
+  lerArquivo('#btnAvatar','#fAvatar',d=>{D.avatarCustom=d;pintar();});
+  lerArquivo('#btnBg4','#fBg4',d=>{D.bg4=d;pintar();toast('Fundo aplicado');});
+  lerArquivo('#btnBg6','#fBg6',d=>{D.bg6=d;pintar();toast('Fundo aplicado');});
+  const i4=$('#btnIA4'); if(i4) i4.onclick=()=>gerarIA(4);
+  const i6=$('#btnIA6'); if(i6) i6.onclick=()=>gerarIA(6);
+  const lt=$('#btnLote'); if(lt) lt.onclick=lote3;
+}
+function lerArquivo(btnSel,inpSel,cb){
+  const b=$(btnSel),i=$(inpSel); if(!b||!i)return;
+  b.onclick=()=>i.click();
+  i.onchange=()=>{const f=i.files[0];if(!f)return;const r=new FileReader();r.onload=()=>cb(r.result);r.readAsDataURL(f);};
+}
+
+/* ==================== PINTAR ==================== */
+function pintar(){
+  const p=perf();
+  const foto=D.fotoCustom||LIB[p.s]||drive(p.t);
+  $$('[data-img="frasco"]').forEach(im=>{im.crossOrigin='anonymous';im.src=foto;});
+  $('#fotoStatus').textContent = D.fotoCustom ? 'Imagem enviada agora, só para esta peça.'
+    : LIB[p.s] ? 'Foto guardada. Vale para todas as peças deste perfume.'
+    : 'Sem foto ainda — envie aqui ou em Frascos.';
+
+  const set=(sel,txt,html)=>{const el=$(sel);if(el){if(html)el.innerHTML=vars(txt);else el.textContent=vars(txt);}};
+
+  // 1
+  set('#t1 [data-f=site]',D.t1.site); set('#t1 [data-f=kick]',D.t1.kick);
+  set('#t1 [data-f=head]',D.t1.head);
+  ['colA','a1','a2','a3','colB','b1','b2','b3','legal'].forEach(k=>set(`#t1 [data-f=${k}]`,D.t1[k]));
+  set('#t1 [data-f=cta]',D.cta);
+  set('#t1 [data-f=seloOff]','-'+D.off.replace('%','')+'%');
+  set('#t1 [data-f=seloTxt]','de R$ '+D.de);
+
+  // 2
+  set('#t2 [data-f=amiga]',D.t2.amiga); set('#t2 [data-f=cta]',D.cta);
+  const av=$('#t2 [data-f=avatar]');
+  av.innerHTML = D.avatarCustom ? `<img src="${D.avatarCustom}" alt="">` : esc((D.t2.amiga||'A').trim()[0]||'A').toUpperCase();
+  const fx=$('#t2fluxo'); fx.innerHTML='';
+  if(D.t2.encenacao){const e=document.createElement('div');e.className='encenacao';e.textContent='encenação';fx.appendChild(e);}
+  let [hh,mm]=(D.t2.horaIni||'21:46').split(':').map(Number);
+  if(isNaN(hh)){hh=21;mm=46;}
+  D.t2.msgs.split('\n').filter(l=>l.trim()).forEach((linha,idx)=>{
+    const env=/^e\s*:/i.test(linha);
+    const txt=linha.replace(/^[re]\s*:\s*/i,'');
+    if(idx>0&&idx%2===0){mm++;if(mm>59){mm=0;hh=(hh+1)%24;}}
+    const hora=String(hh).padStart(2,'0')+':'+String(mm).padStart(2,'0');
+    const d=document.createElement('div');
+    if(/^\[foto\]$/i.test(txt.trim())){
+      d.className='bal foto';
+      d.innerHTML=`<img crossorigin="anonymous" src="${foto}" alt=""><span class="hr">${hora}</span>`;
+    }else{
+      d.className='bal '+(env?'env':'rec');
+      d.innerHTML=`${esc(vars(txt))}<span class="hr">${hora}</span>`;
+    }
+    fx.appendChild(d);
+  });
+
+  // 3
+  set('#t3 [data-f=editoria]',D.t3.editoria);
+  const h3 = D.t3.headIdx==-1 ? D.t3.headLivre : (heads()[D.t3.headIdx]||heads()[0]);
+  set('#t3 [data-f=head]',h3);
+  set('#t3 [data-f=lead]',D.t3.lead);
+  set('#t3 [data-f=cred]',`${p.n}, ${D.categ} de ${D.volume}, da DeoBeauty · Foto: divulgação`);
+  set('#t3 [data-f=cta]',D.cta);
+  $('#t3 [data-f=data]').textContent='BELEZA · '+new Date().toLocaleDateString('pt-BR',{day:'numeric',month:'long',year:'numeric'}).toUpperCase();
+
+  // 4
+  ['head','r1t','r1','r2t','r2','r3t'].forEach(k=>set(`#t4 [data-f=${k}]`,D.t4[k]));
+  set('#t4 [data-f=cta]',D.cta);
+  set('#t4 [data-f=de]','R$ '+D.de); set('#t4 [data-f=por]','R$ '+D.por);
+  $('#t4 .bg').style.backgroundImage = D.bg4?`url(${D.bg4})`:'none';
+
+  // 5
+  const fila=$('#t5fila'); fila.innerHTML='';
+  [D.t5.p1,D.t5.p2,D.t5.p3].forEach(s=>{
+    const x=PERFUMES.find(q=>q.s===s)||PERFUMES[0];
+    const d=document.createElement('div');d.className='it';
+    d.innerHTML=`<img crossorigin="anonymous" src="${LIB[x.s]||drive(x.t)}" alt=""><span>${esc((x.f||x.n).toUpperCase())}</span>`;
+    fila.appendChild(d);
+  });
+  const fundo=$('#t5fundo'); fundo.innerHTML='';
+  PERFUMES.filter(x=>x.t&&![D.t5.p1,D.t5.p2,D.t5.p3].includes(x.s)).slice(0,6).forEach(x=>{
+    const im=document.createElement('img');im.crossOrigin='anonymous';im.src=LIB[x.s]||drive(x.t);fundo.appendChild(im);
+  });
+  set('#t5 [data-f=head]',D.t5.head,true); set('#t5 [data-f=sub]',D.t5.sub,true);
+  set('#t5 [data-f=selo]',D.t5.selo); set('#t5 [data-f=cta]',D.cta);
+
+  // 6
+  ['head','sub','lbl','cta'].forEach(k=>set(`#t6 [data-f=${k}]`,D.t6[k]));
+  $('#t6 .bg').style.backgroundImage = D.bg6?`url(${D.bg6})`:'none';
+}
+
+function render(){
+  $$('.aba').forEach((b,i)=>b.setAttribute('aria-selected',String(i+1===D.tpl)));
+  $$('.tpl').forEach((t,i)=>t.classList.toggle('on',i+1===D.tpl));
+  const cv=$('#canvas'); cv.className=D.formato;
+  $('#fFormato').value=D.formato;
+  const sz=$('#safe'); sz.classList.toggle('on',D.safe);
+  const alto=D.formato==='f916', topo=alto?250:90, base=alto?360:150;
+  sz.querySelector('.topo').style.height=topo+'px';
+  sz.querySelector('.base').style.height=base+'px';
+  sz.querySelector('.topo span').style.top=(topo-32)+'px';
+  sz.querySelector('.topo span').textContent='ÁREA DE RISCO';
+  sz.querySelector('.base span').style.bottom=(base-32)+'px';
+  sz.querySelector('.base span').textContent='ÁREA DE RISCO';
+  $('#moldura').style.transform=`scale(${D.zoom})`;
+  $('#zoomLbl').textContent=Math.round(D.zoom*100)+'%';
+  montarEspec(); pintar(); salvar();
+  if(D.modo!=='completo' && $('#simples').style.display!=='none') renderSimples();
+}
+
+/* ==================== CONTROLES ==================== */
+const selP=$('#fPerfume');
+PERFUMES.forEach(p=>{const o=document.createElement('option');o.value=p.s;o.textContent=p.n+(p.i?' · '+p.i:'');selP.appendChild(o);});
+selP.onchange=()=>{D.perfume=selP.value;D.fotoCustom='';aplicarPreco(D.perfume);pintar();salvar();};
+
+['fVolume','fEssencia','fCateg','fDe','fPor','fOff'].forEach(id=>{
+  const k={fVolume:'volume',fEssencia:'essencia',fCateg:'categ',fDe:'de',fPor:'por',fOff:'off'}[id];
+  $('#'+id).oninput=()=>{
+    D[k]=$('#'+id).value;
+    if(k==='de'||k==='por'){
+      const de=parseFloat(D.de.replace(/\./g,'').replace(',','.'));
+      const po=parseFloat(D.por.replace(/\./g,'').replace(',','.'));
+      if(de>0&&po>0&&po<de){D.off=Math.round((1-po/de)*100)+'%';$('#fOff').value=D.off;}
+    }
+    pintar();salvar();
+  };
+});
+$('#fCta').oninput=()=>{D.cta=$('#fCta').value;pintar();salvar();};
+lerArquivo('#btnFoto','#fFoto',d=>{D.fotoCustom=d;pintar();toast('Imagem aplicada');});
+
+$('#fEscala').onchange=()=>{D.escala=parseInt($('#fEscala').value,10);salvar();};
+$('#fFormato').onchange=()=>{D.formato=$('#fFormato').value;render();};
+$('#btnSafe').onclick=()=>{D.safe=!D.safe;render();};
+$('#mais').onclick=()=>{D.zoom=Math.min(1,D.zoom+.05);render();};
+$('#menos').onclick=()=>{D.zoom=Math.max(.15,D.zoom-.05);render();};
+
+/* ==================== EXPORT ==================== */
+async function capturar(escala){
+  const m=$('#moldura'), sz=$('#safe'), t=m.style.transform, vis=sz.classList.contains('on');
+  m.style.transform='none'; sz.classList.remove('on');
+  await document.fonts.ready;
+  await new Promise(r=>setTimeout(r,140));
+  try{
+    return await html2canvas($('#canvas'),{scale:escala||1,useCORS:true,allowTaint:false,backgroundColor:null,logging:false});
+  } finally {
+    m.style.transform=t; if(vis) sz.classList.add('on');
+  }
+}
+function baixar(canvas,nome){
+  try{
+    const a=document.createElement('a');
+    a.download=nome; a.href=canvas.toDataURL('image/png'); a.click();
+  }catch(e){
+    toast('Imagem do Drive bloqueou o download — envie o frasco pelo botão');
+  }
+}
+const FORMATOS=['f45','f916'];
+const rotuloFmt={f45:'1080x1350',f11:'1080x1080',f916:'1080x1920'};
+
+async function capturarFormato(f,escala){
+  const antes=D.formato;
+  D.formato=f; $('#canvas').className=f;
+  pintar(); await esperarImagens();
+  const cv=await capturar(escala);
+  D.formato=antes; $('#canvas').className=antes; pintar();
+  return cv;
+}
+$('#btnPng').onclick=async()=>{
+  const b=$('#btnPng'), s=$('#sBaixar');
+  const trava=(t,on)=>{if(t){t.disabled=on;}};
+  trava(b,true); trava(s,true);
+  const txtB=b.textContent, txtS=s?s.textContent:'';
+  b.textContent='Gerando…'; if(s) s.textContent='Gerando os dois formatos…';
+  let falhou=0;
+  for(const f of FORMATOS){
+    try{
+      const cv=await capturarFormato(f,D.escala||1);
+      const suf=(D.escala||1)>1?'_2x':'';
+      baixar(cv,`DB_C${D.tpl}_${perf().s}_${rotuloFmt[f]}${suf}.png`);
+      await new Promise(r=>setTimeout(r,380));
+    }catch(e){ falhou++; }
+  }
+  trava(b,false); trava(s,false);
+  b.textContent=txtB; if(s) s.textContent=txtS;
+  toast(falhou?'Um dos formatos falhou — veja a Ajuda':'Feed e stories baixados');
+};
+async function lote3(){
+  const orig=D.t3.headIdx;
+  for(let i=0;i<heads().length;i++){
+    D.t3.headIdx=i; pintar();
+    const c=await capturar();
+    baixar(c,`deobeauty-3-${perf().s}-headline${i+1}.png`);
+    await new Promise(r=>setTimeout(r,420));
+  }
+  D.t3.headIdx=orig; render(); toast('7 arquivos gerados');
+}
+
+/* ==================== FREEPIK ==================== */
+const WORKER='db_freepik_worker';
+const getWorker=()=>{try{return localStorage.getItem(WORKER)||'';}catch(e){return '';}};
+
+async function gerarIA(n){
+  const url=getWorker();
+  if(!url){ modalFreepik(); toast('Configure o endereço do Worker primeiro'); return; }
+  const btn=$('#btnIA'+n); btn.disabled=true; btn.textContent='Gerando…';
+  try{
+    const r=await fetch(url,{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({prompt:(n===4?D.t4.prompt:D.t6.prompt),aspect:D.formato==='f916'?'vertical_9_16':'social_story_9_16'})
+    });
+    if(!r.ok) throw new Error('o Worker respondeu '+r.status);
+    const j=await r.json();
+    const img = j.image ? (j.image.startsWith('data:')?j.image:'data:image/jpeg;base64,'+j.image) : j.url;
+    if(!img) throw new Error('a resposta não trouxe imagem');
+    if(n===4) D.bg4=img; else D.bg6=img;
+    pintar(); salvar(); toast('Fundo gerado');
+  }catch(e){ toast('Falhou: '+e.message); }
+  btn.disabled=false; btn.textContent='Gerar fundo com Freepik';
+}
+
+function modalFreepik(){
+  const atual=getWorker();
+  $('#modalCx').innerHTML=`
+  <button class="fechar" onclick="document.getElementById('modal').classList.remove('on')">×</button>
+  <h3>Conectar a Freepik</h3>
+  <p>A chave da Freepik <b>não pode ficar dentro deste arquivo</b> — qualquer pessoa que abrir o site veria e gastaria seus créditos. Ela fica num intermediário gratuito (Cloudflare Worker) e o site só conversa com ele.</p>
+  <ol>
+    <li>Pegue a chave em <code>freepik.com</code> → sua conta → API (é um produto pago à parte da assinatura de downloads; confira o plano antes).</li>
+    <li>Crie uma conta em <code>dash.cloudflare.com</code> → Workers &amp; Pages → Create → Worker → Deploy.</li>
+    <li>Abra o Worker → Edit code → apague tudo → cole o código abaixo → Deploy.</li>
+    <li>No Worker: Settings → Variables → adicione <code>FREEPIK_KEY</code> com a sua chave (marque Encrypt).</li>
+    <li>Copie o endereço do Worker e cole no campo aqui embaixo.</li>
+  </ol>
+  <pre id="codeW">export default {
+  async fetch(req, env) {
+    const cors = {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Headers": "Content-Type",
+      "Access-Control-Allow-Methods": "POST, OPTIONS"
+    };
+    if (req.method === "OPTIONS") return new Response(null, { headers: cors });
+    if (req.method !== "POST") return new Response("POST apenas", { status: 405, headers: cors });
+
+    const { prompt, aspect } = await req.json();
+
+    const r = await fetch("https://api.freepik.com/v1/ai/text-to-image", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-freepik-api-key": env.FREEPIK_KEY
+      },
+      body: JSON.stringify({
+        prompt,
+        num_images: 1,
+        image: { size: aspect || "social_story_9_16" }
+      })
+    });
+
+    const data = await r.json();
+    if (!r.ok) {
+      return new Response(JSON.stringify({ erro: data }), { status: r.status, headers: { ...cors, "Content-Type": "application/json" } });
+    }
+
+    const b64 = data?.data?.[0]?.base64 || data?.data?.[0]?.url || null;
+    return new Response(JSON.stringify({ image: b64 }), {
+      headers: { ...cors, "Content-Type": "application/json" }
+    });
+  }
+};</pre>
+  <p style="margin-top:14px">Confira o nome do endpoint e dos campos na documentação atual da Freepik antes de rodar — eles mudam de tempos em tempos, e alguns motores (o Mystic, por exemplo) respondem em duas etapas: devolvem um id de tarefa e você consulta depois.</p>
+  <div class="campo" style="margin-top:16px">
+    <label for="wUrl">Endereço do Worker</label>
+    <input type="text" id="wUrl" value="${esc(atual)}" placeholder="https://deobeauty-freepik.seu-usuario.workers.dev">
+  </div>
+  <button class="btn" id="wSalvar">Salvar endereço</button>
+  <button class="btn vazado" id="wCopiar">Copiar o código do Worker</button>`;
+  $('#modal').classList.add('on');
+  $('#wSalvar').onclick=()=>{
+    try{localStorage.setItem(WORKER,$('#wUrl').value.trim());}catch(e){}
+    $('#modal').classList.remove('on'); toast('Endereço salvo neste navegador');
+  };
+  $('#wCopiar').onclick=()=>{
+    navigator.clipboard.writeText($('#codeW').textContent).then(()=>toast('Código copiado'));
+  };
+}
+$('#btnFreepik').onclick=modalFreepik;
+$('#modal').onclick=e=>{if(e.target.id==='modal')$('#modal').classList.remove('on');};
+
+/* ==================== BIBLIOTECA DE FRASCOS (IndexedDB) ==================== */
+const LIB={};
+let db=null;
+function abrirDB(){
+  return new Promise(res=>{
+    const r=indexedDB.open('deobeauty_frascos',1);
+    r.onupgradeneeded=()=>r.result.createObjectStore('img');
+    r.onsuccess=()=>{db=r.result;res(db);};
+    r.onerror=()=>res(null);
+  });
+}
+function libSalvar(slug,dataUrl){
+  if(!db)return Promise.resolve();
+  return new Promise(res=>{
+    const tx=db.transaction('img','readwrite');
+    tx.objectStore('img').put(dataUrl,slug);
+    tx.oncomplete=()=>{LIB[slug]=dataUrl;res();};
+    tx.onerror=()=>res();
+  });
+}
+function libApagar(slug){
+  if(!db)return Promise.resolve();
+  return new Promise(res=>{
+    const tx=db.transaction('img','readwrite');
+    tx.objectStore('img').delete(slug);
+    tx.oncomplete=()=>{delete LIB[slug];res();};
+    tx.onerror=()=>res();
+  });
+}
+function libCarregar(){
+  if(!db)return Promise.resolve();
+  return new Promise(res=>{
+    const st=db.transaction('img','readonly').objectStore('img');
+    const rq=st.openCursor();
+    rq.onsuccess=e=>{
+      const c=e.target.result;
+      if(c){LIB[c.key]=c.value;c.continue();} else res();
+    };
+    rq.onerror=()=>res();
+  });
+}
+function reduzir(file,largura=1200){
+  return new Promise((res,rej)=>{
+    const fr=new FileReader();
+    fr.onload=()=>{
+      const im=new Image();
+      im.onload=()=>{
+        const fator=Math.min(1,largura/im.width);
+        const cv=document.createElement('canvas');
+        cv.width=Math.round(im.width*fator); cv.height=Math.round(im.height*fator);
+        cv.getContext('2d').drawImage(im,0,0,cv.width,cv.height);
+        res(cv.toDataURL('image/png'));
+      };
+      im.onerror=()=>rej(new Error('imagem inválida'));
+      im.src=fr.result;
+    };
+    fr.onerror=()=>rej(new Error('falha na leitura'));
+    fr.readAsDataURL(file);
+  });
+}
+function casarSlug(nome){
+  const limpo=nome.toLowerCase().replace(/\.[a-z0-9]+$/,'').replace(/[_\s]+/g,'-')
+    .normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9-]/g,'');
+  let achado=PERFUMES.find(p=>p.s===limpo);
+  if(achado)return achado.s;
+  achado=PERFUMES.find(p=>limpo.includes(p.s)||p.s.includes(limpo));
+  if(achado)return achado.s;
+  achado=PERFUMES.find(p=>{
+    const n=p.n.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]/g,'');
+    return limpo.replace(/-/g,'').includes(n);
+  });
+  return achado?achado.s:null;
+}
+
+function modalFrascos(){
+  const comFoto=PERFUMES.filter(p=>LIB[p.s]).length;
+  $('#modalCx').innerHTML=`
+  <button class="fechar" data-x>×</button>
+  <h3>Fotos dos frascos</h3>
+  <p>Envie as fotos uma vez. Elas ficam guardadas neste computador e passam a entrar sozinhas em toda peça. <b>${comFoto} de ${PERFUMES.length}</b> guardadas.</p>
+  <div class="solta" id="fbSolta">
+    <b>Arraste as fotos aqui</b>
+    ou clique para escolher · pode mandar as 21 de uma vez
+  </div>
+  <input type="file" id="fbInput" accept="image/*" multiple hidden>
+  <p class="dica">O arquivo é casado pelo nome. <code>fortune-intense.png</code> ou <code>Fortune Intense.png</code> vão pro lugar certo sozinhos. O que não casar aparece na lista abaixo pra você enviar individualmente.</p>
+  <table class="tabela" style="margin-top:18px">
+    <thead><tr><th>Perfume</th><th>Foto</th><th></th></tr></thead>
+    <tbody>${PERFUMES.map(p=>`<tr>
+      <td>${esc(p.n)}</td>
+      <td>${LIB[p.s]?'<span style="color:#7FB069">guardada</span>':'<span class="semfoto">falta</span>'}</td>
+      <td style="text-align:right">
+        <button style="border:none;background:none;color:var(--dourado);text-decoration:underline;cursor:pointer;font-size:12px" data-um="${p.s}">${LIB[p.s]?'trocar':'enviar'}</button>
+        ${LIB[p.s]?`<button style="border:none;background:none;color:var(--app-txt-fraco);text-decoration:underline;cursor:pointer;font-size:12px;margin-left:8px" data-apagar="${p.s}">remover</button>`:''}
+      </td>
+    </tr>`).join('')}</tbody>
+  </table>
+  <input type="file" id="fbUm" accept="image/*" hidden>`;
+  $('#modal').classList.add('on');
+
+  const receber=async(arqs)=>{
+    let ok=0,falhou=[];
+    for(const f of arqs){
+      const slug=casarSlug(f.name);
+      if(!slug){falhou.push(f.name);continue;}
+      try{ await libSalvar(slug, await reduzir(f)); ok++; }catch(e){ falhou.push(f.name); }
+    }
+    pintar(); if(D.modo!=='completo') renderSimples(); modalFrascos();
+    toast(ok+' guardada(s)'+(falhou.length?' · '+falhou.length+' sem par':''));
+  };
+
+  const z=$('#fbSolta');
+  z.onclick=()=>$('#fbInput').click();
+  $('#fbInput').onchange=()=>receber([...$('#fbInput').files]);
+  ['dragenter','dragover'].forEach(ev=>z.addEventListener(ev,e=>{e.preventDefault();z.classList.add('quente');}));
+  ['dragleave','drop'].forEach(ev=>z.addEventListener(ev,e=>{e.preventDefault();z.classList.remove('quente');}));
+  z.addEventListener('drop',e=>receber([...e.dataTransfer.files].filter(f=>f.type.startsWith('image/'))));
+
+  $$('[data-um]').forEach(b=>b.onclick=()=>{
+    const inp=$('#fbUm'); inp.value='';
+    inp.onchange=async()=>{
+      const f=inp.files[0]; if(!f)return;
+      try{ await libSalvar(b.dataset.um, await reduzir(f)); }catch(e){ toast('Imagem inválida'); }
+      pintar(); if(D.modo!=='completo') renderSimples(); modalFrascos();
+    };
+    inp.click();
+  });
+  $$('[data-apagar]').forEach(b=>b.onclick=async()=>{
+    await libApagar(b.dataset.apagar); pintar();
+    if(D.modo!=='completo') renderSimples(); modalFrascos();
+  });
+}
+
+/* ==================== PREÇOS POR PERFUME ==================== */
+function precoDe(slug){ return (D.precos&&D.precos[slug]) || D.padrao || null; }
+function ehExcecao(slug){ return !!(D.precos&&D.precos[slug]); }
+function aplicarPreco(slug){
+  const p=precoDe(slug); if(!p)return;
+  D.de=p.de; D.por=p.por;
+  const de=parseFloat(String(p.de).replace(/\./g,'').replace(',','.'));
+  const po=parseFloat(String(p.por).replace(/\./g,'').replace(',','.'));
+  if(de>0&&po>0&&po<de) D.off=Math.round((1-po/de)*100)+'%';
+  $('#fDe').value=D.de; $('#fPor').value=D.por; $('#fOff').value=D.off;
+}
+function modalPrecos(){
+  const pad=D.padrao||{de:'359,99',por:'99,90'};
+  const calcOff=(a,b)=>{
+    const x=parseFloat(String(a).replace(/\./g,'').replace(',','.'));
+    const y=parseFloat(String(b).replace(/\./g,'').replace(',','.'));
+    return (x>0&&y>0&&y<x)?Math.round((1-y/x)*100)+'%':'—';
+  };
+  $('#modalCx').innerHTML=`
+  <button class="fechar" data-x>×</button>
+  <h3>Preços</h3>
+  <p>Todos os perfumes usam o mesmo valor. Quando ele mudar, você troca aqui em cima e vale pra todo mundo de uma vez.</p>
+
+  <div class="grupo" style="margin-top:18px"><h2>Preço de todos os perfumes</h2>
+    <div class="dupla">
+      <div class="campo"><label for="pdDe">De R$</label><input type="text" id="pdDe" value="${esc(pad.de)}"></div>
+      <div class="campo"><label for="pdPor">Por R$</label><input type="text" id="pdPor" value="${esc(pad.por)}"></div>
+    </div>
+    <p class="dica">Desconto calculado: <b style="color:var(--dourado)" id="pdOff">${calcOff(pad.de,pad.por)}</b></p>
+  </div>
+
+  <div class="grupo"><h2>Exceções</h2>
+    <p class="dica" style="margin:-4px 0 12px">Só preencha a linha de um lançamento ou de um produto que fuja da tabela. Em branco, vale o valor de cima.</p>
+    <table class="tabela">
+      <thead><tr><th>Perfume</th><th>De R$</th><th>Por R$</th><th>Off</th></tr></thead>
+      <tbody>${PERFUMES.map(p=>{
+        const v=(D.precos&&D.precos[p.s])||{de:'',por:''};
+        return `<tr>
+          <td>${esc(p.n)}</td>
+          <td><input type="text" data-pde="${p.s}" value="${esc(v.de)}" placeholder="${esc(pad.de)}"></td>
+          <td><input type="text" data-ppor="${p.s}" value="${esc(v.por)}" placeholder="${esc(pad.por)}"></td>
+          <td style="color:var(--dourado);width:58px">${v.de&&v.por?calcOff(v.de,v.por):'—'}</td>
+        </tr>`;}).join('')}</tbody>
+    </table>
+  </div>
+  <button class="btn" id="prSalvar">Salvar</button>`;
+  $('#modal').classList.add('on');
+  const at=()=>$('#pdOff').textContent=calcOff($('#pdDe').value,$('#pdPor').value);
+  $('#pdDe').oninput=at; $('#pdPor').oninput=at;
+  $('#prSalvar').onclick=()=>{
+    D.padrao={de:$('#pdDe').value.trim()||'359,99',por:$('#pdPor').value.trim()||'99,90'};
+    D.precos=D.precos||{};
+    PERFUMES.forEach(p=>{
+      const de=$(`[data-pde="${p.s}"]`).value.trim();
+      const por=$(`[data-ppor="${p.s}"]`).value.trim();
+      if(de&&por) D.precos[p.s]={de,por}; else delete D.precos[p.s];
+    });
+    salvar(); aplicarPreco(D.perfume); pintar();
+    $('#modal').classList.remove('on'); toast('Preços salvos');
+    if(D.modo!=='completo') renderSimples();
+  };
+}
+
+/* ==================== CAMPANHAS SALVAS ==================== */
+const CAMP='db_campanhas';
+const lerCamp=()=>{try{return JSON.parse(localStorage.getItem(CAMP)||'{}');}catch(e){return {};}};
+const gravarCamp=o=>{try{localStorage.setItem(CAMP,JSON.stringify(o));}catch(e){toast('Sem espaço pra salvar');}};
+function modalPresets(){
+  const c=lerCamp(), nomes=Object.keys(c);
+  $('#modalCx').innerHTML=`
+  <button class="fechar" data-x>×</button>
+  <h3>Campanhas</h3>
+  <p>Guarda todos os textos, preços e escolhas do momento com um nome. Serve pra voltar numa campanha antiga sem reescrever nada.</p>
+  <div class="campo" style="margin-top:14px">
+    <label for="cpNome">Nome da campanha</label>
+    <input type="text" id="cpNome" placeholder="ex: setembro · fortune intense">
+  </div>
+  <button class="btn" id="cpSalvar">Salvar o estado atual</button>
+  <div style="margin-top:20px">
+    ${nomes.length?nomes.map(n=>`<div class="linhaPreset"><b>${esc(n)}</b>
+      <button data-abrir="${esc(n)}">abrir</button>
+      <button data-del="${esc(n)}">excluir</button></div>`).join('')
+    :'<p style="text-align:center;padding:18px 0">Nenhuma campanha salva ainda.</p>'}
+  </div>`;
+  $('#modal').classList.add('on');
+  $('#cpSalvar').onclick=()=>{
+    const n=$('#cpNome').value.trim(); if(!n){toast('Dê um nome à campanha');return;}
+    const c=lerCamp(); c[n]=limpo(); gravarCamp(c);
+    modalPresets(); toast('Campanha salva');
+  };
+  $$('[data-abrir]').forEach(b=>b.onclick=()=>{
+    const c=lerCamp()[b.dataset.abrir]; if(!c)return;
+    Object.assign(D,c); salvar(); render();
+    $('#modal').classList.remove('on'); toast('Campanha carregada');
+  });
+  $$('[data-del]').forEach(b=>b.onclick=()=>{
+    const c=lerCamp(); delete c[b.dataset.del]; gravarCamp(c); modalPresets();
+  });
+}
+
+/* ==================== PRODUÇÃO EM LOTE ==================== */
+const LOTE={tpls:[1,3],perfs:[],formatos:['f45','f916'],todasHeads:false};
+function modalLote(){
+  if(!LOTE.perfs.length) LOTE.perfs=[D.perfume];
+  $('#modalCx').innerHTML=`
+  <button class="fechar" data-x>×</button>
+  <h3>Produzir em lote</h3>
+  <p>Escolha os criativos, os perfumes e os formatos. Sai um .zip com tudo, já nomeado pro gerenciador de anúncios.</p>
+
+  <div style="margin-top:18px"><div class="grupo" style="margin:0"><h2>Criativos</h2>
+    <div class="chips" id="lTpls">${NOMES.map((n,i)=>`<span class="chip${LOTE.tpls.includes(i+1)?' on':''}" data-t="${i+1}">${i+1}. ${n}</span>`).join('')}</div>
+  </div></div>
+
+  <div class="grupo"><h2>Perfumes</h2>
+    <div class="minis"><button data-sel="todos">todos</button><button data-sel="nenhum">nenhum</button><button data-sel="comfoto">só os que têm foto</button></div>
+    <div class="chips" id="lPerfs">${PERFUMES.map(p=>`<span class="chip${LOTE.perfs.includes(p.s)?' on':''}" data-p="${p.s}">${esc(p.n)}</span>`).join('')}</div>
+  </div>
+
+  <p class="dica" style="margin:-6px 0 16px">Cada peça sai nos dois formatos: 1080 × 1350 pro feed e 1080 × 1920 pro stories. O lote sempre usa a resolução padrão, pra não gerar um .zip gigante.</p>
+
+  <label class="check"><input type="checkbox" id="lHeads" ${LOTE.todasHeads?'checked':''}> No Deo News, gerar as 7 headlines de cada perfume</label>
+
+  <div class="avisoBox" id="lConta"></div>
+  <div class="barraProg"><i id="lBarra"></i></div>
+  <p class="dica" id="lStatus">Pronto pra começar.</p>
+  <button class="btn" id="lIr">Gerar o .zip</button>`;
+  $('#modal').classList.add('on');
+
+  const conta=()=>{
+    const heads=$('#lHeads').checked;
+    let n=0;
+    LOTE.tpls.forEach(t=>{ n += (t===3&&heads?7:1) * LOTE.perfs.length * LOTE.formatos.length; });
+    $('#lConta').textContent = n ? `${n} arquivo(s) nesta configuração — cerca de ${Math.max(1,Math.round(n*1.4/60))} min de processamento.` : 'Selecione ao menos um criativo, um perfume e um formato.';
+    $('#lIr').disabled = !n;
+  };
+  const alterna=(sel,campo,attr,tipo)=>{
+    $$(sel+' .chip').forEach(c=>c.onclick=()=>{
+      const v = tipo==='num'?parseInt(c.dataset[attr],10):c.dataset[attr];
+      const i=LOTE[campo].indexOf(v);
+      if(i>-1) LOTE[campo].splice(i,1); else LOTE[campo].push(v);
+      c.classList.toggle('on'); conta();
+    });
+  };
+  alterna('#lTpls','tpls','t','num');
+  alterna('#lPerfs','perfs','p');
+  $$('[data-sel]').forEach(b=>b.onclick=()=>{
+    const m=b.dataset.sel;
+    LOTE.perfs = m==='todos'?PERFUMES.map(p=>p.s) : m==='nenhum'?[] : PERFUMES.filter(p=>LIB[p.s]||p.t).map(p=>p.s);
+    $$('#lPerfs .chip').forEach(c=>c.classList.toggle('on',LOTE.perfs.includes(c.dataset.p)));
+    conta();
+  });
+  $('#lHeads').onchange=()=>{LOTE.todasHeads=$('#lHeads').checked;conta();};
+  $('#lIr').onclick=rodarLote;
+  conta();
+}
+
+function esperarImagens(){
+  const ims=[...$('#canvas').querySelectorAll('img')].filter(i=>i.src);
+  return Promise.all(ims.map(i=>i.complete?Promise.resolve():new Promise(r=>{i.onload=i.onerror=r;})));
+}
+
+async function rodarLote(){
+  const zip=new JSZip();
+  const guardado={tpl:D.tpl,perfume:D.perfume,formato:D.formato,de:D.de,por:D.por,off:D.off,headIdx:D.t3.headIdx};
+  const fila=[];
+  LOTE.tpls.forEach(t=>LOTE.perfs.forEach(s=>LOTE.formatos.forEach(f=>{
+    if(t===3&&$('#lHeads').checked){ for(let h=0;h<heads().length;h++) fila.push({t,s,f,h}); }
+    else fila.push({t,s,f,h:null});
+  })));
+
+  $('#lIr').disabled=true; let falhas=0;
+  for(let i=0;i<fila.length;i++){
+    const it=fila[i];
+    D.tpl=it.t; D.perfume=it.s; D.formato=it.f;
+    aplicarPreco(it.s);
+    if(it.h!==null) D.t3.headIdx=it.h;
+    $$('.tpl').forEach((t,k)=>t.classList.toggle('on',k+1===D.tpl));
+    $('#canvas').className=D.formato;
+    pintar();
+    await esperarImagens();
+    $('#lStatus').textContent=`${i+1} de ${fila.length} · ${PERFUMES.find(p=>p.s===it.s).n}`;
+    $('#lBarra').style.width=Math.round((i+1)/fila.length*100)+'%';
+    try{
+      const cv=await capturar();
+      const b64=cv.toDataURL('image/png').split(',')[1];
+      const nome=`DB_C${it.t}_${it.s}_${rotuloFmt[it.f]}${it.h!==null?'_h'+(it.h+1):''}.png`;
+      zip.file(nome,b64,{base64:true});
+    }catch(e){ falhas++; }
+  }
+
+  $('#lStatus').textContent='Fechando o arquivo…';
+  const blob=await zip.generateAsync({type:'blob'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download=`deobeauty-estaticos-${new Date().toISOString().slice(0,10)}.zip`;
+  a.click(); URL.revokeObjectURL(a.href);
+
+  Object.assign(D,{tpl:guardado.tpl,perfume:guardado.perfume,formato:guardado.formato,de:guardado.de,por:guardado.por,off:guardado.off});
+  D.t3.headIdx=guardado.headIdx;
+  selP.value=D.perfume; $('#fDe').value=D.de; $('#fPor').value=D.por; $('#fOff').value=D.off;
+  render();
+  $('#lStatus').textContent='Pronto.'; $('#lIr').disabled=false;
+  toast(falhas?`Zip gerado · ${falhas} peça(s) falharam`:'Zip gerado');
+}
+
+$('#btnFrascos').onclick=modalFrascos;
+$('#btnPrecos').onclick=modalPrecos;
+$('#btnPresets').onclick=modalPresets;
+$('#btnLoteG').onclick=modalLote;
+document.addEventListener('click',e=>{ if(e.target.hasAttribute&&e.target.hasAttribute('data-x')) $('#modal').classList.remove('on'); });
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape') $('#modal').classList.remove('on');
+  if(e.target.matches('input,textarea,select')) return;
+  if(e.key>='1'&&e.key<='6'){D.tpl=+e.key;render();}
+  if(e.key==='b'||e.key==='B') modalLote();
+  if((e.key==='s'||e.key==='S')&&!e.metaKey&&!e.ctrlKey) $('#btnPng').click();
+});
+
+/* ==================== LEITOR DE BRIEFING ==================== */
+const semAcento=s=>String(s).normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();
+
+const ROTULOS=[
+ {k:'criativo',  re:/^criativo\b/},
+ {k:'ref',       re:/^referencia\s+visual/},
+ {k:'direcao',   re:/^direcionamento\s+visual/},
+ {k:'kicker',    re:/^kicker/},
+ {k:'cabecalho', re:/^cabecalho/},
+ {k:'headline',  re:/^(opcoes\s+de\s+)?headline/},
+ {k:'sub',       re:/^subheadline/},
+ {k:'baloes',    re:/^baloes/},
+ {k:'selo',      re:/^selo/},
+ {k:'cta',       re:/^cta\b/}
+];
+
+function normalizarVars(t){
+  return String(t)
+    .replace(/\{\s*produto\s*\}/gi,'{PERFUME}')
+    .replace(/\[\s*perf\.?\s*deobeauty\s*\]/gi,'{PERFUME}')
+    .replace(/\[\s*nome\s+do\s+(perfume|produto)\s*\]/gi,'{PERFUME}')
+    .replace(/\{\s*(volume\s+da\s+)?ess[êe]ncia\s*\}/gi,'{ESSENCIA}')
+    .replace(/\{\s*pre[çc]o_por\s*\}/gi,'{POR}')
+    .replace(/\{\s*pre[çc]o_de\s*\}/gi,'{DE}')
+    .replace(/\{\s*desconto\s*\}/gi,'{OFF}')
+    .replace(/\{\s*r\$\s*[\d.,]+\s*\}/gi,'{POR}')
+    .replace(/\[\s*vol\.?\s*\]/gi,'{VOLUME}')
+    .replace(/\[\s*pre[çc]o\s*\]/gi,'{POR}')
+    .replace(/\[\s*categoria\s*\]/gi,'{CATEG}');
+}
+
+function lerBriefing(txt){
+  const linhas=txt.split('\n').map(l=>l.replace(/\s+$/,''));
+  const bloco={}; let atual=null;
+  linhas.forEach(l=>{
+    const nu=semAcento(l.trim().replace(/[:：]\s*$/,''));
+    const achado=ROTULOS.find(r=>r.re.test(nu));
+    if(achado && nu.length<64){
+      atual=achado.k;
+      bloco[atual]=bloco[atual]||[];
+      const resto=l.split(/[:：]/).slice(1).join(':').trim();
+      if(resto) bloco[atual].push(resto);
+      if(achado.k==='criativo'){
+        const m=l.match(/(\d+)/); if(m) bloco.num=parseInt(m[1],10);
+      }
+      return;
+    }
+    if(atual && l.trim()) bloco[atual].push(l.trim());
+  });
+  return bloco;
+}
+
+function aplicarBriefing(txt){
+  const b=lerBriefing(txt);
+  const pegou=[], faltou=[];
+  const junta=k=>(b[k]||[]).map(normalizarVars).join(' ').trim();
+  const lista=k=>(b[k]||[]).map(normalizarVars);
+
+  if(b.num&&b.num>=1&&b.num<=6){ D.tpl=b.num; pegou.push('criativo '+b.num); }
+
+  // CTA — sempre respeitado
+  const cta=junta('cta');
+  if(cta){ D.cta=cta.replace(/\[.*?\]/g,'').trim()||cta; pegou.push('CTA'); }
+  else faltou.push('CTA (mantive o atual)');
+
+  // selo → preços
+  const selo=junta('selo');
+  if(selo){
+    const vals=[...selo.matchAll(/r\$\s*([\d.]+,\d{2})/gi)].map(m=>m[1]);
+    const off=selo.match(/(\d{1,2})\s*%/);
+    if(vals.length>=2){ D.padrao={de:vals[0],por:vals[1]}; D.de=vals[0]; D.por=vals[1]; pegou.push('preços do selo'); }
+    else if(vals.length===1){ D.padrao={de:D.padrao.de,por:vals[0]}; D.por=vals[0]; pegou.push('preço do selo'); }
+    if(off){ D.off=off[1]+'%'; }
+    if(D.tpl===5) D.t5.selo=selo.replace(/^apenas\s*/i,'').trim()||D.t5.selo;
+  }
+
+  const kick=junta('kicker'), head=lista('headline'), sub=lista('sub');
+
+  if(D.tpl===1){
+    if(kick){ D.t1.kick=kick; pegou.push('kicker'); }
+    if(head.length){ D.t1.head=head.join(' '); pegou.push('headline'); }
+    const pares=sub.filter(l=>l.includes('|')).map(l=>l.split('|').map(x=>x.trim()));
+    if(pares.length>=2){
+      D.t1.colA=pares[0][0]||D.t1.colA; D.t1.colB=pares[0][1]||D.t1.colB;
+      ['a1','a2','a3'].forEach((k,i)=>{ if(pares[i+1]) D.t1[k]=pares[i+1][0]||''; });
+      ['b1','b2','b3'].forEach((k,i)=>{ if(pares[i+1]) D.t1[k]=pares[i+1][1]||''; });
+      pegou.push('tabela comparativa');
+    } else if(sub.length) faltou.push('tabela do comparativo — separe as colunas com |');
+  }
+
+  if(D.tpl===2){
+    if(kick){
+      const nome=kick.split('\n')[0].replace(/\[|\]/g,'').replace(/online/i,'')
+        .replace(/[^\p{L}\p{N}\s'.-]/gu,'').trim();
+      if(nome && !/nome da amiga/i.test(nome)){ D.t2.amiga=nome; pegou.push('nome da amiga'); }
+    }
+    const bal=lista('baloes').filter(l=>/\[(recebido|enviado)\]/i.test(l));
+    if(bal.length){
+      D.t2.msgs=bal.map(l=>{
+        const env=/\[enviado\]/i.test(l);
+        let t=l.replace(/\[(recebido|enviado)\]\s*/i,'').trim();
+        if(/^\[?\s*foto\b/i.test(t)) t='[foto]';
+        return (env?'e: ':'r: ')+t;
+      }).join('\n');
+      pegou.push(bal.length+' balões');
+    } else faltou.push('balões — precisam vir marcados com [recebido] / [enviado]');
+  }
+
+  if(D.tpl===3){
+    const cab=lista('cabecalho');
+    if(cab.length>1){ D.t3.editoria=cab[cab.length-1].toUpperCase(); pegou.push('editoria'); }
+    const ops=head.filter(l=>/^\d+[.)]/.test(l)).map(l=>l.replace(/^\d+[.)]\s*/,''));
+    if(ops.length){ D.heads3=ops; D.t3.headIdx=0; pegou.push(ops.length+' headlines'); }
+    else if(head.length){ D.heads3=[head.join(' ')]; D.t3.headIdx=0; pegou.push('headline'); }
+    if(sub.length){ D.t3.lead=sub.join(' '); pegou.push('subheadline'); }
+  }
+
+  if(D.tpl===4){
+    if(head.length){ D.t4.head=head.join(' ').toLowerCase(); pegou.push('headline'); }
+    sub.forEach(l=>{
+      const m=l.match(/^(.+?):\s*(.+)$/);
+      if(!m)return;
+      const rot=semAcento(m[1]);
+      if(rot.includes('efeito')){ D.t4.r1t=m[1]+':'; D.t4.r1=m[2]; }
+      else if(rot.includes('nao serve')||rot.includes('para quem')){ D.t4.r2t=m[1]+':'; D.t4.r2=m[2]; }
+      else if(rot.includes('valor')||rot.includes('preco')){ D.t4.r3t=m[1]+':'; }
+    });
+    if(sub.length) pegou.push('nota de papel');
+  }
+
+  if(D.tpl===5){
+    if(head.length){
+      D.t5.head=head[0];
+      if(head[1]) D.t5.sub=head.slice(1).join(' ')+(sub.length?' '+sub.join(' '):'');
+      pegou.push('headline');
+    }
+    if(sub.length && !head[1]){ D.t5.sub=sub.join(' '); pegou.push('subheadline'); }
+  }
+
+  if(D.tpl===6){
+    if(head.length){ D.t6.head=head.join(' '); pegou.push('headline'); }
+    if(sub.length){ D.t6.sub=sub.join(' '); pegou.push('subheadline'); }
+    const c=junta('cta');
+    if(c){
+      const partes=c.split(/\n|\[/)[0].trim();
+      if(partes) D.t6.lbl=partes;
+    }
+  }
+
+  return {pegou,faltou};
+}
+
+function modalBriefing(){
+  $('#modalCx').innerHTML=`
+  <button class="fechar" data-x>×</button>
+  <h3>Colar briefing</h3>
+  <p>Cole o bloco do criativo como ele vem no documento — com as palavras CRIATIVO, KICKER, HEADLINE, SUBHEADLINE, BALÕES, SELO e CTA. O motor separa cada parte e preenche a peça sozinho.</p>
+  <div class="campo" style="margin-top:14px">
+    <textarea id="brTxt" style="min-height:260px;font-size:12.5px" placeholder="CRIATIVO 3
+CABEÇALHO
+DEO NEWS
+Perfumaria
+OPÇÕES DE HEADLINE
+1. PADRÃO INTERNACIONAL COM PREÇO DAQUI...
+2. PERFUME COM {ESSÊNCIA} DE ESSÊNCIA POR {PREÇO_POR}...
+SUBHEADLINE
+O {PRODUTO} é [CATEGORIA] com {ESSÊNCIA} de essência...
+CTA
+COMPRAR AGORA"></textarea>
+  </div>
+  <p class="dica">No comparativo, separe as duas colunas da tabela com <code>|</code> — tipo <code>Deo Colônia | Eau de Parfum</code>. Nos balões, mantenha <code>[recebido]</code> e <code>[enviado]</code>.</p>
+  <button class="btn" id="brIr">Ler e preencher</button>
+  <div id="brSaida"></div>`;
+  $('#modal').classList.add('on');
+  $('#brIr').onclick=()=>{
+    const t=$('#brTxt').value.trim();
+    if(!t){toast('Cole o briefing primeiro');return;}
+    const r=aplicarBriefing(t);
+    salvar(); render();
+    $('#fCta').value=D.cta; $('#fDe').value=D.de; $('#fPor').value=D.por; $('#fOff').value=D.off;
+    $('#brSaida').innerHTML=`
+      <div class="avisoBox" style="margin-top:16px">
+        <b style="color:#F0DDBE">Preenchido:</b> ${r.pegou.length?esc(r.pegou.join(', ')):'nada foi reconhecido'}.
+        ${r.faltou.length?`<br><b style="color:#D89A5C">Não reconheci:</b> ${esc(r.faltou.join(' · '))}`:''}
+      </div>`;
+    toast(r.pegou.length?'Briefing aplicado':'Não reconheci o formato');
+  };
+}
+$('#btnBrief').onclick=modalBriefing;
+
+/* ==================== MODO SIMPLES ==================== */
+const GUIA=[
+ {n:'Comparativo de preço',d:'Explica por que custa menos que o importado. É o criativo que convence quem nunca ouviu falar da marca.',
+  tags:['público frio','convence pelo preço']},
+ {n:'Conversa de amigas',d:'Simula um papo no WhatsApp. Funciona porque parece indicação, não anúncio.',
+  tags:['parece indicação','prende a atenção']},
+ {n:'Notícia (Deo News)',d:'Parece matéria de revista. É o melhor pra testar muitas frases diferentes e descobrir qual vende.',
+  tags:['testar frases','público frio']},
+ {n:'Box embaçado',d:'Cena de banheiro com frase escrita no vidro. Parece foto de cliente.',
+  tags:['orgânico','precisa de fundo']},
+ {n:'Fileira de frascos',d:'Mostra três perfumes juntos. Bom pra quem já conhece a marca e está escolhendo qual comprar.',
+  tags:['público morno','mostra a linha']},
+ {n:'Stories espontâneo',d:'Parece stories de pessoa comum, gravado no dia a dia.',
+  tags:['orgânico','precisa de fundo']}
+];
+
+function faltaConfig(){
+  const semFoto=PERFUMES.filter(p=>!LIB[p.s]).length;
+  return {semFoto,pronto:semFoto===0};
+}
+
+function renderSimples(){
+  const p=perf(), pr=precoDe(D.perfume), f=faltaConfig();
+  const precisaFundo=(D.tpl===4&&!D.bg4)||(D.tpl===6&&!D.bg6);
+
+  let setup='';
+  if(!f.pronto){
+    setup=`<div id="setup">
+      <h3>Falta uma coisa só</h3>
+      <p>Arraste as fotos dos frascos uma vez. Ficam guardadas neste computador e entram sozinhas em toda peça daqui pra frente.</p>
+      <div class="item">
+        <span class="mk no">1</span>
+        <span class="txt">Enviar as fotos dos frascos
+          <small>${f.semFoto} de ${PERFUMES.length} ainda sem foto</small></span>
+        <button id="suFrascos">enviar</button>
+      </div>
+    </div>`;
+  }
+
+  $('#simples').innerHTML=`${setup}
+
+  <button class="btn vazado" id="sBrief" style="margin-bottom:22px">Colar briefing pronto</button>
+
+  <div class="passo">
+    <div class="cab"><span class="num">1</span><b>Qual perfume</b></div>
+    <p class="exp">A foto do frasco e o preço entram sozinhos.</p>
+    <select id="sPerf">${PERFUMES.map(x=>`<option value="${x.s}"${x.s===D.perfume?' selected':''}>${esc(x.n)}</option>`).join('')}</select>
+    <div class="fotoPasso">
+      <div class="mini">${LIB[p.s]?`<img src="${LIB[p.s]}" alt="">`:'<span>sem foto</span>'}</div>
+      <div class="info"><b>Foto do frasco</b>${LIB[p.s]?'guardada neste computador':'envie uma imagem em PNG com fundo transparente ou branco'}</div>
+      <button id="sTrocaFoto">${LIB[p.s]?'trocar':'enviar'}</button>
+      <input type="file" id="sFotoInp" accept="image/*" hidden>
+    </div>
+    <div id="sPreco">
+      <span class="de">R$ ${esc(pr.de)}</span>
+      <span class="por">R$ ${esc(pr.por)}</span>
+      <span class="off">${esc(D.off)} OFF</span>
+    </div>
+    <button class="linkTxt" id="sIrPreco" style="text-align:left;padding-top:7px">${ehExcecao(D.perfume)?'preço próprio deste perfume · alterar':'preço de toda a linha · alterar'}</button>
+  </div>
+
+  <div class="passo">
+    <div class="cab"><span class="num">2</span><b>Qual criativo</b></div>
+    <p class="exp">O formato certo é escolhido junto com o criativo.</p>
+    ${GUIA.map((g,i)=>`<button class="cartao${D.tpl===i+1?' on':''}" data-c="${i+1}">
+      <b>${i+1}. ${g.n}</b><p>${g.d}</p>
+      <span class="tags">${g.tags.map(t=>`<span>${t}</span>`).join('')}</span>
+    </button>`).join('')}
+  </div>
+
+  <div class="passo">
+    <div class="cab"><span class="num">3</span><b>Baixar</b></div>
+    <p class="exp">Saem dois arquivos: um pro feed e um pro stories.</p>
+    ${precisaFundo?`<p class="exp" style="color:#D89A5C">Esse criativo precisa de uma foto de fundo antes.</p>
+      <button class="btn vazado" id="sFundo">Enviar foto de fundo</button>
+      <input type="file" id="sFundoInp" accept="image/*" hidden>
+      <div style="height:8px"></div>`:''}
+    <div class="chips" style="margin:0 0 12px">
+      <span class="chip${D.formato==='f45'?' on':''}" data-ver="f45">ver no feed</span>
+      <span class="chip${D.formato==='f916'?' on':''}" data-ver="f916">ver no stories</span>
+    </div>
+    <button class="btnGrande" id="sBaixar">Baixar feed + stories</button>
+    <button class="linkTxt" id="sTextos">Quero mudar os textos</button>
+    <button class="linkTxt" id="sLote">Fazer vários perfumes de uma vez</button>
+  </div>`;
+
+  $$('#simples [data-ver]').forEach(c=>c.onclick=()=>{
+    D.formato=c.dataset.ver; D.safe=(D.formato==='f916'); render();
+  });
+
+  $('#sPerf').onchange=()=>{D.perfume=$('#sPerf').value;D.fotoCustom='';aplicarPreco(D.perfume);selP.value=D.perfume;pintar();salvar();renderSimples();};
+  $$('#simples .cartao').forEach(b=>b.onclick=()=>{
+    D.tpl=+b.dataset.c; render();
+  });
+  $('#sTrocaFoto').onclick=()=>$('#sFotoInp').click();
+  $('#sFotoInp').onchange=async()=>{
+    const f=$('#sFotoInp').files[0]; if(!f)return;
+    try{ await libSalvar(D.perfume, await reduzir(f)); D.fotoCustom=''; pintar(); renderSimples(); toast('Foto guardada'); }
+    catch(e){ toast('Não consegui ler essa imagem'); }
+  };
+  $('#sBrief').onclick=modalBriefing;
+  $('#sBaixar').onclick=()=>$('#btnPng').click();
+  $('#sTextos').onclick=()=>trocarModo('completo');
+  $('#sLote').onclick=modalLote;
+  const sf=$('#suFrascos'); if(sf) sf.onclick=modalFrascos;
+  const sip=$('#sIrPreco'); if(sip) sip.onclick=modalPrecos;
+  lerArquivo('#sFundo','#sFundoInp',d=>{ if(D.tpl===4)D.bg4=d; else D.bg6=d; pintar(); renderSimples(); toast('Fundo aplicado'); });
+}
+
+function trocarModo(m){
+  D.modo=m;
+  const s=(m==='simples');
+  $('#simples').style.display=s?'block':'none';
+  $('#abas').style.display=s?'none':'flex';
+  $('#campos').style.display=s?'none':'block';
+  $$('.soCompleto').forEach(e=>e.style.display=s?'none':'');
+  $('#mSimples').classList.toggle('on',s);
+  $('#mCompleto').classList.toggle('on',!s);
+  if(s) renderSimples();
+  salvar();
+}
+$('#mSimples').onclick=()=>trocarModo('simples');
+$('#mCompleto').onclick=()=>trocarModo('completo');
+
+/* ==================== AJUDA ==================== */
+function modalAjuda(){
+  $('#modalCx').innerHTML=`
+  <button class="fechar" data-x>×</button>
+  <h3>Como usar</h3>
+  <p>Esta ferramenta monta as artes de anúncio da DeoBeauty. Você escolhe o perfume e o tipo de criativo; o texto, o preço e a foto do frasco entram sozinhos. Nada é publicado automaticamente — você baixa a imagem e sobe no gerenciador.</p>
+
+  <div class="grupo" style="margin-top:20px"><h2>Os dois modos</h2>
+    <p style="margin:0"><b style="color:var(--creme)">Passo a passo</b> é o dia a dia: três escolhas e baixar.<br>
+    <b style="color:var(--creme)">Tudo aberto</b> libera cada texto pra edição, os formatos e o ajuste fino.</p>
+  </div>
+
+  <div class="grupo"><h2>A configuração inicial</h2>
+    <p style="margin:0"><b style="color:var(--creme)">Frascos</b> — arraste as fotos dos perfumes de uma vez. Ficam guardadas neste computador e entram sozinhas em cada peça. É a única coisa a fazer antes de começar.<br>
+    <b style="color:var(--creme)">Preços</b> — já vem com R$ 99,90 pra linha inteira. Quando o valor mudar, troca num campo só e vale pra todos. Lançamento com preço diferente entra como exceção na mesma tela.</p>
+  </div>
+
+  <div class="grupo"><h2>Produzir em lote</h2>
+    <p style="margin:0">Marca vários perfumes e vários criativos e sai um .zip com tudo pronto, já com o nome certo em cada arquivo. É o que economiza o dia inteiro. Antes de mandar um lote grande, rode um teste com 2 perfumes.</p>
+  </div>
+
+  <div class="grupo"><h2>Termos que aparecem</h2>
+    <p style="margin:0"><b style="color:var(--creme)">Safezone</b> — a faixa de cima e de baixo onde o Instagram cobre a arte com os botões dele. Não coloque texto ali.<br>
+    <b style="color:var(--creme)">Headline</b> — a frase grande, a que faz a pessoa parar de rolar.<br>
+    <b style="color:var(--creme)">Público frio</b> — quem nunca teve contato com a marca.<br>
+    <b style="color:var(--creme)">4:5, 1:1, 9:16</b> — o formato da imagem. 4:5 é o feed, 9:16 é stories e reels.</p>
+  </div>
+
+  <div class="grupo"><h2>Se der errado</h2>
+    <p style="margin:0"><b style="color:var(--creme)">O frasco não aparece</b> — aquele perfume ainda não tem foto enviada. Abra Frascos e mande a imagem.<br>
+    <b style="color:var(--creme)">O download não acontece</b> — quase sempre é foto faltando. Confira se todos os perfumes da seleção têm imagem.<br>
+    <b style="color:var(--creme)">Sumiu tudo o que eu tinha configurado</b> — os dados ficam neste navegador. Outro computador, ou limpar o histórico, começa do zero.</p>
+  </div>`;
+  $('#modal').classList.add('on');
+}
+$('#btnAjuda').onclick=modalAjuda;
+
+function boasVindas(){
+  try{ if(localStorage.getItem('db_visto'))return; localStorage.setItem('db_visto','1'); }catch(e){}
+  modalAjuda();
+}
+
+/* ==================== START ==================== */
+carregar();
+selP.value=D.perfume;
+['fVolume','fEssencia','fCateg','fDe','fPor','fOff'].forEach(id=>{
+  const k={fVolume:'volume',fEssencia:'essencia',fCateg:'categ',fDe:'de',fPor:'por',fOff:'off'}[id];
+  $('#'+id).value=D[k];
+});
+$('#fCta').value=D.cta;
+$('#fEscala').value=String(D.escala||1);
+render();
+trocarModo(D.modo||'simples');
+abrirDB().then(libCarregar).then(()=>{aplicarPreco(D.perfume);pintar();if(D.modo!=='completo')renderSimples();});
+boasVindas();
+</script>
+</body>
+</html>
