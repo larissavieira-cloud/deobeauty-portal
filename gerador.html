@@ -6,11 +6,26 @@
 <title>DeoBeauty · Gerador de Estáticos</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Jost:wght@300;400;500;600;700&family=Caveat:wght@500;700&family=Oswald:wght@500;600;700&family=Archivo+Black&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 <style>
+/* Recline é a fonte da marca e não vem do Google Fonts.
+   Coloque os arquivos em assets/ dentro do repositório e ela entra sozinha.
+   Sem os arquivos, o navegador usa Cormorant Garamond, que é o fallback
+   já adotado no portal. */
+@font-face{
+  font-family:'Recline';
+  src:url('assets/Recline.woff2') format('woff2'),
+      url('assets/Recline.woff') format('woff'),
+      url('assets/Recline.ttf') format('truetype');
+  font-weight:400 700;
+  font-display:swap;
+}
+
 :root{
+  --serif:'Recline','Cormorant Garamond',Georgia,serif;
+  --sans:'Poppins',system-ui,-apple-system,sans-serif;
   /* marca */
   --dourado:#B8956A;
   --marrom:#6B4E3D;
@@ -32,7 +47,7 @@ html,body{margin:0;height:100%}
 body{
   background:var(--app-bg);
   color:var(--app-txt);
-  font-family:'Jost',system-ui,sans-serif;
+  font-family:var(--sans);
   font-size:14px;
   display:grid;
   grid-template-columns:372px 1fr;
@@ -49,7 +64,7 @@ button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit
 }
 #railTopo{padding:18px 20px 14px;border-bottom:1px solid var(--app-linha)}
 #railTopo h1{
-  margin:0;font-family:'Cormorant Garamond',Georgia,serif;
+  margin:0;font-family:var(--serif);
   font-size:24px;font-weight:600;letter-spacing:.14em;color:var(--creme);
 }
 #railTopo p{margin:3px 0 0;color:var(--app-txt-fraco);font-size:12.5px;letter-spacing:.04em}
@@ -123,7 +138,7 @@ button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit
 #canvas{
   width:1080px;position:relative;overflow:hidden;background:var(--creme);
   box-shadow:0 26px 70px rgba(0,0,0,.6);
-  font-family:'Cormorant Garamond',Georgia,serif;color:var(--preto);
+  font-family:var(--serif);color:var(--preto);
 }
 #canvas.f45{height:1350px}
 #canvas.f11{height:1080px}
@@ -137,29 +152,29 @@ button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit
 #safe div{position:absolute;left:0;right:0;background:rgba(178,34,34,.13);border-color:rgba(178,34,34,.55);border-style:dashed}
 #safe .topo{top:0;border-bottom-width:2px;border-width:0 0 2px}
 #safe .base{bottom:0;border-top-width:2px;border-width:2px 0 0}
-#safe span{position:absolute;right:16px;font-family:'Jost';font-size:19px;letter-spacing:.14em;color:rgba(178,34,34,.85)}
+#safe span{position:absolute;right:16px;font-family:var(--sans);font-size:19px;letter-spacing:.14em;color:rgba(178,34,34,.85)}
 
 /* marca d'água de logo */
-.dbLogo{font-family:'Cormorant Garamond',serif;letter-spacing:.34em;font-weight:600}
+.dbLogo{font-family:var(--serif);letter-spacing:.34em;font-weight:600}
 
 /* ===== CRIATIVO 1 — confronto ===== */
 #t1{background:#F8F2DA;padding:54px 56px;display:flex;flex-direction:column}
 #t1 .topo{display:flex;justify-content:space-between;align-items:center;margin-bottom:34px}
 #t1 .topo .marca{font-size:29px;letter-spacing:.34em;font-weight:600}
-#t1 .topo .site{font-family:'Jost';font-size:16px;font-weight:600;letter-spacing:.16em;color:var(--preto)}
-#t1 .kick{font-family:'Jost';font-weight:700;font-size:23px;letter-spacing:.06em;color:var(--vermelho);margin-bottom:4px}
+#t1 .topo .site{font-family:var(--sans);font-size:16px;font-weight:600;letter-spacing:.16em;color:var(--preto)}
+#t1 .kick{font-family:var(--sans);font-weight:700;font-size:23px;letter-spacing:.06em;color:var(--vermelho);margin-bottom:4px}
 #t1 h2{
-  font-family:'Archivo Black',sans-serif;font-size:96px;line-height:.9;
-  margin:0 0 18px;letter-spacing:-.03em;text-transform:uppercase;
+  font-family:var(--serif);font-weight:700;font-size:102px;line-height:.94;
+  margin:0 0 20px;letter-spacing:-.012em;text-transform:uppercase;
 }
 #t1 .arena{flex:1;display:grid;grid-template-columns:1fr 1.25fr 1fr;align-items:start;min-height:0;position:relative}
 #t1 .lado{padding-top:26px}
-#t1 .lado .rot{display:block;font-family:'Jost';font-weight:700;font-size:20px;letter-spacing:.09em;margin-bottom:2px}
+#t1 .lado .rot{display:block;font-family:var(--sans);font-weight:700;font-size:20px;letter-spacing:.09em;margin-bottom:2px}
 #t1 .esq .rot{color:#6E6459}
 #t1 .dir .rot{color:var(--vermelho)}
-#t1 .lado .pre{display:block;font-family:'Archivo Black',sans-serif;font-size:52px;line-height:1.05;letter-spacing:-.02em;margin-bottom:18px}
+#t1 .lado .pre{display:block;font-family:var(--serif);font-weight:700;font-size:58px;line-height:1.05;letter-spacing:-.008em;margin-bottom:18px}
 #t1 .esq .pre{color:#6E6459}
-#t1 .lado .li{font-family:'Jost';font-size:22px;font-weight:500;padding:5px 0;line-height:1.3}
+#t1 .lado .li{font-family:var(--sans);font-size:22px;font-weight:500;padding:5px 0;line-height:1.3}
 #t1 .esq .li{color:#7A7065}
 #t1 .esq .li::before{content:"×";color:#A89C8E;font-weight:700;margin-right:9px}
 #t1 .dir .li::after{content:" ✓";color:#2E7D32;font-weight:700}
@@ -168,26 +183,26 @@ button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit
 #t1 .selo{
   position:absolute;right:0;bottom:24px;width:186px;height:186px;border-radius:50%;
   background:var(--vermelho);color:#fff;display:flex;flex-direction:column;align-items:center;
-  justify-content:center;font-family:'Jost';box-shadow:0 12px 28px rgba(0,0,0,.2);
+  justify-content:center;font-family:var(--sans);box-shadow:0 12px 28px rgba(0,0,0,.2);
 }
 #t1 .selo b{font-size:48px;line-height:1;font-weight:700}
 #t1 .selo span{font-size:17px;margin-top:3px}
 #t1 .rodape{margin-top:26px;text-align:center}
 #t1 .cta{
-  display:inline-block;background:#fff;color:var(--preto);font-family:'Jost';
+  display:inline-block;background:#fff;color:var(--preto);font-family:var(--sans);
   font-weight:700;font-size:27px;letter-spacing:.05em;padding:20px 66px;border-radius:999px;
   box-shadow:0 6px 20px rgba(0,0,0,.09);
 }
-#t1 .tag{font-family:'Jost';font-size:20px;color:#5F564C;margin-top:20px}
-#t1 .legal{font-family:'Jost';font-size:16px;color:#8A8074;margin-top:14px}
+#t1 .tag{font-family:var(--sans);font-size:20px;color:#5F564C;margin-top:20px}
+#t1 .legal{font-family:var(--sans);font-size:16px;color:#8A8074;margin-top:14px}
 
 /* ===== CRIATIVO 2 — print ===== */
 #t2{background:#F4F1EA;display:flex;flex-direction:column}
 #t2 .barra{background:#F6F4F1;padding:20px 26px;display:flex;align-items:center;gap:14px;border-bottom:1px solid #E2DCD3}
 #t2 .voltar{font-size:30px;color:#8C8378;line-height:1;margin-right:2px}
-#t2 .av{width:56px;height:56px;border-radius:50%;background:#C3BCD4;color:#fff;display:flex;align-items:center;justify-content:center;font-family:'Jost';font-size:23px;font-weight:600;overflow:hidden;flex:none}
+#t2 .av{width:56px;height:56px;border-radius:50%;background:#C3BCD4;color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--sans);font-size:23px;font-weight:600;overflow:hidden;flex:none}
 #t2 .av img{width:100%;height:100%;object-fit:cover}
-#t2 .quem{font-family:'Jost';line-height:1.15}
+#t2 .quem{font-family:var(--sans);line-height:1.15}
 #t2 .quem b{display:block;font-size:26px;font-weight:600;color:#17150F}
 #t2 .quem span{font-size:17px;color:#8C8378}
 #t2 .fluxo{
@@ -200,7 +215,7 @@ button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit
 }
 #t2 .bal{
   max-width:66%;padding:14px 17px 24px;border-radius:11px;position:relative;
-  font-family:'Jost';font-size:25px;line-height:1.36;color:#17150F;
+  font-family:var(--sans);font-size:25px;line-height:1.36;color:#17150F;
   box-shadow:0 1px 1px rgba(0,0,0,.09);
 }
 #t2 .bal .hr{position:absolute;right:13px;bottom:6px;font-size:15px;color:#9A9287}
@@ -210,32 +225,32 @@ button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit
 #t2 .env .hr::after{content:" ✓✓";color:#4D9FE0;letter-spacing:-.12em}
 #t2 .bal.foto{padding:7px 7px 24px;background:#E4F2D2;align-self:flex-end;max-width:40%}
 #t2 .bal.foto img{width:100%;border-radius:7px;display:block;background:#fff;aspect-ratio:1/1.14;object-fit:contain}
-#t2 .encenacao{align-self:center;background:rgba(23,21,15,.62);color:#F3EDE4;font-family:'Jost';font-size:17px;letter-spacing:.05em;padding:6px 18px;border-radius:999px;margin-bottom:6px}
+#t2 .encenacao{align-self:center;background:rgba(23,21,15,.62);color:#F3EDE4;font-family:var(--sans);font-size:17px;letter-spacing:.05em;padding:6px 18px;border-radius:999px;margin-bottom:6px}
 #t2 .pe{background:#F4F1EA;padding:20px 40px 30px;text-align:center}
 #t2 .pe .marca{font-size:22px;letter-spacing:.34em;margin-bottom:14px;display:block;color:#3A342C}
-#t2 .cta{display:block;background:#17150F;color:#F4F1EA;font-family:'Jost';font-weight:600;font-size:26px;letter-spacing:.12em;padding:20px;border-radius:999px}
+#t2 .cta{display:block;background:#17150F;color:#F4F1EA;font-family:var(--sans);font-weight:600;font-size:26px;letter-spacing:.12em;padding:20px;border-radius:999px}
 
 /* ===== CRIATIVO 3 — manchete ===== */
 #t3{background:#F2EFE8;display:flex;flex-direction:column;padding:44px 40px 40px}
 #t3 .cab{background:#111110;color:#F2EFE8;padding:20px 28px;display:flex;justify-content:space-between;align-items:center;flex:none}
 #t3 .cab .esq{display:flex;align-items:center;gap:18px}
 #t3 .cab .marca{font-size:26px;letter-spacing:.3em}
-#t3 .cab .news{font-family:'Jost';font-size:26px;letter-spacing:.42em;font-weight:600}
-#t3 .cab .data{font-family:'Jost';font-size:15px;letter-spacing:.1em;color:#BDB4A6}
+#t3 .cab .news{font-family:var(--sans);font-size:26px;letter-spacing:.42em;font-weight:600}
+#t3 .cab .data{font-family:var(--sans);font-size:15px;letter-spacing:.1em;color:#BDB4A6}
 #t3 .corpo{padding:30px 0 0;flex:1;display:flex;flex-direction:column;min-height:0}
-#t3 .ed{font-family:'Jost';font-weight:700;font-size:18px;letter-spacing:.16em;color:#C62828;margin-bottom:14px}
+#t3 .ed{font-family:var(--sans);font-weight:700;font-size:18px;letter-spacing:.16em;color:#C62828;margin-bottom:14px}
 #t3 h2{
-  font-family:'Oswald',sans-serif;font-weight:700;font-size:64px;line-height:1.04;
-  margin:0 0 22px;text-transform:uppercase;letter-spacing:-.005em;color:#141210;
+  font-family:var(--serif);font-weight:700;font-size:70px;line-height:1.06;
+  margin:0 0 22px;text-transform:uppercase;letter-spacing:.004em;color:#141210;
 }
 #t3 .risco{height:1px;background:#CFC7B9;margin-bottom:24px;flex:none}
 #t3 .foto{background:#E7E2D8;flex:1;min-height:0;display:flex;align-items:center;justify-content:center;overflow:hidden;padding:26px}
 #t3 .foto img{max-height:100%;max-width:62%;object-fit:contain;filter:drop-shadow(0 16px 24px rgba(0,0,0,.18))}
-#t3 .cred{font-family:'Jost';font-size:15.5px;color:#8C8577;margin:14px 0 18px;line-height:1.4}
-#t3 .lead{font-family:'Jost';font-size:23px;line-height:1.58;color:#39352E;max-width:66ch}
+#t3 .cred{font-family:var(--sans);font-size:15.5px;color:#8C8577;margin:14px 0 18px;line-height:1.4}
+#t3 .lead{font-family:var(--sans);font-size:23px;line-height:1.58;color:#39352E;max-width:66ch}
 #t3 .lead b{font-weight:600;color:#141210}
 #t3 .pe{padding:26px 0 0;flex:none}
-#t3 .cta{display:block;background:#111110;color:#F2EFE8;text-align:center;font-family:'Jost';font-weight:600;font-size:25px;letter-spacing:.16em;padding:22px;border-radius:999px}
+#t3 .cta{display:block;background:#111110;color:#F2EFE8;text-align:center;font-family:var(--sans);font-weight:600;font-size:25px;letter-spacing:.16em;padding:22px;border-radius:999px}
 
 /* ===== CRIATIVO 4 — vapor ===== */
 #t4{background:#6E6862;position:relative;overflow:hidden}
@@ -244,7 +259,7 @@ button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit
 #t4 .cont{position:absolute;inset:0;padding:78px 58px 0;display:flex;flex-direction:column}
 #t4 h2{margin:0;display:flex;flex-direction:column;align-items:flex-start;gap:6px}
 #t4 h2 .ln{
-  font-family:'Caveat',cursive;font-weight:700;text-transform:uppercase;
+  font-family:'Caveat',var(--serif);font-weight:700;text-transform:uppercase;
   color:rgba(38,33,29,.84);line-height:1.02;letter-spacing:.012em;
   text-shadow:0 1px 0 rgba(255,255,255,.34), 0 0 14px rgba(255,255,255,.22);
 }
@@ -253,7 +268,7 @@ button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit
 #t4 h2 .ln u{text-decoration:underline;text-decoration-thickness:4px;text-underline-offset:6px}
 #t4 .nota{
   background:#FAF7F0;color:#2B2622;width:452px;padding:24px 26px 20px;margin-top:38px;
-  font-family:'Jost';box-shadow:0 18px 40px rgba(0,0,0,.36);transform:rotate(-2.4deg);position:relative;
+  font-family:var(--sans);box-shadow:0 18px 40px rgba(0,0,0,.36);transform:rotate(-2.4deg);position:relative;
 }
 #t4 .nota .rot{font-size:15px;font-weight:700;letter-spacing:.13em;color:#C62828;text-transform:uppercase;margin-bottom:3px}
 #t4 .nota .tx{font-size:21px;line-height:1.38;margin-bottom:15px}
@@ -261,12 +276,12 @@ button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit
 #t4 .nota .val{display:flex;align-items:baseline;gap:12px}
 #t4 .nota .de{text-decoration:line-through;color:#9A9083;font-size:20px}
 #t4 .nota .por{font-size:34px;font-weight:700;line-height:1}
-#t4 .nota .db{position:absolute;right:20px;bottom:16px;font-family:'Cormorant Garamond',serif;font-size:14px;letter-spacing:.3em;color:#B0A695}
+#t4 .nota .db{position:absolute;right:20px;bottom:16px;font-family:var(--serif);font-size:14px;letter-spacing:.3em;color:#B0A695}
 #t4 .frasco{position:absolute;right:56px;bottom:168px;width:290px}
 #t4 .frasco img{width:100%;filter:drop-shadow(0 26px 34px rgba(0,0,0,.52))}
 #t4 .cta{
   position:absolute;left:58px;bottom:58px;background:#14120F;color:#F4F1EA;
-  text-align:center;font-family:'Jost';font-weight:600;font-size:24px;letter-spacing:.14em;
+  text-align:center;font-family:var(--sans);font-weight:600;font-size:24px;letter-spacing:.14em;
   padding:19px 62px;border-radius:999px;
 }
 
@@ -277,10 +292,10 @@ button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit
 #t5 .fila{display:flex;justify-content:center;align-items:flex-end;gap:30px;width:100%;padding:0 56px;position:relative}
 #t5 .fila .it{flex:1;max-width:250px}
 #t5 .fila .it img{width:100%;height:340px;object-fit:contain;filter:drop-shadow(0 16px 26px rgba(0,0,0,.8)) drop-shadow(0 0 30px rgba(201,162,39,.14))}
-#t5 .fila .it span{display:block;font-family:'Jost';font-size:14px;letter-spacing:.2em;color:#B79355;margin-top:18px;text-transform:uppercase}
+#t5 .fila .it span{display:block;font-family:var(--sans);font-size:14px;letter-spacing:.2em;color:#B79355;margin-top:18px;text-transform:uppercase}
 #t5 h2{font-size:70px;line-height:1.12;margin:52px 0 20px;font-weight:600;font-style:italic;max-width:17ch;position:relative}
 #t5 h2 em{color:#C9A227;font-style:italic}
-#t5 .sub{font-family:'Jost';font-size:21px;color:#9D9487;line-height:1.55;max-width:46ch;padding:0 40px;position:relative}
+#t5 .sub{font-family:var(--sans);font-size:21px;color:#9D9487;line-height:1.55;max-width:46ch;padding:0 40px;position:relative}
 #t5 .sub b{display:block;color:#F2ECE1;font-weight:600;margin-top:9px;font-size:22px}
 #t5 .fundo{display:flex;justify-content:center;align-items:flex-end;margin-top:auto;width:100%;position:relative}
 #t5 .fundo img{width:168px;height:270px;object-fit:contain;margin:0 -16px;filter:drop-shadow(0 -6px 22px rgba(0,0,0,.9))}
@@ -290,14 +305,14 @@ button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit
   background:linear-gradient(145deg,#E3C25C 0%,#C9A227 46%,#A5811A 100%);
   clip-path:polygon(50.0% 0.0%, 55.8% 9.9%, 64.1% 2.0%, 66.8% 13.2%, 77.0% 7.9%, 76.5% 19.4%, 87.8% 17.3%, 84.1% 28.1%, 95.5% 29.2%, 88.9% 38.6%, 99.5% 42.9%, 90.5% 50.0%, 99.5% 57.1%, 88.9% 61.4%, 95.5% 70.8%, 84.1% 71.9%, 87.8% 82.7%, 76.5% 80.6%, 77.0% 92.1%, 66.8% 86.8%, 64.1% 98.0%, 55.8% 90.1%, 50.0% 100.0%, 44.2% 90.1%, 35.9% 98.0%, 33.2% 86.8%, 23.0% 92.1%, 23.5% 80.6%, 12.2% 82.7%, 15.9% 71.9%, 4.5% 70.8%, 11.1% 61.4%, 0.5% 57.1%, 9.5% 50.0%, 0.5% 42.9%, 11.1% 38.6%, 4.5% 29.2%, 15.9% 28.1%, 12.2% 17.3%, 23.5% 19.4%, 23.0% 7.9%, 33.2% 13.2%, 35.9% 2.0%, 44.2% 9.9%);
   color:#241B08;display:flex;flex-direction:column;align-items:center;justify-content:center;
-  font-family:'Jost';transform:rotate(-9deg);z-index:3;
+  font-family:var(--sans);transform:rotate(-9deg);z-index:3;
 }
 #t5 .selo small{font-size:19px;letter-spacing:.14em;font-weight:600}
 #t5 .selo b{font-size:40px;line-height:1.02;font-weight:700;margin:1px 0}
 #t5 .selo i{font-style:normal;font-size:16px;letter-spacing:.18em;font-weight:600}
 #t5 .cta{
   position:absolute;left:50%;transform:translateX(-50%);bottom:40px;z-index:4;
-  background:#F2ECE1;color:#0A0908;font-family:'Jost';font-weight:700;font-size:23px;
+  background:#F2ECE1;color:#0A0908;font-family:var(--sans);font-weight:700;font-size:23px;
   letter-spacing:.14em;padding:17px 54px;border-radius:999px;
 }
 
@@ -307,18 +322,18 @@ button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit
 #t6 .veu{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.42) 0%,rgba(0,0,0,0) 40%,rgba(0,0,0,.5) 100%)}
 #t6 .cont{position:absolute;inset:0;padding:270px 68px 300px;display:flex;flex-direction:column}
 #t6 h2{
-  font-family:'Jost';font-style:italic;font-weight:700;font-size:62px;line-height:1.14;
+  font-family:var(--sans);font-style:italic;font-weight:800;font-size:60px;line-height:1.16;
   color:#fff;margin:0;text-shadow:0 3px 16px rgba(0,0,0,.5);max-width:16ch;
 }
 #t6 .sub{
-  font-family:'Jost';font-style:italic;font-weight:600;font-size:34px;line-height:1.3;
+  font-family:var(--sans);font-style:italic;font-weight:600;font-size:34px;line-height:1.3;
   color:#fff;margin-top:34px;max-width:22ch;text-shadow:0 3px 14px rgba(0,0,0,.5);
 }
 #t6 .link{margin-top:auto}
-#t6 .link .lbl{font-family:'Jost';font-size:26px;color:#fff;margin-bottom:14px;text-shadow:0 2px 10px rgba(0,0,0,.5)}
+#t6 .link .lbl{font-family:var(--sans);font-size:26px;color:#fff;margin-bottom:14px;text-shadow:0 2px 10px rgba(0,0,0,.5)}
 #t6 .link .btn6{
   display:flex;align-items:center;gap:14px;background:rgba(255,255,255,.92);color:#141414;
-  border-radius:14px;padding:18px 24px;font-family:'Jost';font-size:27px;font-weight:500;width:fit-content;
+  border-radius:14px;padding:18px 24px;font-family:var(--sans);font-size:27px;font-weight:500;width:fit-content;
 }
 #t6 .link .btn6 i{font-style:normal;font-size:24px}
 
@@ -326,7 +341,7 @@ button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit
 #modal{position:fixed;inset:0;background:rgba(10,7,6,.82);display:none;align-items:center;justify-content:center;z-index:200;padding:24px}
 #modal.on{display:flex}
 #modalCx{background:var(--app-panel);border:1px solid var(--app-linha);border-radius:12px;max-width:760px;width:100%;max-height:86vh;overflow-y:auto;padding:26px 30px}
-#modalCx h3{margin:0 0 6px;font-family:'Cormorant Garamond',serif;font-size:25px;letter-spacing:.06em}
+#modalCx h3{margin:0 0 6px;font-family:var(--serif);font-size:25px;letter-spacing:.06em}
 #modalCx p{color:var(--app-txt-fraco);line-height:1.6;font-size:13px}
 #modalCx pre{background:#120E0C;border:1px solid var(--app-linha);border-radius:8px;padding:14px;overflow-x:auto;font-size:11.5px;line-height:1.55;color:#CFC3B4}
 #modalCx ol{color:var(--app-txt-fraco);line-height:1.75;font-size:13px;padding-left:18px}
@@ -458,11 +473,18 @@ button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit
 #setup .txt small{display:block;color:#9C815E;margin-top:2px;font-size:11.5px}
 #setup button{background:none;border:none;color:var(--dourado);cursor:pointer;font-size:12.5px;text-decoration:underline;padding:0;white-space:nowrap}
 
+/* só o criativo ativo aparece — vence os display:flex dos ids */
+.tpl:not(.on){display:none !important}
+
+/* imagem que não carregou não desenha moldura */
+#canvas img:not([src]),#canvas img[src=""]{visibility:hidden}
+#canvas img.falhou{visibility:hidden}
+
 /* ---------- AJUSTES POR FORMATO ---------- */
 .f916 #t1{padding:92px 62px}
-.f916 #t1 h2{font-size:118px;margin-bottom:26px}
+.f916 #t1 h2{font-size:124px;margin-bottom:28px}
 .f916 #t1 .kick{font-size:27px}
-.f916 #t1 .lado .pre{font-size:62px}
+.f916 #t1 .lado .pre{font-size:68px}
 .f916 #t1 .lado .li{font-size:26px;padding:8px 0}
 .f916 #t1 .lado .rot{font-size:23px}
 .f916 #t1 .frascoBox img{max-height:760px}
@@ -476,7 +498,7 @@ button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit
 .f916 #t2 .bal.foto{max-width:44%}
 
 .f916 #t3{padding:56px 46px 50px}
-.f916 #t3 h2{font-size:84px;margin-bottom:28px}
+.f916 #t3 h2{font-size:90px;margin-bottom:30px}
 .f916 #t3 .lead{font-size:27px}
 .f916 #t3 .ed{font-size:21px}
 .f916 #t3 .cred{font-size:18px}
@@ -582,11 +604,13 @@ button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit
     <button id="menos">−</button><span id="zoomLbl">45%</span><button id="mais">+</button>
     <div class="spacer"></div>
     <button id="btnBrief">Colar briefing</button>
+    <button id="btnRef">Analisar referência</button>
     <button id="btnAjuda">Ajuda</button>
     <button id="btnPresets" class="soCompleto">Campanhas</button>
     <button id="btnPrecos" class="soCompleto">Preços</button>
     <button id="btnFrascos" class="soCompleto">Frascos</button>
-    <button id="btnFreepik" class="soCompleto">Freepik</button>
+    <button id="btnGerar">Gerar imagem</button>
+    <button id="btnFreepik" class="soCompleto tecnico">Motor</button>
     <button id="btnPng" class="soCompleto">Baixar PNG</button>
     <button class="primario" id="btnLoteG">Produzir em lote</button>
   </div>
@@ -879,10 +903,10 @@ function montarEspec(){
     ${campoTxt('c4r2','Texto 2',D.t4.r2,'t4.r2')}
     ${campoTxt('c4r3t','Rótulo 3',D.t4.r3t,'t4.r3t')}
     <h2 style="margin-top:22px">Fundo</h2>
-    ${campoArea('c4p','Prompt da cena',D.t4.prompt,'t4.prompt')}
-    <button class="btn" id="btnIA4">Gerar fundo com Freepik</button>
+    <button class="btn" id="btnGer4">Gerar cena para este fundo</button>
     <button class="btn vazado" id="btnBg4">Enviar imagem de fundo</button>
-    <input type="file" id="fBg4" accept="image/*" hidden>`;
+    <input type="file" id="fBg4" accept="image/*" hidden>
+    ${D.bg4?'<button class="btn vazado" id="btnUp4">Melhorar a imagem</button>':''}`;
   }
   if(D.tpl===5){
     h=`<h2>Vitrine</h2>
@@ -900,10 +924,10 @@ function montarEspec(){
     ${campoTxt('c6l','Chamada do link',D.t6.lbl,'t6.lbl')}
     ${campoTxt('c6cta','Texto do botão',D.t6.cta,'t6.cta')}
     <h2 style="margin-top:22px">Fundo</h2>
-    ${campoArea('c6p','Prompt da cena',D.t6.prompt,'t6.prompt')}
-    <button class="btn" id="btnIA6">Gerar fundo com Freepik</button>
+    <button class="btn" id="btnGer6">Gerar cena para este fundo</button>
     <button class="btn vazado" id="btnBg6">Enviar imagem de fundo</button>
     <input type="file" id="fBg6" accept="image/*" hidden>
+    ${D.bg6?'<button class="btn vazado" id="btnUp6">Melhorar a imagem</button>':''}
     <p class="dica">Stories 9:16 é o formato natural aqui. Ligue as safezones pra não perder texto na barra do Instagram.</p>`;
   }
   e.innerHTML=h;
@@ -925,8 +949,19 @@ function ligarBinds(){
   lerArquivo('#btnAvatar','#fAvatar',d=>{D.avatarCustom=d;pintar();});
   lerArquivo('#btnBg4','#fBg4',d=>{D.bg4=d;pintar();toast('Fundo aplicado');});
   lerArquivo('#btnBg6','#fBg6',d=>{D.bg6=d;pintar();toast('Fundo aplicado');});
-  const i4=$('#btnIA4'); if(i4) i4.onclick=()=>gerarIA(4);
-  const i6=$('#btnIA6'); if(i6) i6.onclick=()=>gerarIA(6);
+  const g4=$('#btnGer4'); if(g4) g4.onclick=()=>{G.cena='banheiro';G.produto=true;G.pessoa='maos';G.clima='caseiro';modalGerador();};
+  const g6=$('#btnGer6'); if(g6) g6.onclick=()=>{G.cena='bolsa';G.produto=true;G.pessoa='nenhuma';G.clima='caseiro';modalGerador();};
+  [['#btnUp4',4],['#btnUp6',6]].forEach(([sel,n])=>{
+    const b=$(sel); if(!b)return;
+    b.onclick=async()=>{
+      b.disabled=true; b.textContent='Melhorando… pode levar um minuto';
+      try{
+        await melhorarImagem(n===4?D.bg4:D.bg6,img=>{ if(n===4)D.bg4=img; else D.bg6=img; pintar(); });
+        toast('Fundo melhorado');
+      }catch(e){ toast('Falhou: '+e.message); }
+      b.disabled=false; b.textContent='Melhorar a imagem';
+    };
+  });
   const lt=$('#btnLote'); if(lt) lt.onclick=lote3;
 }
 function lerArquivo(btnSel,inpSel,cb){
@@ -939,7 +974,12 @@ function lerArquivo(btnSel,inpSel,cb){
 function pintar(){
   const p=perf();
   const foto=D.fotoCustom||LIB[p.s]||drive(p.t);
-  $$('[data-img="frasco"]').forEach(im=>{im.crossOrigin='anonymous';im.src=foto;});
+  $$('[data-img="frasco"]').forEach(im=>{
+    im.crossOrigin='anonymous';
+    im.classList.remove('falhou');
+    im.onerror=()=>im.classList.add('falhou');
+    if(foto) im.src=foto; else im.classList.add('falhou');
+  });
   $('#fotoStatus').textContent = D.fotoCustom ? 'Imagem enviada agora, só para esta peça.'
     : LIB[p.s] ? 'Foto guardada. Vale para todas as peças deste perfume.'
     : 'Sem foto ainda — envie aqui ou em Frascos.';
@@ -970,7 +1010,7 @@ function pintar(){
     const d=document.createElement('div');
     if(/^\[foto\]$/i.test(txt.trim())){
       d.className='bal foto';
-      d.innerHTML=`<img crossorigin="anonymous" src="${foto}" alt=""><span class="hr">${hora}</span>`;
+      d.innerHTML=`<img crossorigin="anonymous" src="${foto}" alt="" onerror="this.classList.add('falhou')"><span class="hr">${hora}</span>`;
     }else{
       d.className='bal '+(env?'env':'rec');
       d.innerHTML=`${esc(vars(txt))}<span class="hr">${hora}</span>`;
@@ -996,16 +1036,24 @@ function pintar(){
   $('#t4 .bg').style.backgroundImage = D.bg4?`url(${D.bg4})`:'none';
 
   // 5
+  const temFoto=x=>!!(LIB[x.s]||x.t);
   const fila=$('#t5fila'); fila.innerHTML='';
-  [D.t5.p1,D.t5.p2,D.t5.p3].forEach(s=>{
-    const x=PERFUMES.find(q=>q.s===s)||PERFUMES[0];
+  const escolhidos=[D.t5.p1,D.t5.p2,D.t5.p3]
+    .map(sl=>PERFUMES.find(q=>q.s===sl))
+    .map(x=>(x&&temFoto(x))?x:null);
+  const reservas=PERFUMES.filter(temFoto);
+  escolhidos.forEach((x,i)=>{
+    const y=x||reservas[i]||PERFUMES.find(q=>q.s===D.perfume)||PERFUMES[0];
     const d=document.createElement('div');d.className='it';
-    d.innerHTML=`<img crossorigin="anonymous" src="${LIB[x.s]||drive(x.t)}" alt=""><span>${esc((x.f||x.n).toUpperCase())}</span>`;
+    d.innerHTML=`<img crossorigin="anonymous" src="${LIB[y.s]||drive(y.t)}" alt="" onerror="this.classList.add('falhou')"><span>${esc((y.f||y.n).toUpperCase())}</span>`;
     fila.appendChild(d);
   });
+  const usados=escolhidos.filter(Boolean).map(x=>x.s);
   const fundo=$('#t5fundo'); fundo.innerHTML='';
-  PERFUMES.filter(x=>x.t&&![D.t5.p1,D.t5.p2,D.t5.p3].includes(x.s)).slice(0,6).forEach(x=>{
-    const im=document.createElement('img');im.crossOrigin='anonymous';im.src=LIB[x.s]||drive(x.t);fundo.appendChild(im);
+  reservas.filter(x=>!usados.includes(x.s)).slice(0,6).forEach(x=>{
+    const im=document.createElement('img');
+    im.crossOrigin='anonymous'; im.onerror=()=>im.classList.add('falhou');
+    im.src=LIB[x.s]||drive(x.t); fundo.appendChild(im);
   });
   set('#t5 [data-f=head]',D.t5.head,true); set('#t5 [data-f=sub]',D.t5.sub,true);
   set('#t5 [data-f=selo]',D.t5.selo); set('#t5 [data-f=cta]',D.cta);
@@ -1122,12 +1170,19 @@ async function lote3(){
 }
 
 /* ==================== FREEPIK ==================== */
-const WORKER='db_freepik_worker';
-const getWorker=()=>{try{return localStorage.getItem(WORKER)||'';}catch(e){return '';}};
+/* Endereço do motor de imagens. Não é segredo — as chaves ficam guardadas
+   no servidor, nunca aqui. Preencha uma vez e toda a equipe passa a ter
+   o recurso funcionando, sem configurar nada. */
+const MOTOR_FIXO='https://deobeauty-motor.larissa-vieira.workers.dev';
+
+const WORKER='db_motor';
+const getWorker=()=>{ if(MOTOR_FIXO) return MOTOR_FIXO;
+  try{return localStorage.getItem(WORKER)||'';}catch(e){return '';} };
+const modoTecnico=()=>/[?&#](config|tecnico)/.test(location.search+location.hash);
 
 async function gerarIA(n){
   const url=getWorker();
-  if(!url){ modalFreepik(); toast('Configure o endereço do Worker primeiro'); return; }
+  if(!url){ toast('O recurso de imagem ainda não está ligado aqui'); if(modoTecnico()) modalFreepik(); return; }
   const btn=$('#btnIA'+n); btn.disabled=true; btn.textContent='Gerando…';
   try{
     const r=await fetch(url,{
@@ -1141,62 +1196,228 @@ async function gerarIA(n){
     if(n===4) D.bg4=img; else D.bg6=img;
     pintar(); salvar(); toast('Fundo gerado');
   }catch(e){ toast('Falhou: '+e.message); }
-  btn.disabled=false; btn.textContent='Gerar fundo com Freepik';
+  btn.disabled=false; btn.textContent='Gerar fundo por IA';
 }
 
 function modalFreepik(){
   const atual=getWorker();
   $('#modalCx').innerHTML=`
-  <button class="fechar" onclick="document.getElementById('modal').classList.remove('on')">×</button>
-  <h3>Conectar a Freepik</h3>
-  <p>A chave da Freepik <b>não pode ficar dentro deste arquivo</b> — qualquer pessoa que abrir o site veria e gastaria seus créditos. Ela fica num intermediário gratuito (Cloudflare Worker) e o site só conversa com ele.</p>
+  <button class="fechar" data-x>×</button>
+  <h3>Conectar os motores</h3>
+  <p>Esta tela é só sua — a equipe nunca a vê. Um único intermediário na Cloudflare guarda as chaves e atende quatro funções: gerar fundo, melhorar imagem, consultar tarefa e ler referências. As chaves nunca ficam neste arquivo.</p>
+  <div class="avisoBox">Depois que o Worker estiver no ar, cole o endereço dele na constante <code>MOTOR_FIXO</code>, no começo do código deste arquivo. A partir daí todo mundo abre o site com os recursos já ligados, sem configurar nada e sem ver esta tela.</div>
   <ol>
-    <li>Pegue a chave em <code>freepik.com</code> → sua conta → API (é um produto pago à parte da assinatura de downloads; confira o plano antes).</li>
+    <li>Pegue as chaves dos motores que quiser usar. Só precisa das que for usar: <code>aistudio.google.com</code> para o Nano Banana 2, <code>platform.openai.com</code> para o GPT Image, <code>freepik.com</code> → conta → API para Freepik e Seedream, <code>console.anthropic.com</code> para a leitura de referência.</li>
     <li>Crie uma conta em <code>dash.cloudflare.com</code> → Workers &amp; Pages → Create → Worker → Deploy.</li>
     <li>Abra o Worker → Edit code → apague tudo → cole o código abaixo → Deploy.</li>
-    <li>No Worker: Settings → Variables → adicione <code>FREEPIK_KEY</code> com a sua chave (marque Encrypt).</li>
+    <li>Settings → Variables: cadastre as que tiver — <code>GOOGLE_KEY</code>, <code>OPENAI_KEY</code>, <code>FREEPIK_KEY</code>, <code>ANTHROPIC_KEY</code>. Marque Encrypt em todas. O que faltar simplesmente não aparece como opção na ferramenta.</li>
     <li>Copie o endereço do Worker e cole no campo aqui embaixo.</li>
   </ol>
-  <pre id="codeW">export default {
+  <pre id="codeW">// ===== MODELOS =====
+// Confirme os nomes na documentação de cada serviço antes de usar.
+const MODELO_GOOGLE = "gemini-3-pro-image-preview";  // Nano Banana 2
+const MODELO_OPENAI = "gpt-image-1";                 // GPT Image
+
+const PERMITIDOS = [
+  "https://larissavieira-cloud.github.io",
+  "http://localhost:8000"
+];
+
+function cors(req) {
+  const o = req.headers.get("Origin") || "";
+  return {
+    "Access-Control-Allow-Origin": PERMITIDOS.includes(o) ? o : PERMITIDOS[0],
+    "Access-Control-Allow-Headers": "Content-Type",
+    "Access-Control-Allow-Methods": "POST, OPTIONS"
+  };
+}
+
+let CORS = {};
+const json = (o, st) => new Response(JSON.stringify(o), {
+  status: st || 200,
+  headers: { ...CORS, "Content-Type": "application/json" }
+});
+
+// proporção pedida, traduzida para o que cada serviço entende
+const TAM = {
+  freepik: { f45: "traditional_3_4", f916: "social_story_9_16", f11: "square_1_1" },
+  openai:  { f45: "1024x1536",       f916: "1024x1536",         f11: "1024x1024"  },
+  google:  { f45: "4:5",             f916: "9:16",              f11: "1:1"        }
+};
+
+export default {
   async fetch(req, env) {
-    const cors = {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Headers": "Content-Type",
-      "Access-Control-Allow-Methods": "POST, OPTIONS"
-    };
-    if (req.method === "OPTIONS") return new Response(null, { headers: cors });
-    if (req.method !== "POST") return new Response("POST apenas", { status: 405, headers: cors });
+    CORS = cors(req);
+    if (req.method === "OPTIONS") return new Response(null, { headers: CORS });
+    if (req.method !== "POST") return json({ erro: "use POST" }, 405);
 
-    const { prompt, aspect } = await req.json();
+    const origem = req.headers.get("Origin") || "";
+    if (origem && !PERMITIDOS.includes(origem)) return json({ erro: "origem não autorizada" }, 403);
 
-    const r = await fetch("https://api.freepik.com/v1/ai/text-to-image", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "x-freepik-api-key": env.FREEPIK_KEY
-      },
-      body: JSON.stringify({
-        prompt,
-        num_images: 1,
-        image: { size: aspect || "social_story_9_16" }
-      })
-    });
+    const body = await req.json();
+    const acao = body.acao || "gerar";
+    const fmt  = body.formato || "f45";
 
-    const data = await r.json();
-    if (!r.ok) {
-      return new Response(JSON.stringify({ erro: data }), { status: r.status, headers: { ...cors, "Content-Type": "application/json" } });
+    // ---------- quais motores estão ligados ----------
+    if (acao === "motores") {
+      return json({
+        freepik:  !!env.FREEPIK_KEY,
+        seedream: !!env.FREEPIK_KEY,
+        google:   !!env.GOOGLE_KEY,
+        openai:   !!env.OPENAI_KEY,
+        claude:   !!env.ANTHROPIC_KEY
+      });
     }
 
-    const b64 = data?.data?.[0]?.base64 || data?.data?.[0]?.url || null;
-    return new Response(JSON.stringify({ image: b64 }), {
-      headers: { ...cors, "Content-Type": "application/json" }
-    });
+    // ---------- gerar imagem ----------
+    if (acao === "gerar") {
+      const motor = body.motor || "freepik";
+
+      // --- Nano Banana 2 (Google) ---
+      if (motor === "google" || motor === "nano") {
+        if (!env.GOOGLE_KEY) return json({ erro: "motor do Google não configurado" }, 400);
+        const url = "https://generativelanguage.googleapis.com/v1beta/models/"
+          + MODELO_GOOGLE + ":generateContent?key=" + env.GOOGLE_KEY;
+        const r = await fetch(url, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              contents: [{ parts: [{ text: body.prompt }] }],
+              generationConfig: {
+                responseModalities: ["IMAGE"],
+                imageConfig: { aspectRatio: TAM.google[fmt] }
+              }
+            })
+        });
+        const d = await r.json();
+        if (!r.ok) return json({ erro: d }, r.status);
+        const parte = (d?.candidates?.[0]?.content?.parts || [])
+          .find(x => x.inlineData || x.inline_data);
+        const b64 = parte?.inlineData?.data || parte?.inline_data?.data || null;
+        return b64 ? json({ image: b64 }) : json({ erro: "o modelo não devolveu imagem" }, 502);
+      }
+
+      // --- GPT Image (OpenAI) ---
+      if (motor === "openai" || motor === "gpt") {
+        if (!env.OPENAI_KEY) return json({ erro: "motor da OpenAI não configurado" }, 400);
+        const r = await fetch("https://api.openai.com/v1/images/generations", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer " + env.OPENAI_KEY
+          },
+          body: JSON.stringify({
+            model: MODELO_OPENAI,
+            prompt: body.prompt,
+            size: TAM.openai[fmt],
+            n: 1
+          })
+        });
+        const d = await r.json();
+        if (!r.ok) return json({ erro: d }, r.status);
+        return json({ image: d?.data?.[0]?.b64_json || d?.data?.[0]?.url || null });
+      }
+
+      // --- Freepik / Seedream ---
+      if (!env.FREEPIK_KEY) return json({ erro: "motor da Freepik não configurado" }, 400);
+      const r = await fetch("https://api.freepik.com/v1/ai/text-to-image", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "x-freepik-api-key": env.FREEPIK_KEY },
+        body: JSON.stringify({
+          prompt: body.prompt,
+          num_images: 1,
+          image: { size: TAM.freepik[fmt] }
+        })
+      });
+      const d = await r.json();
+      if (!r.ok) return json({ erro: d }, r.status);
+      return json({ image: d?.data?.[0]?.base64 || d?.data?.[0]?.url || null });
+    }
+
+    // ---------- editar imagem (Freepik) ----------
+    // acao: "editar" | body.tipo: "fundo" (remover) | "ampliar" (Magnific) | "expandir"
+    if (acao === "editar") {
+      if (!env.FREEPIK_KEY) return json({ erro: "motor da Freepik não configurado" }, 400);
+
+      const ROTAS = {
+        fundo:    "https://api.freepik.com/v1/ai/beta/remove-background",
+        ampliar:  "https://api.freepik.com/v1/ai/image-upscaler",
+        expandir: "https://api.freepik.com/v1/ai/image-expand"
+      };
+      const rota = ROTAS[body.tipo || "fundo"];
+      if (!rota) return json({ erro: "tipo de edição desconhecido" }, 400);
+
+      const corpo = { image: body.image };
+      if (body.tipo === "ampliar") corpo.scale_factor = body.escala || "2x";
+      if (body.tipo === "expandir") corpo.image_size = TAM.freepik[fmt];
+
+      const r = await fetch(rota, {
+        method: "POST",
+        headers: { "Content-Type": "application/json", "x-freepik-api-key": env.FREEPIK_KEY },
+        body: JSON.stringify(corpo)
+      });
+      const d = await r.json();
+      if (!r.ok) return json({ erro: d }, r.status);
+
+      // alguns desses respondem em duas etapas: devolvem um id e ficam prontos depois
+      const id = d?.data?.task_id || d?.task_id;
+      const pronta = d?.data?.generated?.[0] || d?.data?.base64 || d?.data?.url || null;
+      if (pronta) return json({ image: pronta });
+      if (id) return json({ tarefa: id, rota: body.tipo });
+      return json({ erro: "o serviço não devolveu imagem" }, 502);
+    }
+
+    // ---------- consultar tarefa ----------
+    if (acao === "tarefa") {
+      const ROTAS = {
+        fundo:    "https://api.freepik.com/v1/ai/beta/remove-background/",
+        ampliar:  "https://api.freepik.com/v1/ai/image-upscaler/",
+        expandir: "https://api.freepik.com/v1/ai/image-expand/"
+      };
+      const r = await fetch((ROTAS[body.rota] || ROTAS.ampliar) + body.tarefa, {
+        headers: { "x-freepik-api-key": env.FREEPIK_KEY }
+      });
+      const d = await r.json();
+      return json({
+        status: d?.data?.status || "desconhecido",
+        image: d?.data?.generated?.[0] || d?.data?.base64 || d?.data?.url || null
+      });
+    }
+
+    // ---------- ler referência (Claude) ----------
+    if (acao === "ler") {
+      if (!env.ANTHROPIC_KEY) return json({ erro: "leitura de referência não configurada" }, 400);
+      const r = await fetch("https://api.anthropic.com/v1/messages", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": env.ANTHROPIC_KEY,
+          "anthropic-version": "2023-06-01"
+        },
+        body: JSON.stringify({
+          model: "claude-sonnet-4-6",
+          max_tokens: 1200,
+          messages: [{
+            role: "user",
+            content: [
+              { type: "image", source: { type: "base64", media_type: body.tipo || "image/png", data: body.image } },
+              { type: "text", text: body.instrucao }
+            ]
+          }]
+        })
+      });
+      const d = await r.json();
+      if (!r.ok) return json({ erro: d }, r.status);
+      return json({ texto: (d.content || []).filter(c => c.type === "text").map(c => c.text).join("\n") });
+    }
+
+    return json({ erro: "ação desconhecida" }, 400);
   }
 };</pre>
-  <p style="margin-top:14px">Confira o nome do endpoint e dos campos na documentação atual da Freepik antes de rodar — eles mudam de tempos em tempos, e alguns motores (o Mystic, por exemplo) respondem em duas etapas: devolvem um id de tarefa e você consulta depois.</p>
+  <p style="margin-top:14px">Confira os nomes dos endpoints na documentação atual da Freepik antes de rodar — eles mudam de tempos em tempos. Se algum responder diferente, é só ajustar o trecho correspondente.</p>
   <div class="campo" style="margin-top:16px">
     <label for="wUrl">Endereço do Worker</label>
-    <input type="text" id="wUrl" value="${esc(atual)}" placeholder="https://deobeauty-freepik.seu-usuario.workers.dev">
+    <input type="text" id="wUrl" value="${esc(atual)}" placeholder="https://deobeauty.seu-usuario.workers.dev">
   </div>
   <button class="btn" id="wSalvar">Salvar endereço</button>
   <button class="btn vazado" id="wCopiar">Copiar o código do Worker</button>`;
@@ -1209,6 +1430,35 @@ function modalFreepik(){
     navigator.clipboard.writeText($('#codeW').textContent).then(()=>toast('Código copiado'));
   };
 }
+
+/* ==================== CHAMADAS AO WORKER ==================== */
+async function worker(corpo){
+  const url=getWorker();
+  if(!url) throw new Error('o recurso de imagem ainda não está ligado nesta instalação');
+  const r=await fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(corpo)});
+  const j=await r.json();
+  if(!r.ok||j.erro) throw new Error(typeof j.erro==='string'?j.erro:'o motor recusou a chamada');
+  return j;
+}
+const soBase64=d=>String(d).replace(/^data:[^;]+;base64,/,'');
+
+async function editarImagem(dataUrl,tipo,aoTerminar){
+  let j=await worker({acao:'editar',tipo,image:soBase64(dataUrl),formato:D.formato});
+  if(j.tarefa){
+    for(let i=0;i<20;i++){
+      await new Promise(r=>setTimeout(r,3000));
+      const t=await worker({acao:'tarefa',tarefa:j.tarefa,rota:j.rota||tipo});
+      if(t.image){ j={image:t.image}; break; }
+      if(t.status==='FAILED') throw new Error('o serviço não conseguiu processar');
+    }
+  }
+  if(!j.image) throw new Error('demorou demais, tente de novo');
+  const img=(j.image.startsWith('http')||j.image.startsWith('data:'))?j.image:'data:image/png;base64,'+j.image;
+  await aoTerminar(img);
+  return img;
+}
+const melhorarImagem=(d,cb)=>editarImagem(d,'ampliar',cb);
+
 $('#btnFreepik').onclick=modalFreepik;
 $('#modal').onclick=e=>{if(e.target.id==='modal')$('#modal').classList.remove('on');};
 
@@ -1297,6 +1547,7 @@ function modalFrascos(){
     ou clique para escolher · pode mandar as 21 de uma vez
   </div>
   <input type="file" id="fbInput" accept="image/*" multiple hidden>
+  ${PERFUMES.filter(x=>LIB[x.s]).length&&getWorker()?'<button class="btn vazado" id="fbTodos" style="margin-top:10px">Recortar o fundo de todas</button>':''}
   <p class="dica">O arquivo é casado pelo nome. <code>fortune-intense.png</code> ou <code>Fortune Intense.png</code> vão pro lugar certo sozinhos. O que não casar aparece na lista abaixo pra você enviar individualmente.</p>
   <table class="tabela" style="margin-top:18px">
     <thead><tr><th>Perfume</th><th>Foto</th><th></th></tr></thead>
@@ -1305,7 +1556,9 @@ function modalFrascos(){
       <td>${LIB[p.s]?'<span style="color:#7FB069">guardada</span>':'<span class="semfoto">falta</span>'}</td>
       <td style="text-align:right">
         <button style="border:none;background:none;color:var(--dourado);text-decoration:underline;cursor:pointer;font-size:12px" data-um="${p.s}">${LIB[p.s]?'trocar':'enviar'}</button>
-        ${LIB[p.s]?`<button style="border:none;background:none;color:var(--app-txt-fraco);text-decoration:underline;cursor:pointer;font-size:12px;margin-left:8px" data-apagar="${p.s}">remover</button>`:''}
+        ${LIB[p.s]?`<button style="border:none;background:none;color:var(--app-txt-fraco);text-decoration:underline;cursor:pointer;font-size:12px;margin-left:8px" data-fundo="${p.s}">recortar fundo</button>
+        <button style="border:none;background:none;color:var(--app-txt-fraco);text-decoration:underline;cursor:pointer;font-size:12px;margin-left:8px" data-melhorar="${p.s}">ampliar</button>
+        <button style="border:none;background:none;color:var(--app-txt-fraco);text-decoration:underline;cursor:pointer;font-size:12px;margin-left:8px" data-apagar="${p.s}">remover</button>`:''}
       </td>
     </tr>`).join('')}</tbody>
   </table>
@@ -1343,6 +1596,27 @@ function modalFrascos(){
     await libApagar(b.dataset.apagar); pintar();
     if(D.modo!=='completo') renderSimples(); modalFrascos();
   });
+  const editar=(attr,tipo,rot)=>$$('['+attr+']').forEach(b=>b.onclick=async()=>{
+    const slug=b.dataset[attr.replace('data-','')];
+    const antes=b.textContent; b.textContent='processando…'; b.disabled=true;
+    try{
+      await editarImagem(LIB[slug],tipo,async img=>{ await libSalvar(slug,img); });
+      pintar(); if(D.modo!=='completo') renderSimples(); modalFrascos(); toast(rot);
+    }catch(e){ toast('Falhou: '+e.message); b.textContent=antes; b.disabled=false; }
+  });
+  editar('data-fundo','fundo','Fundo recortado');
+  editar('data-melhorar','ampliar','Foto ampliada');
+
+  const tb=$('#fbTodos');
+  if(tb) tb.onclick=async()=>{
+    const alvos=PERFUMES.filter(x=>LIB[x.s]);
+    tb.disabled=true;
+    for(let i=0;i<alvos.length;i++){
+      tb.textContent=`Recortando ${i+1} de ${alvos.length}…`;
+      try{ await editarImagem(LIB[alvos[i].s],'fundo',async img=>{ await libSalvar(alvos[i].s,img); }); }catch(e){}
+    }
+    pintar(); modalFrascos(); toast('Fundos recortados');
+  };
 }
 
 /* ==================== PREÇOS POR PERFUME ==================== */
@@ -1760,6 +2034,279 @@ COMPRAR AGORA"></textarea>
 }
 $('#btnBrief').onclick=modalBriefing;
 
+/* ==================== GERADOR DE IMAGENS ==================== */
+let MOTORES_LIGADOS=null;
+async function checarMotores(){
+  if(MOTORES_LIGADOS) return MOTORES_LIGADOS;
+  if(!getWorker()){ MOTORES_LIGADOS={}; return MOTORES_LIGADOS; }
+  try{ MOTORES_LIGADOS=await worker({acao:'motores'}); }catch(e){ MOTORES_LIGADOS={}; }
+  return MOTORES_LIGADOS;
+}
+
+const MOTORES={
+  nano:{nome:'Nano Banana 2',chave:'google',
+    cauda:(f)=>`Fotografia realista, ${f}, 8k, foco nítido, profundidade de campo natural, cores fiéis. Sem texto, sem letras, sem números, sem logotipo, sem marca d'água.`},
+  seedream:{nome:'Seedream 4.5',chave:'seedream',
+    cauda:(f)=>`fotografia editorial realista, ${f}, ultra detalhada, 8k, iluminação cinematográfica, grão sutil de filme --no texto, letras, logotipo, marca d'água, distorção`},
+  gpt:{nome:'GPT Image',chave:'openai',
+    cauda:(f)=>`Gere esta cena como uma fotografia realista no formato ${f}, com alta definição e aparência natural. Não inclua nenhum texto, letra, número ou logotipo na imagem.`},
+  freepik:{nome:'Freepik',chave:'freepik',
+    cauda:(f)=>`fotografia realista, ${f}, alta definição, sem texto, sem letras, sem logotipo`}
+};
+const MOTOR_API={nano:'google',gpt:'openai',seedream:'freepik',freepik:'freepik'};
+
+const CENAS={
+  banheiro:{n:'Box de banheiro embaçado',b:'interior de um box de banheiro com o vidro totalmente embaçado pelo vapor, gotas escorrendo no vidro, azulejos claros desfocados ao fundo'},
+  bolsa:{n:'Bolsa / dia a dia',b:'uma bolsa de couro entreaberta apoiada no banco de um carro, com objetos do dia a dia aparecendo'},
+  penteadeira:{n:'Penteadeira',b:'o canto de uma penteadeira com espelho, joias e objetos femininos espalhados sem arrumação'},
+  quarto:{n:'Quarto pela manhã',b:'um quarto claro pela manhã, cama desfeita, cortina de linho filtrando a luz'},
+  saida:{n:'Saindo de casa',b:'o hall de entrada de um apartamento, alguém prestes a sair, bolsa e chaves sobre o aparador'},
+  festa:{n:'Noite / festa',b:'um ambiente noturno com luzes desfocadas ao fundo, clima de festa vista de longe'},
+  estudio:{n:'Estúdio limpo',b:'um fundo liso de estúdio, superfície contínua, sem objetos'},
+  livre:{n:'Escrever do zero',b:''}
+};
+const LUZES={
+  quente:'luz quente e suave vinda de cima',
+  natural:'luz natural do fim de tarde entrando de lado',
+  manha:'luz da manhã difusa, sombras longas e macias',
+  dura:'luz dura de estúdio com sombra marcada',
+  noite:'luz baixa e quente da noite, pontos de luz desfocados ao fundo'
+};
+const CLIMAS={
+  caseiro:'clima caseiro e espontâneo, como uma foto tirada no celular sem produção',
+  aspiracional:'clima aspiracional e sofisticado, sem parecer publicitário demais',
+  premium:'clima premium e escuro, com brilho controlado',
+  clean:'clima clean e arejado, paleta clara'
+};
+const ENQUADRA=[
+  {n:'plano aberto',b:'plano aberto mostrando o ambiente inteiro, câmera na altura dos olhos'},
+  {n:'plano fechado',b:'plano fechado com fundo desfocado, foco raso, primeiro plano levemente fora de foco'},
+  {n:'visto de cima',b:'visto ligeiramente de cima, composição diagonal'}
+];
+const FORMATOS_TXT={f45:'vertical 4:5',f916:'vertical 9:16',f11:'quadrado 1:1'};
+
+const G={motor:'nano',cena:'banheiro',livre:'',luz:'quente',clima:'caseiro',produto:true,pessoa:'nenhuma',extra:''};
+
+function montarPrompt(i){
+  const m=MOTORES[G.motor], p=perf();
+  const base=G.cena==='livre'?G.livre:CENAS[G.cena].b;
+  const partes=[];
+  partes.push(ENQUADRA[i].b.charAt(0).toUpperCase()+ENQUADRA[i].b.slice(1)+' de '+base);
+  if(G.produto) partes.push(`um frasco de perfume aparecendo na cena de forma natural, sem destaque publicitário`);
+  if(G.pessoa==='maos') partes.push('apenas as mãos de uma mulher aparecem, sem rosto');
+  if(G.pessoa==='mulher') partes.push('uma mulher adulta na cena, de costas ou parcialmente fora de quadro, sem rosto em destaque');
+  partes.push(LUZES[G.luz]);
+  partes.push(CLIMAS[G.clima]);
+  if(G.extra.trim()) partes.push(G.extra.trim());
+  return partes.join(', ')+'. '+m.cauda(FORMATOS_TXT[D.formato]||'vertical 4:5');
+}
+
+async function modalGerador(){
+  const ligados=await checarMotores();
+  const m=MOTORES[G.motor];
+  const sel=(id,obj,val,rot)=>`<div class="campo"><label>${rot}</label><select data-g="${id}">${
+    Object.entries(obj).map(([k,v])=>`<option value="${k}"${k===val?' selected':''}>${typeof v==='string'?v:(v.n||v.nome)}</option>`).join('')
+  }</select></div>`;
+
+  $('#modalCx').innerHTML=`
+  <button class="fechar" data-x>×</button>
+  <h3>Gerar imagem</h3>
+  <p>Preencha o que você recebeu no briefing. A ferramenta monta três variações do prompt e gera a imagem no motor que você escolher.</p>
+
+  <div class="dupla" style="margin-top:16px">
+    ${sel('motor',MOTORES,G.motor,'Motor')}
+    ${sel('cena',CENAS,G.cena,'Cenário')}
+  </div>
+  ${G.cena==='livre'?`<div class="campo"><label>Descreva o cenário</label><textarea data-g="livre" style="min-height:70px">${esc(G.livre)}</textarea></div>`:''}
+  <div class="dupla">
+    ${sel('luz',LUZES,G.luz,'Luz')}
+    ${sel('clima',CLIMAS,G.clima,'Clima')}
+  </div>
+  <div class="dupla">
+    <div class="campo"><label>Quem aparece</label><select data-g="pessoa">
+      <option value="nenhuma"${G.pessoa==='nenhuma'?' selected':''}>Ninguém</option>
+      <option value="maos"${G.pessoa==='maos'?' selected':''}>Só as mãos</option>
+      <option value="mulher"${G.pessoa==='mulher'?' selected':''}>Uma mulher, sem rosto</option>
+    </select></div>
+    <div class="campo"><label>Frasco na cena</label><select data-g="produto">
+      <option value="1"${G.produto?' selected':''}>Sim</option>
+      <option value=""${!G.produto?' selected':''}>Não, só o cenário</option>
+    </select></div>
+  </div>
+  <div class="campo"><label>Detalhes do briefing</label><textarea data-g="extra" style="min-height:64px" placeholder="o que mais precisa aparecer, cores, objetos, referência de estilo">${esc(G.extra)}</textarea></div>
+
+  <div id="gSaida"></div>`;
+  $('#modal').classList.add('on');
+
+  $$('[data-g]').forEach(el=>{
+    const ev=el.tagName==='SELECT'?'onchange':'oninput';
+    el[ev]=()=>{
+      const k=el.dataset.g;
+      G[k]= k==='produto' ? !!el.value : el.value;
+      if(k==='cena'||k==='motor') modalGerador(); else pintarPrompts();
+    };
+  });
+  pintarPrompts();
+}
+
+function pintarPrompts(){
+  const ligados=MOTORES_LIGADOS||{};
+  const podeGerar=!!(getWorker()&&ligados[MOTORES[G.motor].chave]);
+  $('#gSaida').innerHTML=ENQUADRA.map((e,i)=>`
+    <div style="margin-top:16px">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px">
+        <b style="color:var(--creme);font-weight:500;font-size:13px">Variação ${i+1} · ${e.n}</b>
+        <button class="linkTxt" style="width:auto;padding:0;margin-left:auto" data-copiar="${i}">copiar</button>
+        ${podeGerar?`<button class="linkTxt" style="width:auto;padding:0" data-gerar="${i}">gerar</button>`:''}
+      </div>
+      <pre style="background:#120E0C;border:1px solid var(--app-linha);border-radius:8px;padding:12px;white-space:pre-wrap;font-size:12px;line-height:1.55;color:#CFC3B4;margin:0" id="gp${i}">${esc(montarPrompt(i))}</pre>
+      <div id="gimg${i}"></div>
+    </div>`).join('')
+    + (podeGerar?'':`<p class="dica" style="margin-top:14px">${getWorker()?`O ${esc(MOTORES[G.motor].nome)} ainda não está ligado nesta instalação — por enquanto, copie o prompt e use na ferramenta dele.`:'Nenhum motor ligado aqui ainda. Os prompts acima já estão prontos para copiar e colar.'}</p>`);
+
+  $$('[data-copiar]').forEach(b=>b.onclick=()=>{
+    navigator.clipboard.writeText($('#gp'+b.dataset.copiar).textContent).then(()=>toast('Prompt copiado'));
+  });
+  $$('[data-gerar]').forEach(b=>b.onclick=async()=>{
+    const i=b.dataset.gerar;
+    b.textContent='gerando…'; b.disabled=true;
+    $('#gimg'+i).innerHTML='<p class="dica">Gerando…</p>';
+    try{
+      const j=await worker({acao:'gerar',motor:MOTOR_API[G.motor],prompt:montarPrompt(+i),formato:D.formato});
+      const img=j.image?(j.image.startsWith('data:')||j.image.startsWith('http')?j.image:'data:image/jpeg;base64,'+j.image):null;
+      if(!img) throw new Error('não veio imagem');
+      $('#gimg'+i).innerHTML=`<img src="${img}" style="width:100%;border-radius:8px;margin-top:10px">
+        <div style="display:flex;gap:8px;margin-top:8px">
+          <button class="btn vazado" data-usar4="${i}">Usar no Vapor</button>
+          <button class="btn vazado" data-usar6="${i}">Usar no Flagra</button>
+          <a class="btn vazado" href="${img}" download="deobeauty-cena-${+i+1}.png" style="text-align:center;text-decoration:none">Baixar</a>
+        </div>`;
+      $(`[data-usar4="${i}"]`).onclick=()=>{D.bg4=img;D.tpl=4;render();$('#modal').classList.remove('on');toast('Fundo aplicado no Vapor');};
+      $(`[data-usar6="${i}"]`).onclick=()=>{D.bg6=img;D.tpl=6;render();$('#modal').classList.remove('on');toast('Fundo aplicado no Flagra');};
+    }catch(e){ $('#gimg'+i).innerHTML=`<p class="dica" style="color:#D89A5C">Não deu certo: ${esc(e.message)}</p>`; }
+    b.textContent='gerar'; b.disabled=false;
+  });
+}
+$('#btnGerar').onclick=modalGerador;
+
+/* ==================== LEITURA DE REFERÊNCIA ==================== *//* ==================== LEITURA DE REFERÊNCIA ==================== */
+const INSTRUCAO = `Você está analisando a imagem de um anúncio de referência para uma marca de perfumaria brasileira.
+Responda SOMENTE com um objeto JSON, sem markdown, sem crases, sem texto antes ou depois.
+
+{
+  "criativo": número de 1 a 6 ou null,
+  "kicker": texto pequeno acima da headline, ou "",
+  "headline": a frase principal, ou "",
+  "subheadline": o texto de apoio, ou "",
+  "cta": o texto do botão, ou "",
+  "selo": o texto do selo de desconto, ou "",
+  "precoDe": apenas o número do preço antigo no formato 359,99, ou "",
+  "precoPor": apenas o número do preço novo no formato 99,90, ou "",
+  "cena": se a peça tiver uma foto de cenário ao fundo, descreva essa cena em uma frase em português, pronta para ser usada como prompt de geração de imagem; se for fundo liso ou só produto, deixe ""
+  "observacoes": uma frase curta sobre o que mais chama atenção no layout
+}
+
+Para o campo "criativo", escolha o que mais se parece:
+1 = comparação de preço com o produto no centro e duas colunas de valores
+2 = print de conversa de celular
+3 = layout de notícia, com barra escura no topo e manchete
+4 = foto de banheiro com frase escrita no vidro embaçado
+5 = vários frascos enfileirados em fundo escuro
+6 = foto espontânea estilo stories com texto por cima
+
+Transcreva os textos exatamente como aparecem, mantendo acentuação. Se não houver, use string vazia.`;
+
+async function analisarReferencia(dataUrl,tipo){
+  const j=await worker({acao:'ler',image:soBase64(dataUrl),tipo,instrucao:INSTRUCAO});
+  const limpo=String(j.texto||'').replace(/```json|```/g,'').trim();
+  const ini=limpo.indexOf('{'), fim=limpo.lastIndexOf('}');
+  if(ini<0||fim<0) throw new Error('não entendi a resposta do motor');
+  return JSON.parse(limpo.slice(ini,fim+1));
+}
+
+function aplicarLeitura(r){
+  const pegou=[];
+  if(r.criativo>=1&&r.criativo<=6){ D.tpl=r.criativo; pegou.push('criativo '+r.criativo+' ('+NOMES[r.criativo-1]+')'); }
+  if(r.cta){ D.cta=r.cta; pegou.push('CTA'); }
+  if(r.precoDe){ D.de=r.precoDe; D.padrao.de=r.precoDe; pegou.push('preço de'); }
+  if(r.precoPor){ D.por=r.precoPor; D.padrao.por=r.precoPor; pegou.push('preço por'); }
+  if(r.precoDe&&r.precoPor){
+    const a=parseFloat(r.precoDe.replace(/\./g,'').replace(',','.'));
+    const b=parseFloat(r.precoPor.replace(/\./g,'').replace(',','.'));
+    if(a>0&&b>0&&b<a) D.off=Math.round((1-b/a)*100)+'%';
+  }
+  const t=D.tpl;
+  if(t===1){
+    if(r.kicker){D.t1.kick=r.kicker;pegou.push('kicker');}
+    if(r.headline){D.t1.head=r.headline;pegou.push('headline');}
+  }
+  if(t===3){
+    if(r.headline){D.heads3=[r.headline];D.t3.headIdx=0;pegou.push('headline');}
+    if(r.subheadline){D.t3.lead=r.subheadline;pegou.push('subheadline');}
+    if(r.kicker){D.t3.editoria=r.kicker.toUpperCase();pegou.push('editoria');}
+  }
+  if(t===4){
+    if(r.headline){D.t4.head=r.headline.replace(/\.\s+/g,'\n');pegou.push('escrita no vidro');}
+    if(r.cena){D.t4.prompt=r.cena;pegou.push('prompt da cena');}
+  }
+  if(t===5){
+    if(r.headline){D.t5.head=r.headline;pegou.push('headline');}
+    if(r.subheadline){D.t5.sub=r.subheadline;pegou.push('subheadline');}
+    if(r.selo){D.t5.selo=r.selo.replace(/^(só|apenas)\s*/i,'').replace(/\s*cada$/i,'').trim()||D.t5.selo;}
+  }
+  if(t===6){
+    if(r.headline){D.t6.head=r.headline;pegou.push('headline');}
+    if(r.subheadline){D.t6.sub=r.subheadline;pegou.push('subheadline');}
+    if(r.cena){D.t6.prompt=r.cena;pegou.push('prompt da cena');}
+  }
+  if(t===2&&r.headline){ D.t2.msgs='r: '+r.headline; pegou.push('texto'); }
+  return pegou;
+}
+
+function modalReferencia(){
+  $('#modalCx').innerHTML=`
+  <button class="fechar" data-x>×</button>
+  <h3>Analisar referência</h3>
+  <p>Envie a imagem de um anúncio que você quer usar como base. A ferramenta lê os textos, identifica qual dos seis criativos ela mais parece e preenche os campos. Se a peça tiver cenário ao fundo, ela também descreve a cena para virar prompt de geração.</p>
+  <div class="solta" id="refSolta" style="margin-top:14px">
+    <b>Arraste a referência aqui</b>
+    ou clique para escolher uma imagem
+  </div>
+  <input type="file" id="refInp" accept="image/*" hidden>
+  <div id="refPre"></div>
+  <p class="dica">Ela copia o texto e a estrutura, não o visual de outra marca. Layout, fonte e cor continuam sendo os da DeoBeauty.</p>
+  <div id="refSaida"></div>`;
+  $('#modal').classList.add('on');
+  const z=$('#refSolta');
+  z.onclick=()=>$('#refInp').click();
+  ['dragenter','dragover'].forEach(ev=>z.addEventListener(ev,e=>{e.preventDefault();z.classList.add('quente');}));
+  ['dragleave','drop'].forEach(ev=>z.addEventListener(ev,e=>{e.preventDefault();z.classList.remove('quente');}));
+  const processar=f=>{
+    if(!f||!f.type.startsWith('image/'))return;
+    const fr=new FileReader();
+    fr.onload=async()=>{
+      $('#refPre').innerHTML=`<img src="${fr.result}" style="max-height:200px;display:block;margin:14px auto;border-radius:8px">`;
+      $('#refSaida').innerHTML='<p class="dica" style="text-align:center">Lendo a referência…</p>';
+      try{
+        const r=await analisarReferencia(fr.result,f.type);
+        const pegou=aplicarLeitura(r);
+        salvar(); render(); $('#fCta').value=D.cta; $('#fDe').value=D.de; $('#fPor').value=D.por; $('#fOff').value=D.off;
+        $('#refSaida').innerHTML=`<div class="avisoBox" style="margin-top:14px">
+          <b style="color:#F0DDBE">Preenchido:</b> ${pegou.length?esc(pegou.join(', ')):'nada reconhecido'}.
+          ${r.observacoes?`<br><b style="color:#D89A5C">Sobre o layout:</b> ${esc(r.observacoes)}`:''}
+        </div>`;
+        toast('Referência lida');
+      }catch(e){
+        $('#refSaida').innerHTML=`<div class="avisoBox" style="margin-top:14px">Não deu certo: ${esc(e.message)}. ${getWorker()?'':'<br>Configure o Worker em Freepik antes.'}</div>`;
+      }
+    };
+    fr.readAsDataURL(f);
+  };
+  $('#refInp').onchange=()=>processar($('#refInp').files[0]);
+  z.addEventListener('drop',e=>processar(e.dataTransfer.files[0]));
+}
+$('#btnRef').onclick=modalReferencia;
+
 /* ==================== MODO SIMPLES ==================== */
 const GUIA=[
  {n:'Confronto',d:'Frasco no centro, o importado de um lado e o seu do outro. Explica o preço em dois segundos, pra quem nunca ouviu falar da marca.',
@@ -1876,11 +2423,13 @@ function trocarModo(m){
   $('#abas').style.display=s?'none':'flex';
   $('#campos').style.display=s?'none':'block';
   $$('.soCompleto').forEach(e=>e.style.display=s?'none':'');
+  if(!modoTecnico()) $$('.tecnico').forEach(e=>e.style.display='none');
   $('#mSimples').classList.toggle('on',s);
   $('#mCompleto').classList.toggle('on',!s);
   if(s) renderSimples();
   salvar();
 }
+if(!modoTecnico()) $$('.tecnico').forEach(e=>e.style.display='none');
 $('#mSimples').onclick=()=>trocarModo('simples');
 $('#mCompleto').onclick=()=>trocarModo('completo');
 
