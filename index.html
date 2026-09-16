@@ -499,6 +499,8 @@ footer{border-top:1px solid rgba(184,149,106,.3);background:var(--fundo);margin-
       <button class="aba" data-secao="quiosques" onclick="irPara('quiosques')">Quiosques</button>
       <button class="aba" data-secao="notas" onclick="irPara('notas')">Notas &amp; Acordes</button>
       <button class="aba" data-secao="valor" onclick="irPara('valor')">Preço &times; Valor</button>
+      <button class="aba" data-secao="gerador" onclick="irPara('gerador')">Gerador</button>
+
     </nav>
     <button class="btn-busca" onclick="abrirBusca()" aria-label="Buscar no site" title="Buscar">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>
@@ -602,6 +604,18 @@ footer{border-top:1px solid rgba(184,149,106,.3);background:var(--fundo);margin-
     <div class="filtros" id="filtros"></div>
   </div>
   <div class="grade" id="grade-perfumes"></div>
+</section>
+
+<!-- ================== GERADOR ================== -->
+<section class="secao" id="sec-gerador">
+  <div class="cabecalho-secao">
+    <div>
+      <h2>Gerador de Estáticos</h2>
+      <div class="filete"></div>
+    </div>
+    <p>Monta as artes de anúncio a partir do briefing. Escolha o perfume, o criativo e baixe nos dois formatos. <a href="gerador.html" target="_blank" rel="noopener">Abrir em tela cheia ↗</a></p>
+  </div>
+  <iframe src="gerador.html" title="Gerador de Estáticos DeoBeauty" style="width:100%;height:calc(100vh - 260px);min-height:680px;border:1px solid rgba(0,0,0,.12);border-radius:14px;background:#171311"></iframe>
 </section>
 
 <!-- ================= BANCO ================= -->
