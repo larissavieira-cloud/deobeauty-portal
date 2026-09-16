@@ -383,6 +383,91 @@ footer{border-top:1px solid rgba(184,149,106,.3);background:var(--fundo);margin-
 @media (prefers-reduced-motion:reduce){
   *{animation:none!important;transition:none!important}
 }
+/* ===== NOTAS & ACORDES ===== */
+.notas-controles{display:flex;flex-direction:column;gap:16px;align-items:center;margin-bottom:8px}
+.notas-filtros{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+.nf-btn{border:1px solid rgba(184,149,106,.4);background:transparent;color:var(--marrom);font-family:var(--sans);font-size:12px;font-weight:500;letter-spacing:1.4px;text-transform:uppercase;padding:10px 22px;border-radius:2px;cursor:pointer;transition:.3s}
+.nf-btn:hover{border-color:var(--dourado);color:var(--preto)}
+.nf-btn.on{background:var(--preto);color:#fff;border-color:var(--preto)}
+.notas-busca{position:relative;width:100%;max-width:440px}
+.notas-busca input{width:100%;padding:13px 44px 13px 18px;border:1px solid rgba(184,149,106,.35);border-radius:2px;font-family:var(--sans);font-size:14.5px;color:var(--preto);background:var(--branco);font-weight:300;transition:.2s}
+.notas-busca input:focus{outline:none;border-color:var(--dourado)}
+.notas-busca svg{position:absolute;right:16px;top:50%;transform:translateY(-50%);width:18px;height:18px;color:var(--dourado);pointer-events:none}
+.notas-contagem{text-align:center;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:var(--marrom);margin:18px 0 24px}
+.grade-notas{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:26px}
+.ncard{background:var(--branco);border:1px solid rgba(184,149,106,.16);border-radius:4px;overflow:hidden;cursor:pointer;transition:transform .5s cubic-bezier(.22,1,.36,1),box-shadow .5s;box-shadow:0 4px 20px -8px rgba(20,20,20,.09);position:relative;display:flex;flex-direction:column}
+.ncard:hover{transform:translateY(-8px);box-shadow:0 16px 40px -14px rgba(20,20,20,.18)}
+.ncard-foto{aspect-ratio:1/1;background:linear-gradient(160deg,#fff,var(--creme-claro));display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative}
+.ncard-foto img{width:100%;height:100%;object-fit:cover;transition:.6s cubic-bezier(.22,1,.36,1)}
+.ncard:hover .ncard-foto img{transform:scale(1.06)}
+.ncard-foto .semfoto{font-family:var(--serif);font-style:italic;font-size:38px;color:var(--dourado)}
+.ncard-cat{position:absolute;top:12px;left:12px;font-size:9px;letter-spacing:1.5px;text-transform:uppercase;background:rgba(20,20,20,.72);color:#fff;padding:5px 10px;border-radius:2px}
+.ncard-info{padding:18px 18px 20px;text-align:center;flex:1;display:flex;flex-direction:column;align-items:center;gap:5px}
+.ncard-info h3{font-family:var(--serif);font-weight:600;font-size:23px;color:var(--preto);line-height:1.05}
+.ncard-info .insp{font-size:10.5px;letter-spacing:1px;text-transform:uppercase;color:var(--dourado)}
+.ncard-acordes{display:flex;flex-direction:column;gap:4px;width:100%;margin-top:9px}
+.nbarra{height:21px;border-radius:2px;display:flex;align-items:center;padding:0 10px;font-size:10.5px;letter-spacing:.3px;text-transform:capitalize;color:#3a2f28;box-shadow:inset 0 0 0 1px rgba(0,0,0,.04)}
+.nbarra span{text-shadow:0 1px 2px rgba(255,255,255,.4)}
+.notas-vazio{grid-column:1/-1;text-align:center;padding:50px 20px;color:var(--marrom);font-style:italic}
+/* modal notas */
+.veu-notas{position:fixed;inset:0;background:rgba(20,18,16,.55);backdrop-filter:blur(4px);z-index:120;display:none;align-items:center;justify-content:center;padding:24px}
+.veu-notas.aberto{display:flex}
+.nmodal{background:var(--branco);width:100%;max-width:600px;max-height:90vh;overflow:auto;border-radius:6px;position:relative;animation:nsurge .35s cubic-bezier(.22,1,.36,1)}
+@keyframes nsurge{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.nmodal-topo{display:flex;gap:22px;padding:32px 32px 22px;align-items:center;border-bottom:1px solid rgba(184,149,106,.15)}
+.nmodal-foto{width:112px;height:112px;flex-shrink:0;border-radius:4px;overflow:hidden;background:linear-gradient(160deg,#fff,var(--creme-claro));display:flex;align-items:center;justify-content:center}
+.nmodal-foto img{width:100%;height:100%;object-fit:cover}
+.nmodal-foto .semfoto{font-family:var(--serif);font-style:italic;font-size:38px;color:var(--dourado)}
+.nmodal-tit .cat{display:inline-block;font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:#fff;background:var(--dourado);padding:4px 11px;border-radius:2px;margin-bottom:8px}
+.nmodal-tit h2{font-family:var(--serif);font-weight:600;font-size:32px;color:var(--preto);line-height:1.05}
+.nmodal-tit .insp{font-size:12.5px;color:var(--marrom);margin-top:6px}
+.nmodal-corpo{padding:26px 32px 32px}
+.nbloco-tit{font-size:11px;letter-spacing:2.5px;text-transform:uppercase;color:var(--dourado);font-weight:600;margin:0 0 14px}
+.nacordes-g{display:flex;flex-direction:column;gap:7px;margin-bottom:24px}
+.nbarra-g{height:30px;border-radius:3px;display:flex;align-items:center;padding:0 14px;font-size:13px;letter-spacing:.3px;text-transform:capitalize;color:#3a2f28;box-shadow:inset 0 0 0 1px rgba(0,0,0,.04)}
+.nbarra-g span{text-shadow:0 1px 2px rgba(255,255,255,.35)}
+.nficha{display:flex;justify-content:space-between;padding:11px 0;border-top:1px solid rgba(184,149,106,.15);font-size:14px}
+.nficha b{color:var(--marrom);font-weight:400}
+.nficha span{color:var(--preto)}
+.nfechar{position:absolute;top:14px;right:16px;background:none;border:none;font-size:22px;color:var(--marrom);cursor:pointer;padding:6px;line-height:1}
+.nfechar:hover{color:var(--preto)}
+@media(max-width:560px){.nmodal-topo{flex-direction:column;text-align:center}}
+
+/* ===== PREÇO x VALOR ===== */
+.pv-hero{background:linear-gradient(135deg,var(--creme-claro),var(--branco));border:1px solid rgba(184,149,106,.2);border-radius:6px;padding:48px 40px;text-align:center;margin-bottom:30px;position:relative}
+.pv-hero::before,.pv-hero::after{content:'';position:absolute;width:26px;height:26px;border:1px solid var(--dourado)}
+.pv-hero::before{top:16px;left:16px;border-right:none;border-bottom:none}
+.pv-hero::after{bottom:16px;right:16px;border-left:none;border-top:none}
+.pv-rotulo{font-size:11px;letter-spacing:3px;text-transform:uppercase;color:var(--dourado);font-weight:600}
+.pv-hero h3{font-family:var(--serif);font-weight:500;font-size:clamp(22px,3vw,32px);color:var(--preto);line-height:1.25;margin-top:12px}
+.pv-hero2{background:var(--preto)}
+.pv-hero2 h3{color:#fff}
+.pv-hero2::before,.pv-hero2::after{border-color:var(--dourado)}
+.pv-bloco{margin-bottom:34px}
+.pv-bloco h4{font-family:var(--serif);font-weight:600;font-size:26px;color:var(--preto);margin-bottom:14px}
+.pv-bloco p{color:#4a4a4a;font-weight:300;font-size:15.5px;line-height:1.75;max-width:720px}
+.pv-lista{list-style:none;margin-top:16px;display:flex;flex-direction:column;gap:12px}
+.pv-lista li{padding-left:22px;position:relative;color:#3a3a3a;font-weight:300;font-size:15px;line-height:1.7;max-width:760px}
+.pv-lista li::before{content:'';position:absolute;left:0;top:10px;width:8px;height:8px;background:var(--dourado);border-radius:50%}
+.pv-lista b{color:var(--preto);font-weight:600}
+.pv-tabela{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:30px}
+.pv-col{background:var(--branco);border:1px solid rgba(184,149,106,.2);border-radius:6px;padding:28px 26px}
+.pv-col.pv-destaque{border-color:var(--dourado);box-shadow:0 12px 30px -14px rgba(184,149,106,.4)}
+.pv-marca{display:block;font-family:var(--serif);font-weight:600;font-size:24px;color:var(--preto);margin-bottom:16px;text-align:center}
+.pv-destaque .pv-marca{color:var(--dourado)}
+.pv-linha{display:flex;justify-content:space-between;gap:12px;padding:11px 0;border-top:1px solid rgba(184,149,106,.15);font-size:14px}
+.pv-linha b{color:var(--marrom);font-weight:400}
+.pv-linha span{color:var(--preto);text-align:right;font-weight:300}
+.pv-destaque .pv-linha span{font-weight:500}
+.pv-pilares{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;margin-top:20px}
+.pv-pilar{background:var(--branco);border:1px solid rgba(184,149,106,.18);border-radius:6px;padding:28px 24px}
+.pv-num{display:flex;align-items:center;justify-content:center;width:38px;height:38px;border-radius:50%;background:var(--dourado);color:#fff;font-family:var(--serif);font-size:18px;font-weight:600;margin-bottom:14px}
+.pv-pilar b{display:block;font-family:var(--serif);font-size:20px;color:var(--preto);margin-bottom:8px;font-weight:600}
+.pv-pilar p{color:#4a4a4a;font-weight:300;font-size:14px;line-height:1.65}
+.pv-frases{list-style:none;display:flex;flex-direction:column;gap:12px;margin-top:8px}
+.pv-frases li{background:var(--creme-claro);border-left:3px solid var(--dourado);border-radius:4px;padding:16px 20px;color:var(--marrom-escuro,var(--preto));font-size:15px;line-height:1.6;font-style:italic}
+@media(max-width:640px){.pv-tabela{grid-template-columns:1fr}.pv-hero{padding:36px 24px}}
+
 </style>
 </head>
 <body>
@@ -412,6 +497,8 @@ footer{border-top:1px solid rgba(184,149,106,.3);background:var(--fundo);margin-
       <button class="aba" data-secao="banco" onclick="irPara('banco')">Banco de Imagens</button>
       <button class="aba" data-secao="stories" onclick="irPara('stories')">Post</button>
       <button class="aba" data-secao="quiosques" onclick="irPara('quiosques')">Quiosques</button>
+      <button class="aba" data-secao="notas" onclick="irPara('notas')">Notas &amp; Acordes</button>
+      <button class="aba" data-secao="valor" onclick="irPara('valor')">Preço &times; Valor</button>
     </nav>
     <button class="btn-busca" onclick="abrirBusca()" aria-label="Buscar no site" title="Buscar">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>
@@ -562,6 +649,109 @@ footer{border-top:1px solid rgba(184,149,106,.3);background:var(--fundo);margin-
   <div class="grade-quiosques" id="grade-quiosques"></div>
 </section>
 
+<!-- ================= NOTAS & ACORDES ================= -->
+<section class="secao" id="sec-notas">
+  <div class="cabecalho-secao">
+    <div>
+      <h2>Notas &amp; Acordes</h2>
+      <div class="filete"></div>
+    </div>
+    <p>Explore o perfil olfativo de cada fragrância. Filtre por categoria ou busque por acorde.</p>
+  </div>
+  <div class="notas-controles">
+    <div class="notas-filtros" id="notas-filtros">
+      <button class="nf-btn on" data-cat="todos" onclick="filtrarNotas('todos')">Todos</button>
+      <button class="nf-btn" data-cat="perfume" onclick="filtrarNotas('perfume')">Perfumes</button>
+      <button class="nf-btn" data-cat="splash" onclick="filtrarNotas('splash')">Body Splash</button>
+    </div>
+    <div class="notas-busca">
+      <input type="search" id="notas-busca" placeholder="Buscar por nome ou acorde (baunilha, cítrico...)" oninput="renderNotas()">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg>
+    </div>
+  </div>
+  <div class="notas-contagem" id="notas-contagem"></div>
+  <div class="grade-notas" id="grade-notas"></div>
+</section>
+
+<!-- ================= PREÇO x VALOR ================= -->
+<section class="secao" id="sec-valor">
+  <div class="cabecalho-secao">
+    <div>
+      <h2>Preço &times; Valor</h2>
+      <div class="filete"></div>
+    </div>
+    <p>O que somos — e como explicar isso ao cliente. Padrão internacional, feito no Brasil.</p>
+  </div>
+
+  <div class="pv-hero">
+    <span class="pv-rotulo">Nosso diferencial</span>
+    <h3>Não vendemos um perfume mais barato.<br>Vendemos o mesmo padrão internacional, a um preço justo.</h3>
+  </div>
+
+  <div class="pv-bloco">
+    <h4>A diferença que muda tudo: Eau de Parfum</h4>
+    <p>A força de um perfume está na concentração de essência. Quanto maior, mais intenso, duradouro e marcante. É um padrão internacional — e é exatamente o que a DeoBeauty entrega.</p>
+    <ul class="pv-lista">
+      <li><b>Eau de Parfum:</b> cerca de 20% de concentração — o padrão máximo internacional para uso diário. A mesma categoria dos grandes perfumes importados.</li>
+      <li><b>A diferença para o importado:</b> não está na qualidade nem na concentração — está no preço. Produzimos aqui, com o mesmo padrão, sem o custo da importação e do nome de fora.</li>
+    </ul>
+  </div>
+
+  <div class="pv-tabela">
+    <div class="pv-col pv-destaque">
+      <span class="pv-marca">DeoBeauty</span>
+      <div class="pv-linha"><b>Categoria</b><span>Eau de Parfum</span></div>
+      <div class="pv-linha"><b>Concentração</b><span>~20% (padrão internacional)</span></div>
+      <div class="pv-linha"><b>Fixação</b><span>Prolongada — deixa rastro</span></div>
+      <div class="pv-linha"><b>Qualidade</b><span>Padrão internacional</span></div>
+      <div class="pv-linha"><b>Preço</b><span>Acessível e justo</span></div>
+    </div>
+    <div class="pv-col">
+      <span class="pv-marca">Perfumes importados</span>
+      <div class="pv-linha"><b>Categoria</b><span>Eau de Parfum</span></div>
+      <div class="pv-linha"><b>Concentração</b><span>~20% (mesmo padrão)</span></div>
+      <div class="pv-linha"><b>Fixação</b><span>Prolongada</span></div>
+      <div class="pv-linha"><b>Qualidade</b><span>Padrão internacional</span></div>
+      <div class="pv-linha"><b>Preço</b><span>Muitas vezes mais caro</span></div>
+    </div>
+  </div>
+
+  <div class="pv-hero pv-hero2">
+    <h3>Mesma qualidade dos importados. Mesmo padrão internacional.<br>Por um preço justo, feito aqui.</h3>
+  </div>
+
+  <div class="pv-bloco">
+    <h4>Como passar isso para o cliente</h4>
+    <div class="pv-pilares">
+      <div class="pv-pilar">
+        <span class="pv-num">1</span>
+        <b>Mostre as notas</b>
+        <p>Apresente a composição — saída, corpo e fundo. Mostra construção e sofisticação, como nos grandes perfumes.</p>
+      </div>
+      <div class="pv-pilar">
+        <span class="pv-num">2</span>
+        <b>Prove a performance</b>
+        <p>Fale e demonstre a fixação. Nosso perfume deixa rastro, dura o dia, deixa uma marca. Convide a sentir na pele.</p>
+      </div>
+      <div class="pv-pilar">
+        <span class="pv-num">3</span>
+        <b>Torne o perfume a marca da pessoa</b>
+        <p>"Qual perfume DeoBeauty é a SUA marca?" Aquele rastro que faz saberem que é você chegando.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="pv-bloco">
+    <h4>Frases-chave para a equipe</h4>
+    <ul class="pv-frases">
+      <li>"Nosso perfume é Eau de Parfum — 20% de concentração, o padrão internacional. Por isso fixa e deixa rastro."</li>
+      <li>"Você está levando a mesma categoria e qualidade dos importados, por um preço justo. Padrão internacional, feito aqui."</li>
+      <li>"Sente na pele: em pouco tempo você percebe que ele não vai embora — ele marca."</li>
+      <li>"Qual vai ser a sua marca? O perfume que faz todo mundo saber que é você chegando."</li>
+    </ul>
+  </div>
+</section>
+
 </main>
 
 <!-- MODAL QUIOSQUE -->
@@ -570,6 +760,11 @@ footer{border-top:1px solid rgba(184,149,106,.3);background:var(--fundo);margin-
     <button class="fechar" onclick="fecharQuiosque()" aria-label="Fechar">✕</button>
     <div id="quiosque-corpo"></div>
   </div>
+</div>
+
+<!-- MODAL NOTAS & ACORDES -->
+<div class="veu-notas" id="veu-notas" onclick="if(event.target===this)fecharNota()">
+  <div class="nmodal" id="nmodal"></div>
 </div>
 
 <!-- MODAL -->
@@ -1430,6 +1625,95 @@ document.addEventListener("keydown",e=>{
   if(e.key==="Escape" && document.getElementById("veu-quiosque").classList.contains("aberto")) fecharQuiosque();
 });
 
+/* =============== NOTAS & ACORDES =============== */
+const COR_ACORDE={"doce":"#F6D3C8","baunilha":"#F0DCC0","caramelo":"#E6B98F","mel":"#F2C879","chocolate":"#B07A54","frutado":"#F4B9C4","cereja":"#E58B9A","frutas vermelhas":"#D96A7E","tropical":"#F7C56B","azedo":"#EAD86B","cítrico":"#F4E07A","fresco":"#CDE9E0","fresco especiado":"#BFD8C6","aromático":"#C6DEC0","verde":"#B7D3A0","marinho":"#B5D8E6","aquático":"#B5D8E6","lavanda":"#C9BEE0","violeta":"#CBB6DE","íris":"#D2C4E0","rosa":"#F0C4D2","floral":"#F3CBDD","floral branco":"#F5E4E8","floral aromático":"#EBD3D8","tuberosa":"#F0DDE4","amadeirado":"#C9A87C","oud":"#8A6B4F","musgo":"#A9AE7C","terroso":"#B49B7B","patchouli":"#9C8460","âmbar":"#E0B27A","especiado quente":"#D99A6C","picante suave":"#E8B48C","anis":"#D8CBA0","almiscarado":"#E7DED0","atalcado":"#EDE6DA","animálico":"#C7A98A","lactônico":"#F0E6D6","amêndoa":"#E8D6B8","amendoado":"#E0C9A2","rum":"#D4A96B","couro":"#9A7856","especiado":"#DDA878"};
+function corDe(a){return COR_ACORDE[a]||"#E4D9C8";}
+function nbarras(ac,cls){return ac.map(a=>`<div class="${cls}" style="background:${corDe(a)}"><span>${a}</span></div>`).join("");}
+
+const NOTAS_PERFUMES=[
+ {nome:"Valen",insp:"Oriana",familia:"Floral Frutado",fix:"Prolongada",acordes:["almiscarado","floral branco","doce","frutado","fresco especiado","cítrico"],thumb:"1vLbFEPdBWY2nxrhGvriNZKPtqhZ5RtJE"},
+ {nome:"Mystère",insp:"Scandal",familia:"Doce Gourmand",fix:"Alta",acordes:["floral branco","cítrico","doce","frutado","patchouli","mel","caramelo","picante suave"],thumb:"14uGzvrFTeg0yCaM9GWg2Jv5AogWFv40x"},
+ {nome:"Oud Passion",insp:"Ombre Nomade",familia:"Amadeirado Oriental",fix:"Intensa",acordes:["fresco especiado","oud"],thumb:"1h2DOgopftrj9Ksce9tBtmmxOiIGl4J1E"},
+ {nome:"E se Light Árabe",insp:"Valaya",familia:"Oriental Leve",fix:"Equilibrada",acordes:["especiado quente","almiscarado","âmbar"],thumb:"10_2GEexMvcVauBYdMPSR1TPL5BkySqxt"},
+ {nome:"E se Vermelho",insp:"Sí Passione",familia:"Floral Doce",fix:"Prolongada",acordes:["amadeirado","frutado","floral","picante suave","aromático","baunilha","rosa","patchouli","verde","terroso"],thumb:"1LkUgS9wPCuzVN9arzp8b7oSuISLEzE9o"},
+ {nome:"My Moments",insp:"Chance Chanel",familia:"Cítrico Floral",fix:"Duradoura",acordes:["cítrico","floral","fresco","almiscarado","fresco especiado","aromático"],thumb:"1x8jAUWdR1rfm_XY-uZeXhENHR0880bLo"},
+ {nome:"Deo Rare",insp:"Amouage",familia:"Floral Sofisticado",fix:"Alta",acordes:["doce","floral","frutado"],thumb:"14adburXMcCpqkZwFBrIKFvtQrg4G08A9"},
+ {nome:"Fortune Platinum",insp:"J'adore",familia:"Floral Frutado",fix:"Envolvente",acordes:["frutado","âmbar","floral","doce","fresco","animálico"],thumb:"1iunzPh_Od2GNiQ6TgzzSbYObzdzBngm-"},
+ {nome:"Fortune Intense",insp:"Prada Paradoxe Intense",familia:"Floral Intenso",fix:"Alta",acordes:["almiscarado","âmbar","musgo","floral branco","atalcado","terroso","baunilha","doce","frutado","fresco"],thumb:"1VclgJlp1XabQuVOfWlS4LIUiEQCMNjPl"},
+ {nome:"Fortune",insp:"Prada Paradoxe",familia:"Floral Doce",fix:"Prolongada",acordes:["cítrico","doce","frutado","floral branco","fresco especiado","almiscarado","fresco"],thumb:"1zAt4sYGDpsoFoImFoUJErwJoJN2Pw3AO"},
+ {nome:"Jump",insp:"Good Girl",familia:"Oriental Floral",fix:"Intensa",acordes:["floral branco","amadeirado","tuberosa","aromático","frutado","baunilha","terroso","âmbar","doce","verde"],thumb:"1iyRb0ZOlyZLXfSD5hHlOje1sfDqeQfOh"},
+ {nome:"Del'Luxe",insp:"La Vie Est Belle",familia:"Floral Adocicado",fix:"Prolongada",acordes:["frutado","floral branco","doce","cítrico","íris"],thumb:"1sqljfshN6AJB7II9hPqtJzQAjTbsxahk"}
+];
+const NOTAS_SPLASH=[
+ {nome:"Amber Luxe",insp:"Cold Smell",familia:"Body Splash · Deo Colônia",fix:"200ml",acordes:["âmbar","animálico","atalcado","picante suave"]},
+ {nome:"Lua de Bahamas",insp:"Love Summer",familia:"Body Splash · Deo Colônia",fix:"200ml",acordes:["amadeirado","floral branco","floral","atalcado","almiscarado","fresco"]},
+ {nome:"Coconut",insp:"Óleo de coco 2%",familia:"Body Splash · Deo Colônia",fix:"200ml",acordes:["floral aromático","anis","âmbar","picante suave","fresco especiado","especiado quente","amadeirado","doce","almiscarado"]},
+ {nome:"Grateful Year",insp:"#success",familia:"Body Splash · Deo Colônia",fix:"200ml",acordes:["doce","baunilha","frutado","floral","cereja","caramelo","atalcado","fresco"]},
+ {nome:"Sol de Cancún",insp:"Love Summer",familia:"Body Splash · Deo Colônia",fix:"200ml",acordes:["doce","floral branco","baunilha","rum","lactônico","cítrico","amadeirado","atalcado"]},
+ {nome:"Dragon Fruit",insp:"Extrato de Pitaya 2%",familia:"Body Splash · Deo Colônia",fix:"200ml",acordes:["frutado","doce","violeta","marinho","lavanda","aromático","amêndoa","atalcado","amendoado","floral"]},
+ {nome:"Cherry Bloom",insp:"Cold Smell",familia:"Body Splash · Deo Colônia",fix:"200ml",acordes:["floral","fresco","frutado","cereja"]},
+ {nome:"Passion Fruit",insp:"Maracujá",familia:"Body Splash · Deo Colônia",fix:"200ml",acordes:["tropical","frutado","doce","fresco","azedo"]}
+];
+NOTAS_PERFUMES.forEach(p=>p.cat="perfume");
+NOTAS_SPLASH.forEach(p=>p.cat="splash");
+const NOTAS_TODOS=[...NOTAS_PERFUMES,...NOTAS_SPLASH];
+let notasFiltro="todos";
+function notaCatLabel(c){return c==="perfume"?"Perfume":"Body Splash";}
+function notaFoto(p){
+  if(p.thumb) return `<img src="${driveImg(p.thumb)}" alt="${p.nome}" referrerpolicy="no-referrer" onerror="this.parentNode.innerHTML='<span class=&quot;semfoto&quot;>DB</span>'">`;
+  return `<span class="semfoto">DB</span>`;
+}
+function filtrarNotas(cat){
+  notasFiltro=cat;
+  document.querySelectorAll("#notas-filtros .nf-btn").forEach(b=>b.classList.toggle("on",b.dataset.cat===cat));
+  renderNotas();
+}
+function renderNotas(){
+  const q=(document.getElementById("notas-busca").value||"").trim().toLowerCase();
+  let lista=NOTAS_TODOS.filter(p=>notasFiltro==="todos"||p.cat===notasFiltro);
+  if(q) lista=lista.filter(p=>p.nome.toLowerCase().includes(q)||p.acordes.some(a=>a.includes(q))||(p.insp||"").toLowerCase().includes(q)||p.familia.toLowerCase().includes(q));
+  const grade=document.getElementById("grade-notas");
+  document.getElementById("notas-contagem").textContent=`${lista.length} ${lista.length===1?"produto":"produtos"}`;
+  if(!lista.length){grade.innerHTML=`<div class="notas-vazio">Nada encontrado para “${q}”. Tente outro acorde ou nome.</div>`;return;}
+  grade.innerHTML=lista.map(p=>{
+    const idx=NOTAS_TODOS.indexOf(p);
+    return `<div class="ncard" onclick="abrirNota(${idx})">
+      <div class="ncard-foto"><span class="ncard-cat">${notaCatLabel(p.cat)}</span>${notaFoto(p)}</div>
+      <div class="ncard-info">
+        <h3>${p.nome}</h3>
+        <span class="insp">${p.cat==="perfume"?"Inspiração "+p.insp:p.insp}</span>
+        <div class="ncard-acordes">${nbarras(p.acordes,"nbarra")}</div>
+      </div>
+    </div>`;
+  }).join("");
+}
+function abrirNota(idx){
+  const p=NOTAS_TODOS[idx];
+  document.getElementById("nmodal").innerHTML=`
+    <button class="nfechar" onclick="fecharNota()">✕</button>
+    <div class="nmodal-topo">
+      <div class="nmodal-foto">${notaFoto(p)}</div>
+      <div class="nmodal-tit">
+        <span class="cat">${notaCatLabel(p.cat)}</span>
+        <h2>${p.nome}</h2>
+        <div class="insp">${p.cat==="perfume"?"Inspiração "+p.insp:p.insp}</div>
+      </div>
+    </div>
+    <div class="nmodal-corpo">
+      <div class="nbloco-tit">Principais Acordes</div>
+      <div class="nacordes-g">${nbarras(p.acordes,"nbarra-g")}</div>
+      <div class="nbloco-tit">Ficha</div>
+      <div class="nficha"><b>Categoria</b><span>${notaCatLabel(p.cat)}</span></div>
+      ${p.cat==="perfume"?`<div class="nficha"><b>Inspiração</b><span>${p.insp}</span></div>`:''}
+      <div class="nficha"><b>Família</b><span>${p.familia}</span></div>
+      <div class="nficha"><b>${p.cat==="perfume"?"Fixação":"Volume"}</b><span>${p.fix}</span></div>
+    </div>`;
+  document.getElementById("veu-notas").classList.add("aberto");
+  document.body.style.overflow="hidden";
+}
+function fecharNota(){document.getElementById("veu-notas").classList.remove("aberto");document.body.style.overflow="";}
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&document.getElementById("veu-notas").classList.contains("aberto"))fecharNota();});
+
 /* =============== BUSCA GLOBAL =============== */
 function abrirBusca(){
   document.getElementById("veu-busca").classList.add("aberto");
@@ -1509,6 +1793,7 @@ sincronizarComDrive();
 montarFiltrosPosts();
 renderPosts();
 renderQuiosques();
+renderNotas();
 
 /* Estado inicial no histórico (para a seta voltar ter um ponto de partida) */
 history.replaceState({tipo:"secao",id:"inicio"},"","#inicio");
