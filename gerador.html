@@ -357,39 +357,6 @@ button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit
 .f11 #t7 .cont{padding:56px 56px 140px}
 .f11 #t7 h2{font-size:64px}
 
-/* ===== STORIES 9:16: tudo dentro da faixa segura (250px no topo, 420px embaixo) =====
-   A informação fica centralizada no miolo. Só imagem pode invadir as bordas. */
-.f916 #t1{padding:280px 62px 460px;justify-content:center}
-.f916 #t1 .topo{margin-bottom:26px}
-.f916 #t1 .frascoBox img{max-height:520px}
-.f916 #t1 .arena{align-items:center}
-.f916 #t1 .rodape{margin-top:22px}
-
-.f916 #t2{padding:250px 0 430px}
-.f916 #t2 .fluxo{justify-content:center;padding:26px 28px}
-
-.f916 #t3{padding:270px 46px 450px;justify-content:center}
-.f916 #t3 .foto{min-height:380px;max-height:520px}
-
-.f916 #t4 .cont{padding:290px 58px 470px;justify-content:center}
-.f916 #t4 .nota{margin-top:34px}
-.f916 #t4 .frasco{bottom:500px;width:260px}
-.f916 #t4 .cta{bottom:460px}
-
-.f916 #t5{justify-content:center;padding-bottom:0}
-.f916 #t5 .marca{margin:280px 0 40px}
-.f916 #t5 h2{margin:46px 0 20px}
-.f916 #t5 .fundo{margin-top:40px;opacity:.9}
-.f916 #t5 .selo{bottom:520px}
-.f916 #t5 .cta{bottom:450px}
-
-.f916 #t6 .cont{padding:290px 68px 470px;justify-content:center}
-.f916 #t6 .link{margin-top:40px}
-
-.f916 #t7 .cont{padding:280px 64px 470px;justify-content:center}
-.f916 #t7 .bloco{margin:24px 0 0}
-.f916 #t7 .marca{position:absolute;top:280px;left:64px}
-
 /* só o criativo ativo aparece — vence os display:flex dos ids */
 .tpl:not(.on){display:none !important}
 
@@ -447,6 +414,40 @@ button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit
 .f11 #t4 h2 .ln:nth-child(even){font-size:54px}
 .f11 #t4 .nota{width:380px;margin-top:22px}
 .f11 #t4 .frasco{width:210px;bottom:130px}
+
+
+/* ===== STORIES 9:16: tudo dentro da faixa segura (250px no topo, 420px embaixo) =====
+   A informação fica centralizada no miolo. Só imagem pode invadir as bordas. */
+.f916 #t1{padding:280px 62px 460px;justify-content:center}
+.f916 #t1 .topo{margin-bottom:26px}
+.f916 #t1 .frascoBox img{max-height:520px}
+.f916 #t1 .arena{align-items:center}
+.f916 #t1 .rodape{margin-top:22px}
+
+.f916 #t2{padding:250px 0 430px}
+.f916 #t2 .fluxo{justify-content:center;padding:26px 28px}
+
+.f916 #t3{padding:270px 46px 450px;justify-content:center}
+.f916 #t3 .foto{min-height:380px;max-height:520px}
+
+.f916 #t4 .cont{padding:290px 58px 470px;justify-content:center}
+.f916 #t4 .nota{margin-top:34px}
+.f916 #t4 .frasco{bottom:500px;width:260px}
+.f916 #t4 .cta{bottom:460px}
+
+.f916 #t5{justify-content:center;padding-bottom:0}
+.f916 #t5 .marca{margin:280px 0 40px}
+.f916 #t5 h2{margin:46px 0 20px}
+.f916 #t5 .fundo{margin-top:40px;opacity:.9}
+.f916 #t5 .selo{bottom:520px}
+.f916 #t5 .cta{bottom:450px}
+
+.f916 #t6 .cont{padding:290px 68px 470px;justify-content:center}
+.f916 #t6 .link{margin-top:40px}
+
+.f916 #t7 .cont{padding:280px 64px 470px;justify-content:center}
+.f916 #t7 .bloco{margin:24px 0 0}
+.f916 #t7 .marca{position:absolute;top:280px;left:64px}
 
 
 </style>
@@ -625,7 +626,7 @@ const REPO_OK = {};   // preenchido ao abrir: quais frascos existem na pasta ass
 
 async function sondarRepo(){
   const testa = url => new Promise(res=>{ const i=new Image(); i.onload=()=>res(true); i.onerror=()=>res(false); i.src=url; });
-  await Promise.all(PERFUMES.map(async p=>{ REPO_OK[p.s]=await testa(REPO_FRASCO(p.s)); }));
+  await Promise.all(PERFUMES.map(async p=>{ REPO_OK[p.s]=await testa(REPO_FRASCO(p.s)); if(REPO_OK[p.s]&&!LIB[p.s]) LIB[p.s]=await fotoLimpa(REPO_FRASCO(p.s)); }));
   for(const k of ['escura','clara']){ if(!LOGO[k] && await testa(REPO_LOGO[k])) LOGO[k]=REPO_LOGO[k]; }
 }
 
@@ -747,6 +748,37 @@ function libCarregar(){
     rq.onerror=()=>res();
   });
 }
+/* Foto de frasco em JPG vem com fundo branco. Isso tira o branco no próprio
+   navegador, com borda suave, antes de a imagem entrar nas peças. */
+function limparBranco(canvas){
+  const ctx=canvas.getContext('2d'), w=canvas.width, h=canvas.height;
+  const d=ctx.getImageData(0,0,w,h), px=d.data;
+  // só mexe se a borda for branca de verdade (foto de produto em fundo branco)
+  let amostra=0, brancos=0;
+  for(let x=0;x<w;x+=Math.max(1,(w/40)|0)){ for(const y of [0,h-1]){ const i=(y*w+x)*4; amostra++; if(px[i]>235&&px[i+1]>235&&px[i+2]>235) brancos++; } }
+  if(brancos/amostra<0.8) return canvas;
+  for(let i=0;i<px.length;i+=4){
+    const m=Math.min(px[i],px[i+1],px[i+2]);
+    if(m>=248) px[i+3]=0;
+    else if(m>222) px[i+3]=Math.round(px[i+3]*(248-m)/26);
+  }
+  ctx.putImageData(d,0,0);
+  return canvas;
+}
+async function fotoLimpa(src){
+  // aplica limparBranco em imagens do repositório (mesma origem); guarda em memória
+  if(!src||src.startsWith('data:')) return src;
+  if(fotoLimpa.cache[src]) return fotoLimpa.cache[src];
+  try{
+    const im=await new Promise((res,rej)=>{const i=new Image();i.crossOrigin='anonymous';i.onload=()=>res(i);i.onerror=rej;i.src=src;});
+    const cv=document.createElement('canvas'); cv.width=im.width; cv.height=im.height;
+    cv.getContext('2d').drawImage(im,0,0);
+    const out=limparBranco(cv).toDataURL('image/png');
+    fotoLimpa.cache[src]=out; return out;
+  }catch(e){ return src; }
+}
+fotoLimpa.cache={};
+
 function reduzir(file,largura=1200){
   return new Promise((res,rej)=>{
     const fr=new FileReader();
@@ -757,7 +789,7 @@ function reduzir(file,largura=1200){
         const cv=document.createElement('canvas');
         cv.width=Math.round(im.width*fator); cv.height=Math.round(im.height*fator);
         cv.getContext('2d').drawImage(im,0,0,cv.width,cv.height);
-        res(cv.toDataURL('image/png'));
+        res(limparBranco(cv).toDataURL('image/png'));
       };
       im.onerror=()=>rej(new Error('imagem inválida'));
       im.src=fr.result;
@@ -919,10 +951,23 @@ function pintar(){
 }
 
 
+function caberTexto(sel,maxAltura,minPx){
+  const el=$(sel); if(!el||!el.offsetParent) return;
+  el.style.fontSize='';
+  let px=parseFloat(getComputedStyle(el).fontSize);
+  let guarda=24;
+  while(el.scrollHeight>maxAltura && px>minPx && guarda--){ px-=4; el.style.fontSize=px+'px'; }
+}
 function render(){
   $$('.tpl').forEach((t,i)=>t.classList.toggle('on',i+1===D.tpl));
   $('#canvas').className=D.formato;
   pintar(); salvar();
+  const alto=$('#canvas').offsetHeight;
+  caberTexto('#t1 h2',alto*0.30,56);
+  caberTexto('#t3 h2',alto*0.24,44);
+  caberTexto('#t5 h2',alto*0.16,44);
+  caberTexto('#t7 h2',alto*0.26,46);
+  caberTexto('#t6 h2',alto*0.22,40);
 }
 
 /* ==================== CAPTURA ==================== */
@@ -1602,6 +1647,7 @@ async function gerar(){
   if(temIA){ st.textContent='Entendendo o briefing…'; try{ r=aplicarEntendimento(await entenderPorIA(txt)); }catch(e){ r=aplicarBriefing(txt); } }
   else r=aplicarBriefing(txt);
   if(D.tipo) D.tpl=D.tipo;                        // a pessoa escolheu o criativo
+  aplicarTextos();                                // headline e sub entram no criativo escolhido, seja ele qual for
   if(!r||!r.pegou.length){ st.textContent='Não reconheci nada nesse texto.'; b.disabled=false; b.textContent='Gerar'; return; }
   renderForm(); $('#btnGerar').disabled=true; $('#btnGerar').textContent='Pensando…';
 
@@ -1610,7 +1656,8 @@ async function gerar(){
   if(!temIA || !precisaCena){
     $('#status').textContent='Montando as peças…';
     DIR=null; await fecharLayout(D.tpl);
-    $('#status').textContent=r.faltou&&r.faltou.length?'Pronto. Não reconheci: '+r.faltou.join(' · '):'Pronto.';
+    const motivo = !getWorker()?'motor desligado' : !ligados.claude?'chave da Anthropic ausente no motor' : !D.entender?'IA desligada no interruptor' : NOMES[D.tpl-1]+' é layout com foto, não usa cena de IA';
+    $('#status').textContent=`Layout montado com os textos do briefing (${motivo}). `+(r.faltou&&r.faltou.length?'Não reconheci: '+r.faltou.join(' · '):'');
     $('#btnGerar').disabled=false; $('#btnGerar').textContent='Gerar'; return;
   }
 
