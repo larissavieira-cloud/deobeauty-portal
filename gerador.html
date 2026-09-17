@@ -129,7 +129,14 @@ button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit
 #barra .primario{background:var(--dourado);border-color:var(--dourado);color:#2A1E14;font-weight:600}
 #zoomLbl{color:var(--app-txt-fraco);font-size:12px;min-width:42px;text-align:center}
 
-#area{flex:1;overflow:auto;display:flex;align-items:flex-start;justify-content:center;padding:36px}
+#area{flex:1;overflow:auto;display:flex;align-items:flex-start;justify-content:center;padding:36px;flex-wrap:wrap;gap:0 24px;align-content:flex-start}
+#conf{width:100%;display:flex;flex-wrap:wrap;gap:7px;justify-content:center;margin-bottom:18px}
+#conf span{font-size:11.5px;padding:6px 11px;border-radius:999px;border:1px solid}
+#conf .ok{color:#8FC98B;border-color:#2F4A2D;background:#152015}
+#conf .alerta{color:#E6B26B;border-color:#5A4322;background:#2A1E10}
+#conf .conar{color:#E88A7A;border-color:#5E2E28;background:#2A1512}
+#conf .marca{color:#D9B8A0;border-color:#4E3A2C;background:#241A14}
+#conf .dica{color:#9A8B7D;border-color:var(--app-linha);background:#1A1512}
 #area::-webkit-scrollbar{width:11px;height:11px}
 #area::-webkit-scrollbar-thumb{background:var(--app-linha);border-radius:9px}
 #moldura{transform-origin:top center;transition:transform .12s}
@@ -320,6 +327,9 @@ button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit
 #t6{background:#3B342E;position:relative;overflow:hidden}
 #t6 .bg{position:absolute;inset:0;background-size:cover;background-position:center}
 #t6 .veu{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.42) 0%,rgba(0,0,0,0) 40%,rgba(0,0,0,.5) 100%)}
+#t6 .frasco6{position:absolute;right:8%;bottom:26%;width:28%;display:none}
+#t6 .frasco6.on{display:block}
+#t6 .frasco6 img{width:100%;filter:drop-shadow(0 28px 34px rgba(0,0,0,.55))}
 #t6 .cont{position:absolute;inset:0;padding:270px 68px 300px;display:flex;flex-direction:column}
 #t6 h2{
   font-family:var(--sans);font-style:italic;font-weight:800;font-size:60px;line-height:1.16;
@@ -422,6 +432,68 @@ button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit
 }
 .btnGerarG:hover{filter:brightness(1.07)}
 .btnGerarG:disabled{opacity:.45;cursor:not-allowed;box-shadow:none}
+
+/* ---------- TELA DE COLAR ---------- */
+#colarRail{padding:20px;overflow-y:auto;flex:1;display:none}
+#colarRail::-webkit-scrollbar{width:9px}
+#colarRail::-webkit-scrollbar-thumb{background:var(--app-linha);border-radius:9px}
+.colaBox{background:#191412;border:1px solid var(--app-linha);border-radius:12px;padding:14px;margin-bottom:14px}
+.colaBox:focus-within{border-color:var(--dourado)}
+.colaBox textarea{
+  width:100%;background:none;border:none;color:var(--app-txt);resize:vertical;
+  min-height:260px;font-size:13px;line-height:1.6;padding:0;
+}
+.colaBox textarea:focus{outline:none}
+.logoSlots{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px}
+.logoSlot{
+  border:1px dashed #3A2F27;border-radius:10px;height:74px;cursor:pointer;background:none;
+  color:var(--app-txt-fraco);font-size:11px;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:5px;transition:.14s;overflow:hidden;position:relative;
+}
+.logoSlot:hover{border-color:var(--dourado);color:var(--creme)}
+.logoSlot.cheio{border-style:solid;border-color:#4A3B2E}
+.logoSlot img{max-width:74%;max-height:44px;object-fit:contain}
+.logoSlot.clara{background:#0B0908}
+.logoSlot.escura{background:#EFE9DE}
+.logoSlot b{position:absolute;bottom:3px;font-size:9.5px;letter-spacing:.1em;font-weight:500;opacity:.75}
+.logoSlot.escura b,.logoSlot.escura{color:#5A5048}
+.pecaFeita{background:var(--app-panel);border:1px solid var(--app-linha);border-radius:12px;overflow:hidden}
+.pecaFeita .img{background:#0E0B09;position:relative}
+.pecaFeita .img img{width:100%;display:block}
+.pecaFeita .rod{padding:10px 12px;display:flex;align-items:center;gap:8px}
+.pecaFeita .nm{flex:1;font-size:12px;color:var(--app-txt)}
+.pecaFeita .nm small{display:block;color:var(--app-txt-fraco);font-size:10.5px;letter-spacing:.1em;margin-top:2px}
+.pecaFeita a{background:#120E0C;border:1px solid var(--app-linha);color:var(--app-txt);border-radius:7px;padding:6px 12px;font-size:11.5px;text-decoration:none}
+.pecaFeita a:hover{border-color:var(--dourado)}
+
+/* direção criativa */
+.direcao{max-width:980px;margin:0 auto}
+.dirTopo{background:linear-gradient(135deg,#221A15,#151110);border:1px solid #33271F;border-radius:14px;padding:26px 30px;margin-bottom:20px}
+.dirTopo .rot{font-size:10px;letter-spacing:.22em;color:var(--dourado);text-transform:uppercase;font-weight:600}
+.dirTopo h2{margin:8px 0 8px;font-family:var(--serif);font-size:28px;line-height:1.2;color:var(--creme);font-weight:600}
+.dirTopo p{margin:0;color:#B9AB9B;font-size:14px;line-height:1.6;max-width:70ch}
+.dirMeta{display:flex;gap:22px;flex-wrap:wrap;margin-top:18px;padding-top:16px;border-top:1px solid #2C221B}
+.dirMeta span{font-size:12.5px;color:var(--app-txt);line-height:1.5}
+.dirMeta b{display:block;font-size:10px;letter-spacing:.18em;color:#7E7064;text-transform:uppercase;font-weight:600;margin-bottom:3px}
+.dirAlerta{margin-top:16px;background:#2A1512;border:1px solid #5E2E28;color:#E88A7A;border-radius:8px;padding:10px 13px;font-size:12.5px}
+.dirVars{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:16px}
+.dirVar{background:var(--app-panel);border:1px solid var(--app-linha);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:10px}
+.dirVarCab{display:flex;align-items:center;gap:8px;justify-content:space-between}
+.dirVarCab b{font-size:13px;color:var(--creme);font-weight:500}
+.dirVarCab .acoes{display:flex;gap:6px}
+.dirVar pre{margin:0;white-space:pre-wrap;font-size:11px;line-height:1.55;color:#A99B8B;background:#120E0C;border-radius:8px;padding:11px;max-height:190px;overflow-y:auto}
+.dirImg img{width:100%;border-radius:8px;display:block}
+.dirImg .acoes{display:flex;gap:6px;flex-wrap:wrap}
+.dirImg .acoes .chipG{text-decoration:none}
+.dirRod{display:flex;gap:14px;align-items:flex-end;margin-top:20px}
+
+/* crítica do diretor */
+.critica{margin-top:8px}
+.critCab b{font-size:12px;font-weight:600;padding:4px 10px;border-radius:6px;display:inline-block}
+.critCab .ok{color:#8FC98B;background:#152015}
+.critCab .nao{color:#E6B26B;background:#2A1E10}
+.critica ul{margin:8px 0 0;padding-left:16px;font-size:12px;color:#D9C4A4;line-height:1.5}
+.critOk{font-size:11.5px;color:#8FC98B;margin-top:7px;line-height:1.45}
 
 /* painel estilo ferramenta */
 .secG{margin-bottom:16px}
@@ -530,7 +602,9 @@ button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit
 .solta:hover,.solta.quente{border-color:var(--dourado);background:#1C1512;color:var(--creme)}
 .solta b{display:block;color:var(--creme);font-weight:500;margin-bottom:4px}
 
-#modoBar{display:flex;gap:6px;padding:12px 20px 0}
+#modoBar{display:none}
+#voltar{display:none;padding:12px 20px 0}
+#voltar button{background:none;border:none;color:var(--dourado);cursor:pointer;font-size:12.5px;text-decoration:underline;padding:0}
 #modoBar button{
   flex:1;background:#120E0C;border:1px solid var(--app-linha);color:var(--app-txt-fraco);
   border-radius:7px;padding:8px;cursor:pointer;font-size:12.5px;transition:.14s;
@@ -598,6 +672,65 @@ button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit
 #setup .txt{flex:1;font-size:12.5px;line-height:1.5;color:#D9C4A4}
 #setup .txt small{display:block;color:#9C815E;margin-top:2px;font-size:11.5px}
 #setup button{background:none;border:none;color:var(--dourado);cursor:pointer;font-size:12.5px;text-decoration:underline;padding:0;white-space:nowrap}
+
+/* ===== CRIATIVO 7 — arte dirigida ===== */
+#t7{background:#1A1512;position:relative;overflow:hidden}
+#t7 .bg{position:absolute;inset:0;background-size:cover;background-position:center}
+#t7 .veu{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.28) 0%,rgba(0,0,0,0) 32%,rgba(0,0,0,.08) 58%,rgba(0,0,0,.62) 100%)}
+#t7 .frasco7{position:absolute;display:none}
+#t7 .frasco7.on{display:block}
+#t7 .frasco7 img{width:100%;filter:drop-shadow(0 30px 40px rgba(0,0,0,.55))}
+#t7 .cont{position:absolute;inset:0;padding:64px 64px 70px;display:flex;flex-direction:column;color:#FBF7EF}
+#t7 .marca{font-size:26px;letter-spacing:.4em;color:#FBF7EF;font-weight:600}
+#t7 .bloco{margin-top:auto;max-width:82%}
+#t7 h2{font-family:var(--serif);font-weight:600;font-size:78px;line-height:1.02;margin:0 0 20px;letter-spacing:-.005em;text-shadow:0 2px 30px rgba(0,0,0,.45)}
+#t7 .sub{font-family:var(--sans);font-weight:400;font-size:25px;line-height:1.45;color:#EFE6D8;max-width:36ch;text-shadow:0 1px 18px rgba(0,0,0,.5)}
+#t7 .preco{display:flex;align-items:baseline;gap:14px;margin-top:22px;font-family:var(--sans)}
+#t7 .preco .de{text-decoration:line-through;font-size:22px;color:#C9BBA9}
+#t7 .preco .por{font-family:var(--serif);font-weight:700;font-size:54px;letter-spacing:-.01em;color:#F0D9A6}
+#t7 .cta{
+  margin-top:30px;align-self:flex-start;background:#FBF7EF;color:#141210;font-family:var(--sans);
+  font-weight:700;font-size:24px;letter-spacing:.14em;padding:19px 56px;border-radius:999px;
+}
+.f916 #t7 .cont{padding:250px 64px 440px}
+.f916 #t7 h2{font-size:88px}
+.f916 #t7 .sub{font-size:28px}
+.f45 #t7 .cont{padding:64px 60px 170px}
+.f11 #t7 .cont{padding:56px 56px 140px}
+.f11 #t7 h2{font-size:64px}
+
+/* ===== STORIES 9:16: tudo dentro da faixa segura (250px no topo, 420px embaixo) =====
+   A informação fica centralizada no miolo. Só imagem pode invadir as bordas. */
+.f916 #t1{padding:280px 62px 460px;justify-content:center}
+.f916 #t1 .topo{margin-bottom:26px}
+.f916 #t1 .frascoBox img{max-height:520px}
+.f916 #t1 .arena{align-items:center}
+.f916 #t1 .rodape{margin-top:22px}
+
+.f916 #t2{padding:250px 0 430px}
+.f916 #t2 .fluxo{justify-content:center;padding:26px 28px}
+
+.f916 #t3{padding:270px 46px 450px;justify-content:center}
+.f916 #t3 .foto{min-height:380px;max-height:520px}
+
+.f916 #t4 .cont{padding:290px 58px 470px;justify-content:center}
+.f916 #t4 .nota{margin-top:34px}
+.f916 #t4 .frasco{bottom:500px;width:260px}
+.f916 #t4 .cta{bottom:460px}
+
+.f916 #t5{justify-content:center;padding-bottom:0}
+.f916 #t5 .marca{margin:280px 0 40px}
+.f916 #t5 h2{margin:46px 0 20px}
+.f916 #t5 .fundo{margin-top:40px;opacity:.9}
+.f916 #t5 .selo{bottom:520px}
+.f916 #t5 .cta{bottom:450px}
+
+.f916 #t6 .cont{padding:290px 68px 470px;justify-content:center}
+.f916 #t6 .link{margin-top:40px}
+
+.f916 #t7 .cont{padding:280px 64px 470px;justify-content:center}
+.f916 #t7 .bloco{margin:24px 0 0}
+.f916 #t7 .marca{position:absolute;top:280px;left:64px}
 
 /* só o criativo ativo aparece — vence os display:flex dos ids */
 .tpl:not(.on){display:none !important}
@@ -674,11 +807,14 @@ button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit
   </div>
 
   <div id="modoBar">
-    <button id="mGerar" class="on">Gerar arte</button>
+    <button id="mColar" class="on">Colar briefing</button>
+    <button id="mGerar">Gerar arte</button>
     <button id="mSimples">Montar peça</button>
     <button id="mCompleto">Tudo aberto</button>
   </div>
 
+  <div id="voltar"><button id="btnVoltar">← voltar ao briefing</button></div>
+  <div id="colarRail"></div>
   <div id="gerarRail"></div>
   <div id="simples"></div>
 
@@ -739,6 +875,7 @@ button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit
     <button id="btnFrascos" class="soCompleto">Frascos</button>
     <button id="btnGerar">Gerar imagem</button>
     <button id="btnFreepik" class="soCompleto tecnico">Motor</button>
+    <button id="btnFicha" class="soCompleto">Ficha de entrega</button>
     <button id="btnPng" class="soCompleto">Baixar PNG</button>
     <button class="primario" id="btnLoteG">Produzir em lote</button>
   </div>
@@ -842,6 +979,7 @@ button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit
         <section class="tpl" id="t6">
           <div class="bg" data-img="bg6"></div>
           <div class="veu"></div>
+          <div class="frasco6" id="frasco6"><img data-img="frasco" alt=""></div>
           <div class="cont">
             <h2 data-f="head"></h2>
             <div class="sub" data-f="sub"></div>
@@ -849,6 +987,22 @@ button,input,select,textarea{font-family:inherit;font-size:inherit;color:inherit
               <div class="lbl" data-f="lbl"></div>
               <div class="btn6"><i>🔗</i><span data-f="cta"></span></div>
             </div>
+          </div>
+        </section>
+
+        <!-- 7 -->
+        <section class="tpl" id="t7">
+          <div class="bg" data-img="bg7"></div>
+          <div class="veu"></div>
+          <div class="frasco7" id="frasco7"><img data-img="frasco" alt=""></div>
+          <div class="cont">
+            <span class="marca dbLogo">DEOBEAUTY</span>
+            <div class="bloco">
+              <h2 data-f="head"></h2>
+              <div class="sub" data-f="sub"></div>
+              <div class="preco"><span class="de" data-f="de"></span><span class="por" data-f="por"></span></div>
+            </div>
+            <div class="cta" data-f="cta"></div>
           </div>
         </section>
 
@@ -886,7 +1040,20 @@ const PERFUMES=[
  {s:'pure-attraction',n:'Pure Attraction',i:'Bleu de Chanel',c:'Masculino',f:'Amadeirado Aromático',t:'19vAGThXdxgXCqFa-LtgC94DeHWMumBzN'},
  {s:'unic',n:'UNIC',i:'',c:'Feminino',f:'',t:'1u3-o6GUvXN2CTcm8tR_NfYgAIWZOmF0O'}
 ];
+/* Fotos oficiais ficam no repositório, na pasta assets/frascos/<slug>.png e
+   assets/logo-escura.png / assets/logo-clara.png. Assim toda a equipe abre o
+   site já com tudo no lugar. O que for enviado pelo navegador sobrescreve. */
+const REPO_FRASCO = slug => `assets/frascos/${slug}.png`;
+const REPO_LOGO   = {escura:'assets/logo-escura.png', clara:'assets/logo-clara.png'};
 const drive = id => id ? `https://drive.google.com/thumbnail?id=${id}&sz=w1200` : '';
+const fotoDe = p => LIB[p.s] || (REPO_OK[p.s] ? REPO_FRASCO(p.s) : '') || drive(p.t);
+const REPO_OK = {};   // preenchido ao abrir: quais frascos existem na pasta assets
+
+async function sondarRepo(){
+  const testa = url => new Promise(res=>{ const i=new Image(); i.onload=()=>res(true); i.onerror=()=>res(false); i.src=url; });
+  await Promise.all(PERFUMES.map(async p=>{ REPO_OK[p.s]=await testa(REPO_FRASCO(p.s)); }));
+  for(const k of ['escura','clara']){ if(!LOGO[k] && await testa(REPO_LOGO[k])) LOGO[k]=REPO_LOGO[k]; }
+}
 
 const HEADLINES3=[
  'Padrão internacional com preço daqui: o perfume que está esvaziando o estoque',
@@ -902,7 +1069,7 @@ const heads=()=>(D.heads3&&D.heads3.length)?D.heads3:HEADLINES3;
 
 /* ==================== ESTADO ==================== */
 const D={
-  tpl:1, modo:'gerar', formato:'f45', safe:false, zoom:.45,
+  tpl:1, modo:'colar', formato:'f45', safe:false, zoom:.45,
   perfume:'fortune-intense', fotoCustom:'', bg4:'', bg6:'', avatarCustom:'',
   volume:'100ml', essencia:'20%', categ:'eau de parfum',
   de:'359,99', por:'99,90', off:'72%', precos:{}, padrao:{de:'359,99',por:'99,90'},
@@ -923,14 +1090,18 @@ const D={
       r1t:'Efeitos observados',r1:'Perguntas sobre o nome. Elogio no elevador. Gente chegando mais perto.',
       r2t:'Para quem não serve',r2:'Quem prefere passar despercebida.',
       r3t:'Valor',
+      fx:74,fy:78,fs:28,   /* frasco: % da largura para o centro x, % da altura para o centro y, largura em % */
       prompt:'foto vertical de celular dentro de um box de banheiro, vidro totalmente embaçado pelo vapor com gotas escorrendo, azulejos bege claros ao fundo desfocados, luz quente do teto, clima íntimo e caseiro, sem pessoas, sem texto, sem letras, aparência de foto real sem produção'},
   t5:{p1:'majestic',p2:'delluxe-rouge',p3:'la-mia-passione',
       head:'Cheiro de quem gastou uma <em>fortuna</em>',
       sub:'E ninguém precisa saber que custou menos de cem reais.<b>{CATEG} {VOLUME} com {ESSENCIA} de essência.</b>',
       selo:'R$ {POR}'},
+  t7:{head:'{PERFUME}',sub:'{CATEG} {VOLUME} com {ESSENCIA} de essência. Padrão internacional, feito no Brasil.',
+      frasco:false,fx:74,fy:46,fs:30},
   t6:{head:'Meu segredo pra cheirar bem o dia inteiro',
       sub:'{PERFUME} da DeoBeauty — {ESSENCIA} de essência, fixa desde cedo',
       lbl:'Compre nesse link aqui:',cta:'deobeauty.me',
+      frasco:false,fx:78,fy:70,fs:28,
       prompt:'foto orgânica estilo stories, bolsa de couro no banco do carro com frasco de perfume aparecendo, luz natural do fim de tarde, clima aspiracional despojado, sem texto, vertical'}
 };
 
@@ -948,12 +1119,12 @@ function vars(txt){
     .replace(/\{DE\}/g,D.de).replace(/\{POR\}/g,D.por).replace(/\{OFF\}/g,D.off);
 }
 function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(t._z);t._z=setTimeout(()=>t.classList.remove('on'),2600);}
-function limpo(){const c=JSON.parse(JSON.stringify(D));c.bg4='';c.bg6='';c.fotoCustom='';c.avatarCustom='';return c;}
+function limpo(){const c=JSON.parse(JSON.stringify(D));c.bg4='';c.bg6='';c.bg7='';c.fotoCustom='';c.avatarCustom='';return c;}
 function salvar(){try{localStorage.setItem('db_gerador',JSON.stringify(limpo()));}catch(e){}}
 function carregar(){try{const r=localStorage.getItem('db_gerador');if(r)Object.assign(D,JSON.parse(r));}catch(e){}}
 
 /* ==================== ABAS ==================== */
-const NOMES=['Confronto','Print','Manchete','Vapor','Vitrine','Flagra'];
+const NOMES=['Confronto','Print','Manchete','Vapor','Vitrine','Flagra','Arte dirigida'];
 NOMES.forEach((n,i)=>{
   const b=document.createElement('button');
   b.className='aba';b.textContent=(i+1)+'. '+n;b.setAttribute('role','tab');
@@ -1032,6 +1203,13 @@ function montarEspec(){
     ${campoTxt('c4r2t','Rótulo 2',D.t4.r2t,'t4.r2t')}
     ${campoTxt('c4r2','Texto 2',D.t4.r2,'t4.r2')}
     ${campoTxt('c4r3t','Rótulo 3',D.t4.r3t,'t4.r3t')}
+
+    <h2 style="margin-top:22px">Frasco real na cena</h2>
+    
+    <div class="campo"><label>Posição horizontal</label><input type="range" min="10" max="90" value="${D.t4.fx}" data-bind="t4.fx" style="width:100%;accent-color:var(--dourado)"></div>
+    <div class="campo"><label>Posição vertical</label><input type="range" min="10" max="95" value="${D.t4.fy}" data-bind="t4.fy" style="width:100%;accent-color:var(--dourado)"></div>
+    <div class="campo"><label>Tamanho</label><input type="range" min="10" max="60" value="${D.t4.fs}" data-bind="t4.fs" style="width:100%;accent-color:var(--dourado)"></div>
+    <p class="dica">A IA inventa um frasco genérico. Aqui entra a foto real por cima, com sombra — é o que garante que o produto da peça é o seu.</p>
     <h2 style="margin-top:22px">Fundo</h2>
     <button class="btn" id="btnGer4">Gerar cena para este fundo</button>
     <button class="btn vazado" id="btnBg4">Enviar imagem de fundo</button>
@@ -1053,12 +1231,33 @@ function montarEspec(){
     ${campoArea('c6s','Subheadline',D.t6.sub,'t6.sub')}
     ${campoTxt('c6l','Chamada do link',D.t6.lbl,'t6.lbl')}
     ${campoTxt('c6cta','Texto do botão',D.t6.cta,'t6.cta')}
+
+    <h2 style="margin-top:22px">Frasco real na cena</h2>
+    <label class="check"><input type="checkbox" id="c6fr" ${D.t6.frasco?'checked':''}> Mostrar o frasco na cena</label>
+    <div class="campo"><label>Posição horizontal</label><input type="range" min="10" max="90" value="${D.t6.fx}" data-bind="t6.fx" style="width:100%;accent-color:var(--dourado)"></div>
+    <div class="campo"><label>Posição vertical</label><input type="range" min="10" max="95" value="${D.t6.fy}" data-bind="t6.fy" style="width:100%;accent-color:var(--dourado)"></div>
+    <div class="campo"><label>Tamanho</label><input type="range" min="10" max="60" value="${D.t6.fs}" data-bind="t6.fs" style="width:100%;accent-color:var(--dourado)"></div>
+    <p class="dica">A IA inventa um frasco genérico. Aqui entra a foto real por cima, com sombra — é o que garante que o produto da peça é o seu.</p>
     <h2 style="margin-top:22px">Fundo</h2>
     <button class="btn" id="btnGer6">Gerar cena para este fundo</button>
     <button class="btn vazado" id="btnBg6">Enviar imagem de fundo</button>
     <input type="file" id="fBg6" accept="image/*" hidden>
     ${D.bg6?'<button class="btn vazado" id="btnUp6">Melhorar a imagem</button>':''}
     <p class="dica">Stories 9:16 é o formato natural aqui. Ligue as safezones pra não perder texto na barra do Instagram.</p>`;
+  }
+  if(D.tpl===7){
+    h=`<h2>Arte dirigida</h2>
+    ${campoArea('c7h','Headline',D.t7.head,'t7.head')}
+    ${campoArea('c7s','Subheadline',D.t7.sub,'t7.sub')}
+    <h2 style="margin-top:22px">Frasco real por cima</h2>
+    <label class="check"><input type="checkbox" id="c7fr" ${D.t7.frasco?'checked':''}> Mostrar o frasco real</label>
+    <div class="campo"><label>Posição horizontal</label><input type="range" min="10" max="90" value="${D.t7.fx}" data-bind="t7.fx" style="width:100%;accent-color:var(--dourado)"></div>
+    <div class="campo"><label>Posição vertical</label><input type="range" min="10" max="95" value="${D.t7.fy}" data-bind="t7.fy" style="width:100%;accent-color:var(--dourado)"></div>
+    <div class="campo"><label>Tamanho</label><input type="range" min="10" max="60" value="${D.t7.fs}" data-bind="t7.fs" style="width:100%;accent-color:var(--dourado)"></div>
+    <h2 style="margin-top:22px">Imagem</h2>
+    <button class="btn vazado" id="btnBg7">Enviar imagem</button>
+    <input type="file" id="fBg7" accept="image/*" hidden>
+    <p class="dica">A imagem normalmente vem do diretor criativo, em Colar briefing. Aqui é só para trocar na mão.</p>`;
   }
   e.innerHTML=h;
   ligarBinds();
@@ -1068,14 +1267,18 @@ function ligarBinds(){
   $$('[data-bind]').forEach(el=>{
     el.oninput=()=>{
       const [a,b]=el.dataset.bind.split('.');
-      const v=(b==='headIdx')?parseInt(el.value,10):el.value;
+      const v=(b==='headIdx'||el.type==='range')?parseInt(el.value,10):el.value;
       if(b) D[a][b]=v; else D[a]=v;
       if(b==='headIdx') montarEspec();
       pintar();salvar();
+      clearTimeout(render._c); render._c=setTimeout(mostrarConferencia,320);
     };
     if(el.tagName==='SELECT') el.onchange=el.oninput;
   });
   const enc=$('#c2enc'); if(enc) enc.onchange=()=>{D.t2.encenacao=enc.checked;pintar();salvar();};
+  const fr6=$('#c6fr'); if(fr6) fr6.onchange=()=>{D.t6.frasco=fr6.checked;pintar();salvar();};
+  const fr7=$('#c7fr'); if(fr7) fr7.onchange=()=>{D.t7.frasco=fr7.checked;pintar();salvar();};
+  lerArquivo('#btnBg7','#fBg7',d=>{D.bg7=d;pintar();toast('Imagem aplicada');});
   lerArquivo('#btnAvatar','#fAvatar',d=>{D.avatarCustom=d;pintar();});
   lerArquivo('#btnBg4','#fBg4',d=>{D.bg4=d;pintar();toast('Fundo aplicado');});
   lerArquivo('#btnBg6','#fBg6',d=>{D.bg6=d;pintar();toast('Fundo aplicado');});
@@ -1101,9 +1304,34 @@ function lerArquivo(btnSel,inpSel,cb){
 }
 
 /* ==================== PINTAR ==================== */
+function aplicarLogo(){
+  // fundo claro usa a versão escura da logo, e vice-versa
+  const claros=['t1','t2','t3'], escuros=['t4','t5','t6','t7'];
+  $$('.dbLogo').forEach(el=>{
+    const sec=el.closest('.tpl');
+    const id=sec?sec.id:'';
+    const usa = escuros.includes(id) ? (LOGO.clara||LOGO.escura) : (LOGO.escura||LOGO.clara);
+    const precisaInverter = escuros.includes(id) ? !LOGO.clara : !LOGO.escura;
+    if(usa){
+      el.innerHTML=`<img src="${usa}" alt="DeoBeauty" style="height:1.15em;width:auto;display:block;${precisaInverter&&usa?'filter:invert(1) brightness(1.9);':''}">`;
+      el.style.letterSpacing='0';
+    } else {
+      el.textContent='DEOBEAUTY';
+      el.style.letterSpacing='';
+    }
+  });
+}
+
+function posicionarFrasco(sel,st){
+  const el=$(sel); if(!el||st.fx===undefined) return;
+  el.style.left=st.fx+'%'; el.style.top=st.fy+'%'; el.style.width=st.fs+'%';
+  el.style.right='auto'; el.style.bottom='auto';
+  el.style.transform='translate(-50%,-50%)';
+}
+
 function pintar(){
   const p=perf();
-  const foto=D.fotoCustom||LIB[p.s]||drive(p.t);
+  const foto=D.fotoCustom||fotoDe(p);
   $$('[data-img="frasco"]').forEach(im=>{
     im.crossOrigin='anonymous';
     im.classList.remove('falhou');
@@ -1111,7 +1339,8 @@ function pintar(){
     if(foto) im.src=foto; else im.classList.add('falhou');
   });
   $('#fotoStatus').textContent = D.fotoCustom ? 'Imagem enviada agora, só para esta peça.'
-    : LIB[p.s] ? 'Foto guardada. Vale para todas as peças deste perfume.'
+    : LIB[p.s] ? 'Foto enviada neste navegador.'
+    : REPO_OK[p.s] ? 'Foto oficial do repositório.'
     : 'Sem foto ainda — envie aqui ou em Frascos.';
 
   const set=(sel,txt,html)=>{const el=$(sel);if(el){if(html)el.innerHTML=vars(txt);else el.textContent=vars(txt);}};
@@ -1164,9 +1393,10 @@ function pintar(){
   set('#t4 [data-f=cta]',D.cta);
   set('#t4 [data-f=de]','R$ '+D.de); set('#t4 [data-f=por]','R$ '+D.por);
   $('#t4 .bg').style.backgroundImage = D.bg4?`url(${D.bg4})`:'none';
+  posicionarFrasco('#t4 .frasco',D.t4);
 
   // 5
-  const temFoto=x=>!!(LIB[x.s]||x.t);
+  const temFoto=x=>!!(LIB[x.s]||REPO_OK[x.s]||x.t);
   const fila=$('#t5fila'); fila.innerHTML='';
   const escolhidos=[D.t5.p1,D.t5.p2,D.t5.p3]
     .map(sl=>PERFUMES.find(q=>q.s===sl))
@@ -1175,7 +1405,7 @@ function pintar(){
   escolhidos.forEach((x,i)=>{
     const y=x||reservas[i]||PERFUMES.find(q=>q.s===D.perfume)||PERFUMES[0];
     const d=document.createElement('div');d.className='it';
-    d.innerHTML=`<img crossorigin="anonymous" src="${LIB[y.s]||drive(y.t)}" alt="" onerror="this.classList.add('falhou')"><span>${esc((y.f||y.n).toUpperCase())}</span>`;
+    d.innerHTML=`<img crossorigin="anonymous" src="${fotoDe(y)}" alt="" onerror="this.classList.add('falhou')"><span>${esc((y.f||y.n).toUpperCase())}</span>`;
     fila.appendChild(d);
   });
   const usados=escolhidos.filter(Boolean).map(x=>x.s);
@@ -1183,14 +1413,25 @@ function pintar(){
   reservas.filter(x=>!usados.includes(x.s)).slice(0,6).forEach(x=>{
     const im=document.createElement('img');
     im.crossOrigin='anonymous'; im.onerror=()=>im.classList.add('falhou');
-    im.src=LIB[x.s]||drive(x.t); fundo.appendChild(im);
+    im.src=fotoDe(x); fundo.appendChild(im);
   });
   set('#t5 [data-f=head]',D.t5.head,true); set('#t5 [data-f=sub]',D.t5.sub,true);
   set('#t5 [data-f=selo]',D.t5.selo); set('#t5 [data-f=cta]',D.cta);
 
+  // 7
+  set('#t7 [data-f=head]',D.t7.head); set('#t7 [data-f=sub]',D.t7.sub); set('#t7 [data-f=cta]',D.cta);
+  set('#t7 [data-f=de]','R$ '+D.de); set('#t7 [data-f=por]','R$ '+D.por);
+  $('#t7 .bg').style.backgroundImage = D.bg7?`url(${D.bg7})`:'none';
+  $('#frasco7').classList.toggle('on',!!D.t7.frasco);
+  posicionarFrasco('#frasco7',D.t7);
+
+  aplicarLogo();
+
   // 6
   ['head','sub','lbl','cta'].forEach(k=>set(`#t6 [data-f=${k}]`,D.t6[k]));
   $('#t6 .bg').style.backgroundImage = D.bg6?`url(${D.bg6})`:'none';
+  $('#frasco6').classList.toggle('on',!!D.t6.frasco);
+  posicionarFrasco('#frasco6',D.t6);
 }
 
 function render(){
@@ -1199,17 +1440,120 @@ function render(){
   const cv=$('#canvas'); cv.className=D.formato;
   $('#fFormato').value=D.formato;
   const sz=$('#safe'); sz.classList.toggle('on',D.safe);
-  const alto=D.formato==='f916', topo=alto?250:90, base=alto?360:150;
+  /* Áreas cobertas pela interface de cada posicionamento, em pixels sobre 1080 de largura.
+     Stories e Reels são os mais agressivos: o Reels cobre quase 500px embaixo. */
+  const SAFE={
+    f916:{topo:250,base:420},   /* stories e reels */
+    f45 :{topo:0,  base:150},   /* feed: só o rodapé de legenda e botões */
+    f11 :{topo:0,  base:130}
+  };
+  const z=SAFE[D.formato]||SAFE.f45, topo=z.topo, base=z.base;
+  sz.querySelector('.topo').style.display=topo?'block':'none';
   sz.querySelector('.topo').style.height=topo+'px';
   sz.querySelector('.base').style.height=base+'px';
   sz.querySelector('.topo span').style.top=(topo-32)+'px';
-  sz.querySelector('.topo span').textContent='ÁREA DE RISCO';
+  sz.querySelector('.topo span').textContent='COBERTO PELO APP';
   sz.querySelector('.base span').style.bottom=(base-32)+'px';
-  sz.querySelector('.base span').textContent='ÁREA DE RISCO';
+  sz.querySelector('.base span').textContent=D.formato==='f916'?'BOTÕES DO REELS':'LEGENDA E BOTÕES';
   $('#moldura').style.transform=`scale(${D.zoom})`;
   $('#zoomLbl').textContent=Math.round(D.zoom*100)+'%';
   montarEspec(); pintar(); salvar();
   if(D.modo!=='completo' && $('#simples').style.display!=='none') renderSimples();
+  clearTimeout(render._c); render._c=setTimeout(mostrarConferencia,260);
+}
+
+/* ==================== CONFERÊNCIA ==================== */
+const SAFE_PX={f916:{topo:250,base:420},f45:{topo:0,base:150},f11:{topo:0,base:130}};
+
+function conferirPeca(){
+  const avisos=[];
+  const cv=$('#canvas'), r0=cv.getBoundingClientRect();
+  const escala=r0.width/1080;                 // o canvas está reduzido na tela
+  const alto=cv.offsetHeight;
+  const z=SAFE_PX[D.formato]||SAFE_PX.f45;
+  const sec=$('.tpl.on'); if(!sec) return avisos;
+
+  // 1. texto invadindo a área coberta pelo app
+  const textos=[...sec.querySelectorAll('h2,.cta,.kick,.lead,.sub,.li,.pre,.selo,.bal,.nota,.rot,.tag,.legal,.btn6,.lbl')]
+    .filter(el=>el.offsetParent!==null && el.textContent.trim());
+  let invadeTopo=0, invadeBase=0;
+  textos.forEach(el=>{
+    const r=el.getBoundingClientRect();
+    const top=(r.top-r0.top)/escala, bot=(r.bottom-r0.top)/escala;
+    if(z.topo && top<z.topo) invadeTopo++;
+    if(bot>alto-z.base) invadeBase++;
+  });
+  if(invadeTopo) avisos.push({n:'alerta',t:`${invadeTopo} elemento(s) de texto no topo, onde o app cobre (${z.topo}px)`});
+  if(invadeBase) avisos.push({n:'alerta',t:`${invadeBase} elemento(s) de texto embaixo, onde ficam os botões (${z.base}px)`});
+
+  // 2. regras da marca e do CONAR
+  const tudo=vars([D.t1.head,D.t3.lead,D.t5.head,D.t5.sub,D.t6.head,D.t6.sub,D.t4.head,D.t2.msgs].join(' ')).toLowerCase();
+  if(/\b(o melhor|a melhor|n[úu]mero 1|o mais vendido|l[íi]der)\b/.test(tudo)) avisos.push({n:'conar',t:'superlativo sem prova ("o melhor", "líder") — o CONAR exige comprovação'});
+  if(/\b(igual ao|id[êe]ntico|mesma f[óo]rmula|c[óo]pia)\b/.test(tudo)) avisos.push({n:'conar',t:'promessa de identidade com marca alheia — evite "igual ao", "mesma fórmula"'});
+  if(/\b(cliente|depoimento|comprei e|recomendo)\b/.test(tudo) && D.tpl!==2) avisos.push({n:'marca',t:'parece depoimento de cliente — a marca não usa prova social'});
+  if(D.tpl===2&&!D.t2.encenacao) avisos.push({n:'marca',t:'conversa sem o selo de encenação — é depoimento fabricado'});
+  if(!D.cta.trim()) avisos.push({n:'alerta',t:'peça sem CTA'});
+  const semFoto=!fotoDe(perf())&&!D.fotoCustom;
+  if(semFoto&&[1,3,5].includes(D.tpl)) avisos.push({n:'alerta',t:'sem foto do frasco — a peça vai sair com espaço vazio'});
+  if(!LOGO.escura&&!LOGO.clara) avisos.push({n:'dica',t:'logo ainda em texto — envie os arquivos da logo em Colar briefing'});
+  return avisos;
+}
+
+function mostrarConferencia(){
+  const a=conferirPeca();
+  let box=$('#conf');
+  if(!box){ box=document.createElement('div'); box.id='conf'; $('#area').prepend(box); }
+  if(!a.length){ box.innerHTML='<span class="ok">✓ Peça dentro da safe area e das regras da marca</span>'; return; }
+  box.innerHTML=a.map(x=>`<span class="${x.n}">${esc(x.t)}</span>`).join('');
+}
+
+/* ==================== FICHA DE ENTREGA ==================== */
+function fichaEntrega(){
+  const p=perf(), t=D.tpl;
+  const head=vars(t===1?D.t1.head:t===3?(heads()[D.t3.headIdx]||''):t===4?D.t4.head.replace(/\n/g,' '):t===5?D.t5.head.replace(/<[^>]+>/g,''):t===6?D.t6.head:t===7?D.t7.head:'');
+  const sub=vars(t===3?D.t3.lead:t===5?D.t5.sub.replace(/<[^>]+>/g,''):t===6?D.t6.sub:t===7?D.t7.sub:t===1?D.t1.tag:'');
+  const preco=`de R$ ${D.de} por R$ ${D.por} (${D.off} off)`;
+  const primario=[
+    head,
+    sub,
+    `${p.n} · ${D.categ} ${D.volume} com ${D.essencia} de essência. ${preco}.`,
+    `Disponível no WhatsApp, nos quiosques e na TikTok Shop.`
+  ].filter(Boolean).join('\n\n');
+
+  const linhas=[
+    `DEOBEAUTY · FICHA DE ENTREGA`,
+    `Data: ${new Date().toLocaleDateString('pt-BR')}`,
+    `Criativo: ${t} · ${NOMES[t-1]}`,
+    `Perfume: ${p.n}${p.i?' (inspiração '+p.i+')':''}`,
+    ``,
+    `ARQUIVOS`,
+    `DB_C${t}_${p.s}_1080x1350.png  → feed (4:5)`,
+    `DB_C${t}_${p.s}_1080x1920.png  → stories e reels (9:16)`,
+    ``,
+    `TEXTO PRIMÁRIO (campo grande do anúncio)`,
+    primario,
+    ``,
+    `TÍTULO (headline do anúncio, até 40 caracteres)`,
+    (head||'').slice(0,40),
+    ``,
+    `DESCRIÇÃO (até 30 caracteres)`,
+    `${p.n} · R$ ${D.por}`.slice(0,30),
+    ``,
+    `BOTÃO`,
+    D.cta,
+    ``,
+    `OBSERVAÇÕES`,
+    `Preço válido na data. CTA leva para o canal definido pela equipe de tráfego.`,
+    t===2?`Peça é encenação assumida — manter o selo visível.`:``
+  ].filter(l=>l!==null);
+  return linhas.join('\n');
+}
+function baixarFicha(){
+  const txt=fichaEntrega();
+  const a=document.createElement('a');
+  a.href='data:text/plain;charset=utf-8,'+encodeURIComponent(txt);
+  a.download=`DB_C${D.tpl}_${perf().s}_ficha.txt`; a.click();
+  toast('Ficha de entrega baixada');
 }
 
 /* ==================== CONTROLES ==================== */
@@ -1233,6 +1577,7 @@ $('#fCta').oninput=()=>{D.cta=$('#fCta').value;pintar();salvar();};
 lerArquivo('#btnFoto','#fFoto',d=>{D.fotoCustom=d;pintar();toast('Imagem aplicada');});
 
 $('#fEscala').onchange=()=>{D.escala=parseInt($('#fEscala').value,10);salvar();};
+$('#btnFicha').onclick=baixarFicha;
 $('#fFormato').onchange=()=>{D.formato=$('#fFormato').value;render();};
 $('#btnSafe').onclick=()=>{D.safe=!D.safe;render();};
 $('#mais').onclick=()=>{D.zoom=Math.min(1,D.zoom+.05);render();};
@@ -1514,6 +1859,49 @@ export default {
       });
     }
 
+    // ---------- direção criativa (Claude pensa a peça e escreve os prompts) ----------
+    if (acao === "dirigir") {
+      if (!env.ANTHROPIC_KEY) return json({ erro: "direção criativa não configurada" }, 400);
+      const r = await fetch("https://api.anthropic.com/v1/messages", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": env.ANTHROPIC_KEY,
+          "anthropic-version": "2023-06-01"
+        },
+        body: JSON.stringify({
+          model: "claude-sonnet-4-6",
+          max_tokens: 2500,
+          system: body.sistema,
+          messages: [{ role: "user", content: body.pedido }]
+        })
+      });
+      const d = await r.json();
+      if (!r.ok) return json({ erro: d }, r.status);
+      return json({ texto: (d.content || []).filter(c => c.type === "text").map(c => c.text).join("\n") });
+    }
+
+    // ---------- entender briefing em texto livre (Claude) ----------
+    if (acao === "entender") {
+      if (!env.ANTHROPIC_KEY) return json({ erro: "leitura por IA não configurada" }, 400);
+      const r = await fetch("https://api.anthropic.com/v1/messages", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": env.ANTHROPIC_KEY,
+          "anthropic-version": "2023-06-01"
+        },
+        body: JSON.stringify({
+          model: "claude-sonnet-4-6",
+          max_tokens: 1500,
+          messages: [{ role: "user", content: body.instrucao + "\n\n=== TEXTO RECEBIDO ===\n" + body.texto }]
+        })
+      });
+      const d = await r.json();
+      if (!r.ok) return json({ erro: d }, r.status);
+      return json({ texto: (d.content || []).filter(c => c.type === "text").map(c => c.text).join("\n") });
+    }
+
     // ---------- ler referência (Claude) ----------
     if (acao === "ler") {
       if (!env.ANTHROPIC_KEY) return json({ erro: "leitura de referência não configurada" }, 400);
@@ -1594,6 +1982,7 @@ $('#modal').onclick=e=>{if(e.target.id==='modal')$('#modal').classList.remove('o
 
 /* ==================== BIBLIOTECA DE FRASCOS (IndexedDB) ==================== */
 const LIB={};
+const LOGO={clara:'',escura:''};   // clara = para fundo escuro · escura = para fundo claro
 let db=null;
 function abrirDB(){
   return new Promise(res=>{
@@ -1621,6 +2010,9 @@ function libApagar(slug){
     tx.onerror=()=>res();
   });
 }
+function logoSalvar(qual,dataUrl){ LOGO[qual]=dataUrl; return libSalvar('__logo_'+qual,dataUrl); }
+function logoCarregar(){ LOGO.clara=LIB['__logo_clara']||''; LOGO.escura=LIB['__logo_escura']||''; }
+
 function libCarregar(){
   if(!db)return Promise.resolve();
   return new Promise(res=>{
@@ -1683,7 +2075,7 @@ function modalFrascos(){
     <thead><tr><th>Perfume</th><th>Foto</th><th></th></tr></thead>
     <tbody>${PERFUMES.map(p=>`<tr>
       <td>${esc(p.n)}</td>
-      <td>${LIB[p.s]?'<span style="color:#7FB069">guardada</span>':'<span class="semfoto">falta</span>'}</td>
+      <td>${LIB[p.s]?'<span style="color:#7FB069">enviada</span>':REPO_OK[p.s]?'<span style="color:#B79355">repositório</span>':'<span class="semfoto">falta</span>'}</td>
       <td style="text-align:right">
         <button style="border:none;background:none;color:var(--dourado);text-decoration:underline;cursor:pointer;font-size:12px" data-um="${p.s}">${LIB[p.s]?'trocar':'enviar'}</button>
         ${LIB[p.s]?`<button style="border:none;background:none;color:var(--app-txt-fraco);text-decoration:underline;cursor:pointer;font-size:12px;margin-left:8px" data-fundo="${p.s}">recortar fundo</button>
@@ -1962,7 +2354,7 @@ document.addEventListener('click',e=>{ if(e.target.hasAttribute&&e.target.hasAtt
 document.addEventListener('keydown',e=>{
   if(e.key==='Escape') $('#modal').classList.remove('on');
   if(e.target.matches('input,textarea,select')) return;
-  if(e.key>='1'&&e.key<='6'){D.tpl=+e.key;render();}
+  if(e.key>='1'&&e.key<='7'){D.tpl=+e.key;render();}
   if(e.key==='b'||e.key==='B') modalLote();
   if((e.key==='s'||e.key==='S')&&!e.metaKey&&!e.ctrlKey) $('#btnPng').click();
 });
@@ -2166,7 +2558,7 @@ COMPRAR AGORA"></textarea>
     toast(r.pegou.length?'Briefing aplicado':'Não reconheci o formato');
   };
 }
-$('#btnBrief').onclick=modalBriefing;
+$('#btnBrief').onclick=()=>trocarModo('colar');
 
 /* ==================== GERADOR DE IMAGENS ==================== */
 let MOTORES_LIGADOS=null;
@@ -2235,12 +2627,14 @@ function aplicarTextos(){
     D.t4.head=h.replace(/([.!?,])\s+/g, '$1' + String.fromCharCode(10));
     D.t5.head=h;
     D.t6.head=h;
+    D.t7.head=h;
     feitos.push('headline');
   }
   if(sb){
     D.t3.lead=sb;
     D.t5.sub=sb;
     D.t6.sub=sb;
+    D.t7.sub=sb;
     D.t4.r1=sb;
     feitos.push('subheadline');
   }
@@ -2470,11 +2864,523 @@ function modalReferencia(){
 }
 $('#btnRef').onclick=modalReferencia;
 
+/* ==================== ENTENDER TEXTO LIVRE ==================== */
+const INSTRUCAO_TEXTO = `Você recebe um briefing de anúncio para a DeoBeauty, marca brasileira de perfumaria (eau de parfum, 20% de essência, R$ 99,90). O texto pode vir estruturado ou solto, como um recado.
+Responda SOMENTE com um objeto JSON, sem markdown, sem crases, sem texto antes ou depois:
+
+{
+  "criativo": número de 1 a 6 ou null,
+  "perfume": nome do perfume citado, ou "",
+  "kicker": "", "headline": "", "subheadline": "", "cta": "",
+  "precoDe": "359,99" ou "", "precoPor": "99,90" ou "",
+  "baloes": [ {"de":"amiga"|"marca","texto":"..."} ] ou [],
+  "cena": uma frase em português descrevendo o cenário da foto, se o briefing pedir cena, ou "",
+  "amiga": nome da amiga se for conversa, ou "",
+  "duvidas": uma frase curta com o que ficou ambíguo, ou ""
+}
+
+Criativos: 1 = comparação de preço com importado · 2 = print de conversa · 3 = notícia/manchete · 4 = frase escrita no vidro embaçado · 5 = vários frascos em fundo escuro · 6 = stories espontâneo.
+Se o texto não disser qual criativo, escolha pelo conteúdo: menção a importado ou "R$ 800" → 1; diálogo → 2; tom de notícia → 3; banheiro/espelho/vidro → 4; "linha", "coleção", vários perfumes → 5; tom pessoal de stories → 6.
+Transcreva as frases exatamente como estão. Placeholders como {PRODUTO}, [Nome do perfume], {PREÇO_POR} devem ser mantidos como vieram. Não invente preço nem frase que não esteja no texto.`;
+
+async function entenderPorIA(txt){
+  const j=await worker({acao:'entender',texto:txt,instrucao:INSTRUCAO_TEXTO});
+  const limpo=String(j.texto||'').replace(/```json|```/g,'').trim();
+  const a=limpo.indexOf('{'), b=limpo.lastIndexOf('}');
+  if(a<0||b<0) throw new Error('resposta ilegível');
+  return JSON.parse(limpo.slice(a,b+1));
+}
+
+function aplicarEntendimento(r){
+  const pegou=[];
+  if(r.perfume){
+    const alvo=semAcento(r.perfume);
+    const ach=PERFUMES.find(p=>alvo.includes(semAcento(p.n))||semAcento(p.n).includes(alvo));
+    if(ach){ D.perfume=ach.s; aplicarPreco(ach.s); pegou.push('perfume: '+ach.n); }
+  }
+  if(r.criativo>=1&&r.criativo<=7){ D.tpl=r.criativo; pegou.push(NOMES[r.criativo-1]); }
+  if(r.cta){ D.cta=r.cta; pegou.push('CTA'); }
+  if(r.precoDe){ D.de=r.precoDe; D.padrao.de=r.precoDe; }
+  if(r.precoPor){ D.por=r.precoPor; D.padrao.por=r.precoPor; }
+  if(r.precoDe&&r.precoPor){
+    const a=parseFloat(r.precoDe.replace(/\./g,'').replace(',','.')), b=parseFloat(r.precoPor.replace(/\./g,'').replace(',','.'));
+    if(a>0&&b>0&&b<a){ D.off=Math.round((1-b/a)*100)+'%'; pegou.push('preços'); }
+  }
+  if(r.headline){ G.headline=normalizarVars(r.headline); }
+  if(r.subheadline){ G.sub=normalizarVars(r.subheadline); }
+  if(r.kicker&&D.tpl===1) D.t1.kick=r.kicker;
+  if(r.kicker&&D.tpl===3) D.t3.editoria=r.kicker.toUpperCase();
+  if(Array.isArray(r.baloes)&&r.baloes.length){
+    D.t2.msgs=r.baloes.map(b=>(b.de==='marca'?'e: ':'r: ')+normalizarVars(b.texto||'')).join('\n');
+    pegou.push(r.baloes.length+' balões');
+  }
+  if(r.amiga&&!/nome da amiga/i.test(r.amiga)) D.t2.amiga=r.amiga;
+  if(r.cena){ if(D.tpl===4) D.t4.prompt=r.cena; if(D.tpl===6) D.t6.prompt=r.cena; G.extra=r.cena; G.cena='livre'; pegou.push('cena'); }
+  const f=aplicarTextos(); pegou.push(...f);
+  return {pegou,duvidas:r.duvidas||''};
+}
+
+/* ==================== ENSINAR O GOSTO ==================== */
+/* A Larissa sobe peças que considera nível sênior. O diretor extrai de cada uma
+   o que a torna boa e guarda um guia de gosto, que passa a ir junto em toda direção. */
+const GOSTO='db_gosto';
+const lerGosto=()=>{try{return JSON.parse(localStorage.getItem(GOSTO)||'[]');}catch(e){return [];}};
+const INSTRUCAO_GOSTO=`Você é um diretor de arte sênior analisando uma peça de anúncio que a diretora criativa da DeoBeauty considera exemplar. Extraia o que a torna boa, em termos que sirvam para dirigir outras peças. Responda SOMENTE com JSON, sem markdown:
+{
+  "composicao": "como o olho percorre a peça, onde está o foco, uso de espaço vazio",
+  "luz": "origem, temperatura, contraste, o que ela faz pelo produto",
+  "produto": "como o frasco aparece: tamanho relativo, ângulo, integração com a cena",
+  "texto": "como o texto se relaciona com a imagem: peso, posição, integração 3D ou sobreposição",
+  "clima": "a sensação em três adjetivos",
+  "evitar": "o que essa peça claramente evitou fazer",
+  "licao": "uma frase que um diretor guardaria dessa peça"
+}`;
+
+async function aprenderCom(dataUrl,tipo){
+  const j=await worker({acao:'ler',image:soBase64(dataUrl),tipo,instrucao:INSTRUCAO_GOSTO});
+  const limpo=String(j.texto||'').replace(/```json|```/g,'').trim();
+  const a=limpo.indexOf('{'), b=limpo.lastIndexOf('}');
+  if(a<0||b<0) throw new Error('leitura ilegível');
+  return JSON.parse(limpo.slice(a,b+1));
+}
+function guiaDeGosto(){
+  const g=lerGosto(); if(!g.length) return '';
+  return `\n\nGUIA DE GOSTO DA LARISSA — extraído de ${g.length} peça(s) que ela considera nível sênior. Dirija por estes princípios:\n`+
+    g.slice(0,8).map((x,i)=>`${i+1}. ${x.licao} | composição: ${x.composicao} | luz: ${x.luz} | produto: ${x.produto} | texto: ${x.texto} | clima: ${x.clima} | evita: ${x.evitar}`).join('\n');
+}
+
+function modalGosto(){
+  const g=lerGosto();
+  $('#modalCx').innerHTML=`
+  <button class="fechar" data-x>×</button>
+  <h3>Ensinar o meu gosto</h3>
+  <p>Suba peças que você considera nível sênior — suas, de concorrentes, de marcas de fora, tanto faz. O diretor estuda cada uma e extrai composição, luz, tratamento de produto e texto. Isso vira um guia que ele consulta em toda direção. Quanto mais peças boas, mais parecido com você ele fica.</p>
+  <div class="solta" id="gsSolta" style="margin-top:14px"><b>Arraste as peças aqui</b>até 8 de uma vez</div>
+  <input type="file" id="gsInp" accept="image/*" multiple hidden>
+  <div id="gsSaida"></div>
+  ${g.length?`<div style="margin-top:18px">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px"><b style="color:var(--creme);font-weight:500">${g.length} lição(ões) guardada(s)</b>
+    <button class="linkTxt" style="width:auto;padding:0;margin-left:auto" id="gsLimpar">apagar tudo</button></div>
+    ${g.map(x=>`<div class="linhaPreset" style="display:block"><b style="display:block;color:var(--creme);font-weight:500;font-size:13px">${esc(x.licao)}</b><span style="font-size:12px;color:var(--app-txt-fraco)">${esc(x.clima)} · ${esc(x.composicao)}</span></div>`).join('')}
+  </div>`:''}`;
+  $('#modal').classList.add('on');
+  const z=$('#gsSolta'); z.onclick=()=>$('#gsInp').click();
+  ['dragenter','dragover'].forEach(ev=>z.addEventListener(ev,e=>{e.preventDefault();z.classList.add('quente');}));
+  ['dragleave','drop'].forEach(ev=>z.addEventListener(ev,e=>{e.preventDefault();z.classList.remove('quente');}));
+  const processar=async arqs=>{
+    const ligados=await checarMotores();
+    if(!ligados.claude){ $('#gsSaida').innerHTML='<div class="avisoBox" style="margin-top:12px">Precisa da chave da Anthropic no Worker.</div>'; return; }
+    const lista=[...arqs].filter(f=>f.type.startsWith('image/')).slice(0,8);
+    $('#gsSaida').innerHTML='<p class="dica" style="text-align:center;margin-top:12px">Estudando…</p>';
+    const g=lerGosto(); let ok=0;
+    for(const f of lista){
+      try{ const d=await reduzir(f,1200); const r=await aprenderCom(d,'image/png'); g.unshift(r); ok++;
+        $('#gsSaida').innerHTML=`<p class="dica" style="text-align:center;margin-top:12px">${ok} de ${lista.length} estudada(s)…</p>`; }
+      catch(e){}
+    }
+    try{localStorage.setItem(GOSTO,JSON.stringify(g.slice(0,20)));}catch(e){}
+    modalGosto(); toast(ok+' peça(s) estudada(s)');
+  };
+  $('#gsInp').onchange=()=>processar($('#gsInp').files);
+  z.addEventListener('drop',e=>processar(e.dataTransfer.files));
+  const lp=$('#gsLimpar'); if(lp) lp.onclick=()=>{localStorage.removeItem(GOSTO);modalGosto();};
+}
+
+/* ==================== CRÍTICA E REFINO ==================== */
+const INSTRUCAO_CRITICA=`Você é o diretor criativo sênior da DeoBeauty avaliando uma imagem recém-gerada para um anúncio. Seja duro como quem vai assinar a peça. Verifique: parece IA (brilho plástico, simetria morta, pele de cera, frasco flutuando sem contato ou sombra)? O frasco condiz com a referência? A tampa está certa (aberta só se estiver borrifando)? A luz tem origem? O ponto focal é um só? Há texto errado ou indesejado? A composição deixa espaço para o texto do layout?
+Responda SOMENTE com JSON, sem markdown:
+{
+  "nota": 1 a 10,
+  "aprovaria": true ou false,
+  "problemas": ["frase curta por problema, no máximo 5"],
+  "acertos": ["o que funciona, no máximo 3"],
+  "prompt_corrigido": "o prompt original reescrito para resolver os problemas, mantendo o conceito. Em inglês, começando com 'Using the attached product photo as absolute reference for the bottle (@PRODUTO)'."
+}`;
+
+async function criticar(img,promptOriginal){
+  const tipo=img.startsWith('data:')?img.slice(5,img.indexOf(';')):'image/png';
+  const j=await worker({acao:'ler',image:soBase64(img),tipo,instrucao:INSTRUCAO_CRITICA+`\n\nPROMPT QUE GEROU ESTA IMAGEM:\n${promptOriginal}`});
+  const limpo=String(j.texto||'').replace(/```json|```/g,'').trim();
+  const a=limpo.indexOf('{'), b=limpo.lastIndexOf('}');
+  if(a<0||b<0) throw new Error('crítica ilegível');
+  return JSON.parse(limpo.slice(a,b+1));
+}
+
+/* ==================== DIRETOR CRIATIVO ==================== */
+/* Este é o cérebro. Ele foi escrito com as regras que a Larissa já usa nos
+   fluxos dela: o frasco é autoridade, texto integrado à cena, CTA curto,
+   referência é qualidade de render e não cópia, lifestyle sem prova social. */
+const SISTEMA_DIRETOR = `Você é o diretor criativo sênior da DeoBeauty, perfumaria brasileira. Você pensa como um designer com quinze anos de tráfego pago em beleza: cada peça tem UM conceito, UM ponto focal e UMA leitura em dois segundos. Você detesta imagem que parece feita por IA — brilho excessivo, simetria perfeita, frasco flutuando, cena vazia de intenção.
+
+A MARCA
+- Eau de parfum, 20% de essência, padrão internacional feito no Brasil. Preço de linha R$ 99,90.
+- Paleta sóbria: marfim/off-white/bege como base (70%), preto e marrom estruturais (20%), dourado e rosa claro como acento (10%). O rosa é tempero, nunca protagonista.
+- Personalidade: elegante, sofisticada, feminina, acolhedora, premium sem ser vulgar.
+- Tipografia: Recline nos títulos e detalhes, Poppins em textos longos.
+- Comunica valor em três pilares: mostrar as notas; provar performance ("deixa rastro, dura o dia"); tornar o perfume a marca da pessoa ("todo mundo sabe que sou eu porque uso o Valen").
+- NUNCA usa depoimento de cliente, repost, prova social ou bastidores. Prefere lifestyle aspiracional: o frasco em cenas de vida.
+
+REGRAS DE PRODUÇÃO (não negociáveis)
+1. O frasco real vai como imagem de referência (@PRODUTO). Formato, cor, rótulo e tampa são autoridade absoluta — proibido inventar ou alterar. Se a cena mostra aplicação ou borrifo, o frasco está ABERTO, tampa fora; se só está segurando ou exposto, FECHADO.
+2. Texto dentro da imagem só quando for CTA curto (máximo duas linhas, sem emoji) e sempre como objeto 3D integrado à cena: gravado em pedra, letreiro de metal, relevo em vidro, neon, letras de acrílico — nunca sobreposição plana. O texto obedece à luz e às sombras da cena. Textos longos, preços e comparações ficam FORA da imagem, na camada de layout.
+3. Composição cinematográfica: primeiro plano com bokeh, plano médio nítido com o produto, fundo com profundidade. Regra dos terços ou centralização deliberada — nunca "meio que centralizado".
+4. Luz com origem clara e motivo (janela, abajur, fim de tarde). Nada de luz uniforme de estúdio a menos que o briefing peça foto de e-commerce.
+5. Referências visuais de outras marcas servem apenas para qualidade de render e tratamento de texto — jamais copiar fundo, logo, cor ou identidade delas.
+6. Sempre três variações reais, que mudem conceito ou enquadramento — não a mesma cena com palavra trocada.
+7. Pessoas: adultas, sem rosto em destaque a menos que o briefing traga @REF de identidade. Mãos e gestos contam mais que expressão.
+
+COMO VOCÊ ENTREGA
+Responda SOMENTE com JSON, sem markdown:
+{
+  "conceito": "uma frase: a ideia por trás da peça",
+  "porque": "uma frase: por que essa ideia vende para público frio de tráfego",
+  "ponto_focal": "o que o olho vê primeiro",
+  "texto_na_imagem": "" ou o CTA curto que vai integrado em 3D (máximo 2 linhas),
+  "texto_fora": { "headline": "...", "subheadline": "...", "cta": "..." },
+  "variacoes": [
+    { "nome": "3 palavras", "prompt": "prompt completo em inglês, 120 a 200 palavras, descrevendo cena, câmera, lente, luz, materiais, posição exata do @PRODUTO, tratamento do texto 3D se houver, e terminando com as restrições: no extra text, no logos, no watermark, natural skin, no plastic look" },
+    { ... }, { ... }
+  ],
+  "formato": "4:5" ou "9:16",
+  "alerta": "" ou o que no briefing conflita com a marca ou com o CONAR
+}
+Os prompts começam sempre com "Using the attached product photo as absolute reference for the bottle (@PRODUTO)". Escreva o prompt como quem dirige um fotógrafo, não como quem lista tags.`;
+
+const APROVADOS='db_aprovados';
+const lerAprovados=()=>{try{return JSON.parse(localStorage.getItem(APROVADOS)||'[]');}catch(e){return [];}};
+function aprovar(item){
+  const a=lerAprovados();
+  a.unshift({quando:new Date().toISOString(),conceito:item.conceito||'',prompt:item.prompt,perfume:item.perfume});
+  try{localStorage.setItem(APROVADOS,JSON.stringify(a.slice(0,30)));}catch(e){}
+  toast('Aprovada — entra como referência nas próximas direções');
+}
+
+async function dirigir(briefing){
+  const p=perf();
+  const aprovados=lerAprovados().slice(0,5);
+  const memoria=aprovados.length
+    ? `\n\nPEÇAS QUE A LARISSA APROVOU RECENTEMENTE (calibre o gosto por elas, sem copiar):\n`+aprovados.map((a,i)=>`${i+1}. ${a.conceito} — ${a.prompt.slice(0,220)}…`).join('\n')
+    : '';
+  const pedido=`BRIEFING RECEBIDO:\n${briefing}`+guiaDeGosto()+`\n\nPERFUME: ${p.n}${p.i?' (inspirado em '+p.i+')':''} · ${p.f||''} · ${D.volume} · ${D.essencia} de essência · de R$ ${D.de} por R$ ${D.por}.\nCRIATIVO ESCOLHIDO: ${D.tpl} (${NOMES[D.tpl-1]}). Formato de saída da campanha: feed 4:5 e stories 9:16.${memoria}\n\nPense como diretor, depois escreva.`;
+  const j=await worker({acao:'dirigir',sistema:SISTEMA_DIRETOR,pedido});
+  const limpo=String(j.texto||'').replace(/```json|```/g,'').trim();
+  const a=limpo.indexOf('{'), b=limpo.lastIndexOf('}');
+  if(a<0||b<0) throw new Error('o diretor não respondeu em formato legível');
+  return JSON.parse(limpo.slice(a,b+1));
+}
+
+async function refsDoProduto(){
+  // frasco real como referência de imagem; estilo, se houver
+  const refs=[];
+  const foto=D.fotoCustom||fotoDe(perf());
+  const paraB64=async src=>{
+    if(!src) return null;
+    if(src.startsWith('data:')) return {tipo:src.slice(5,src.indexOf(';')),data:soBase64(src)};
+    try{ const r=await fetch(src); const bl=await r.blob();
+      const d=await new Promise(res=>{const fr=new FileReader();fr.onload=()=>res(fr.result);fr.readAsDataURL(bl);});
+      return {tipo:bl.type||'image/png',data:soBase64(d)}; }catch(e){ return null; }
+  };
+  const f=await paraB64(foto); if(f) refs.push(f);
+  const e=await paraB64(G.estilo); if(e) refs.push(e);
+  return refs;
+}
+
+let DIRECAO=null;
+async function produzir(){
+  const st=$('#colaStatus'), b=$('#colaDirigir');
+  const txt=$('#colaTxt').value.trim();
+  b.disabled=true; b.textContent='Pensando…'; st.textContent='O diretor está lendo o briefing e desenhando a peça.';
+  try{
+    DIRECAO=await dirigir(txt);
+    if(DIRECAO.texto_fora){
+      if(DIRECAO.texto_fora.headline) G.headline=DIRECAO.texto_fora.headline;
+      if(DIRECAO.texto_fora.subheadline) G.sub=DIRECAO.texto_fora.subheadline;
+      if(DIRECAO.texto_fora.cta) D.cta=DIRECAO.texto_fora.cta;
+      aplicarTextos();
+    }
+    if(DIRECAO.formato==='9:16'){ D.formato='f916'; D.safe=true; }
+    salvar();
+    renderDirecao();
+    st.textContent='Direção pronta. Escolha as variações que quer produzir.';
+  }catch(e){ st.textContent='Não deu: '+e.message; }
+  b.disabled=false; b.textContent='Gerar';
+}
+
+function renderDirecao(){
+  const g=$('#galeria'), d=DIRECAO; if(!d) return;
+  g.innerHTML=`
+  <div class="direcao">
+    <div class="dirTopo">
+      <span class="rot">Conceito</span>
+      <h2>${esc(d.conceito||'')}</h2>
+      <p>${esc(d.porque||'')}</p>
+      <div class="dirMeta">
+        <span><b>Ponto focal</b>${esc(d.ponto_focal||'')}</span>
+        ${d.texto_na_imagem?`<span><b>Texto 3D na cena</b>${esc(d.texto_na_imagem)}</span>`:'<span><b>Texto na cena</b>nenhum — tudo na camada de layout</span>'}
+        <span><b>Formato</b>${esc(d.formato||'4:5')}</span>
+      </div>
+      ${d.alerta?`<div class="dirAlerta">${esc(d.alerta)}</div>`:''}
+    </div>
+    <div class="dirVars">${(d.variacoes||[]).map((v,i)=>`
+      <div class="dirVar" id="var${i}">
+        <div class="dirVarCab"><b>${i+1}. ${esc(v.nome||'')}</b>
+          <div class="acoes">
+            <button class="chipG" data-copiar-var="${i}">copiar</button>
+            <button class="chipG on" data-produzir="${i}">produzir</button>
+          </div>
+        </div>
+        <pre>${esc(v.prompt||'')}</pre>
+        <div class="dirImg" id="varImg${i}"></div>
+      </div>`).join('')}
+    </div>
+    <div class="dirRod">
+      <div class="campo" style="flex:1;margin:0"><label>Motor</label>
+        <select class="selModelo" id="dirMotor">${Object.entries(MOTORES).map(([k,v])=>`<option value="${k}"${G.motor===k?' selected':''}>${esc(v.nome)}</option>`).join('')}</select></div>
+      <button class="btnGerarG" id="dirTodas" style="flex:1">Produzir as três</button>
+    </div>
+  </div>`;
+  $('#dirMotor').onchange=()=>{G.motor=$('#dirMotor').value;};
+  $$('[data-copiar-var]').forEach(b=>b.onclick=()=>navigator.clipboard.writeText(d.variacoes[b.dataset.copiarVar].prompt).then(()=>toast('Prompt copiado')));
+  $$('[data-produzir]').forEach(b=>b.onclick=()=>produzirVar(+b.dataset.produzir));
+  $('#dirTodas').onclick=async()=>{ for(let i=0;i<(d.variacoes||[]).length;i++) await produzirVar(i); };
+}
+
+async function produzirVar(i,promptForcado){
+  const v=DIRECAO.variacoes[i], alvo=$('#varImg'+i);
+  const ligados=await checarMotores();
+  if(!ligados[MOTORES[G.motor].chave]){ toast(`${MOTORES[G.motor].nome} não está ligado`); return; }
+  const prompt=promptForcado||v.prompt;
+  alvo.innerHTML='<div class="carregando"><div class="girando"></div>produzindo com o frasco real como referência</div>';
+  try{
+    const refs=MOTOR_API[G.motor]==='google'?await refsDoProduto():[];
+    const j=await worker({acao:'gerar',motor:MOTOR_API[G.motor],prompt,formato:D.formato,refs});
+    const img=j.image?((j.image.startsWith('data:')||j.image.startsWith('http'))?j.image:'data:image/png;base64,'+j.image):null;
+    if(!img) throw new Error('não veio imagem');
+    v.img=img; v.promptUsado=prompt;
+    mostrarResultado(i);
+    // o diretor olha o que produziu
+    if(ligados.claude && D.autoCritica!==false) avaliarVar(i);
+  }catch(e){ alvo.innerHTML=`<div class="carregando" style="color:#D89A5C">${esc(e.message)}</div>`; }
+}
+
+function mostrarResultado(i){
+  const v=DIRECAO.variacoes[i], alvo=$('#varImg'+i);
+  alvo.innerHTML=`<img src="${v.img}">
+    <div id="crit${i}" class="critica"></div>
+    <div class="acoes" style="margin-top:8px">
+      <button class="chipG on" data-fechar="${i}">Fechar a peça</button>
+      <button class="chipG" data-ap="${i}">✓ aprovar</button>
+      <button class="chipG" data-aval="${i}">avaliar</button>
+      <a class="chipG" href="${v.img}" download="DB_dir_${perf().s}_v${i+1}.png">baixar</a>
+    </div>`;
+  $(`[data-ap="${i}"]`).onclick=()=>aprovar({conceito:DIRECAO.conceito,prompt:v.promptUsado||v.prompt,perfume:perf().n});
+  $(`[data-aval="${i}"]`).onclick=()=>avaliarVar(i);
+  $(`[data-fechar="${i}"]`).onclick=()=>fecharPeca(i);
+}
+
+async function avaliarVar(i){
+  const v=DIRECAO.variacoes[i], box=$('#crit'+i); if(!box) return;
+  box.innerHTML='<div class="carregando" style="padding:12px"><div class="girando"></div>o diretor está olhando</div>';
+  try{
+    const c=await criticar(v.img,v.promptUsado||v.prompt);
+    v.critica=c;
+    box.innerHTML=`
+      <div class="critCab"><b class="${c.aprovaria?'ok':'nao'}">${c.nota}/10 · ${c.aprovaria?'aprovaria':'não aprovaria'}</b></div>
+      ${(c.problemas||[]).length?`<ul>${c.problemas.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>`:''}
+      ${(c.acertos||[]).length?`<div class="critOk">${c.acertos.map(x=>esc(x)).join(' · ')}</div>`:''}
+      ${!c.aprovaria&&c.prompt_corrigido?`<button class="chipG on" data-refazer="${i}" style="margin-top:8px">Refazer com as correções</button>`:''}`;
+    const rf=$(`[data-refazer="${i}"]`);
+    if(rf) rf.onclick=()=>produzirVar(i,c.prompt_corrigido);
+  }catch(e){ box.innerHTML=`<div class="dica" style="padding:8px 0">Não consegui avaliar: ${esc(e.message)}</div>`; }
+}
+
+async function fecharPeca(i){
+  const v=DIRECAO.variacoes[i];
+  D.bg7=v.img; D.tpl=7; D.t7.frasco=false;
+  if(DIRECAO.texto_fora){
+    if(DIRECAO.texto_fora.headline) D.t7.head=DIRECAO.texto_fora.headline;
+    if(DIRECAO.texto_fora.subheadline) D.t7.sub=DIRECAO.texto_fora.subheadline;
+    if(DIRECAO.texto_fora.cta) D.cta=DIRECAO.texto_fora.cta;
+  }
+  salvar();
+  // monta nos dois formatos e joga na galeria de peças prontas
+  PECAS.length=0;
+  const guardado={formato:D.formato,safe:D.safe}; D.safe=false;
+  for(const f of FORMATOS){
+    D.formato=f; $$('.tpl').forEach((t,k)=>t.classList.toggle('on',k+1===7)); $('#canvas').className=f;
+    pintar(); await esperarImagens();
+    try{
+      const avisos=conferirPeca().filter(x=>x.n!=='dica');
+      const cv=await capturar(1);
+      PECAS.push({nome:'Arte dirigida · '+(v.nome||''),fmt:rotuloFmt[f],slug:perf().s,tpl:7,img:cv.toDataURL('image/png'),avisos});
+    }catch(e){ PECAS.push({nome:'Arte dirigida',fmt:rotuloFmt[f],erro:e.message}); }
+  }
+  Object.assign(D,guardado);
+  trocarModo('simples'); D.tpl=7; render();
+  toast('Peça fechada nos dois formatos — confira e baixe');
+  setTimeout(()=>{ trocarModo('colar'); renderFeitas(); },50);
+}
+
+/* ==================== TELA DE COLAR ==================== */
+const PECAS=[];
+let COLADO='';
+
+function renderColarRail(){
+  $('#colarRail').innerHTML=`
+  <div class="colaBox">
+    <textarea id="colaTxt" placeholder="Cole aqui o briefing como você recebeu.&#10;&#10;Tabela do documento, recado, texto solto — ele entende, dirige a peça e produz.">${esc(COLADO)}</textarea>
+  </div>
+
+  <div class="secG">
+    <select class="selModelo" id="colaPerf">${PERFUMES.map(x=>
+      `<option value="${x.s}"${x.s===D.perfume?' selected':''}>${esc(x.n)}</option>`).join('')}</select>
+  </div>
+
+  <button class="btnGerarG" id="colaDirigir">Gerar</button>
+  <p class="dica" id="colaStatus" style="text-align:center;margin-top:10px">Entende o briefing, dirige a peça, produz a imagem com o frasco real e fecha nos dois formatos.</p>
+
+  <div class="secG" style="margin-top:26px">
+    <div class="chipsLinha">
+      <button class="chipG" id="colaIr">só o layout, sem IA</button>
+      <button class="chipG" id="colaGosto">ensinar o meu gosto${lerGosto().length?` · ${lerGosto().length}`:''}</button>
+      <button class="chipG${D.autoCritica!==false?' on':''}" id="colaAuto">avaliar sozinho</button>
+    </div>
+  </div>
+
+  <div class="secG" style="margin-top:6px">
+    <div class="logoSlots" style="margin-bottom:8px">
+      <button class="logoSlot escura${LOGO.escura?' cheio':''}" id="lgEscura" style="height:52px">
+        ${LOGO.escura?`<img src="${LOGO.escura}" style="max-height:30px">`:'<span style="font-size:11px">logo · fundo claro</span>'}
+      </button>
+      <button class="logoSlot clara${LOGO.clara?' cheio':''}" id="lgClara" style="height:52px">
+        ${LOGO.clara?`<img src="${LOGO.clara}" style="max-height:30px">`:'<span style="font-size:11px">logo · fundo escuro</span>'}
+      </button>
+    </div>
+    <input type="file" id="lgInp" accept="image/*" hidden>
+    <div class="chipsLinha">
+      <button class="chipG" id="colaFrascos">frascos</button>
+      <button class="chipG" id="colaPrecos">preços</button>
+      <button class="chipG" id="colaAvancado">ajustes avançados</button>
+    </div>
+  </div>`;
+
+  const carregar=(sel,qual)=>{
+    $(sel).onclick=()=>{
+      const inp=$('#lgInp'); inp.value='';
+      inp.onchange=async()=>{
+        const f=inp.files[0]; if(!f)return;
+        try{ await logoSalvar(qual, await reduzir(f,800)); pintar(); renderColarRail(); toast('Logo guardada'); }
+        catch(e){ toast('Não consegui ler essa imagem'); }
+      };
+      inp.click();
+    };
+  };
+  carregar('#lgEscura','escura');
+  carregar('#lgClara','clara');
+
+  $('#colaTxt').oninput=()=>{COLADO=$('#colaTxt').value;};
+  $('#colaPerf').onchange=()=>{D.perfume=$('#colaPerf').value;D.fotoCustom='';aplicarPreco(D.perfume);selP.value=D.perfume;pintar();salvar();};
+  $('#colaIr').onclick=entenderEMontar;
+  $('#colaGosto').onclick=modalGosto;
+  $('#colaFrascos').onclick=modalFrascos;
+  $('#colaPrecos').onclick=modalPrecos;
+  $('#colaAvancado').onclick=()=>trocarModo('completo');
+  $('#colaAuto').onclick=()=>{D.autoCritica=(D.autoCritica===false);salvar();renderColarRail();};
+  $('#colaDirigir').onclick=async()=>{
+    const txt=$('#colaTxt').value.trim(); if(!txt){toast('Cole o briefing primeiro');return;}
+    const ligados=await checarMotores();
+    // sem diretor ligado, o botão faz o melhor que pode: monta o layout com a foto
+    if(!getWorker()||!ligados.claude){ await entenderEMontar(); return; }
+    try{ aplicarEntendimento(await entenderPorIA(txt)); }catch(e){ aplicarBriefing(txt); }
+    salvar(); await produzir();
+  };
+}
+
+async function entenderEMontar(){
+  const txt=$('#colaTxt').value.trim();
+  if(!txt){toast('Cole o briefing primeiro');return;}
+  const b=$('#colaDirigir'), st=$('#colaStatus');
+  b.disabled=true; b.textContent='Lendo…'; st.textContent='Separando as partes do briefing.';
+
+  let r, viaIA=false;
+  const ligados=await checarMotores();
+  if(getWorker()&&ligados.claude){
+    try{ st.textContent='Lendo com IA…'; r=aplicarEntendimento(await entenderPorIA(txt)); viaIA=true; }
+    catch(e){ r=null; }
+  }
+  if(!r||!r.pegou.length) r=aplicarBriefing(txt);
+  if(!r.pegou.length){
+    st.textContent=ligados.claude
+      ? 'Não consegui extrair nada desse texto.'
+      : 'Não reconheci nada. Sem leitura por IA ligada, o texto precisa vir com as palavras CRIATIVO, HEADLINE, SUBHEADLINE e CTA.';
+    b.disabled=false; b.textContent='Gerar'; return;
+  }
+  r.faltou=r.faltou||[]; if(r.duvidas) r.faltou.push(r.duvidas);
+
+  st.textContent='Reconheci: '+r.pegou.join(', ')+'. Montando as peças…';
+  salvar();
+  PECAS.length=0; renderFeitas();
+
+  const guardado={tpl:D.tpl,formato:D.formato,safe:D.safe};
+  D.safe=false;
+  for(const f of FORMATOS){
+    D.tpl=guardado.tpl; D.formato=f;
+    $$('.tpl').forEach((t,k)=>t.classList.toggle('on',k+1===D.tpl));
+    $('#canvas').className=f;
+    pintar(); await esperarImagens();
+    try{
+      const avisos=conferirPeca().filter(x=>x.n!=='dica');
+      const cv=await capturar(1);
+      PECAS.push({nome:NOMES[D.tpl-1],fmt:rotuloFmt[f],slug:perf().s,tpl:D.tpl,img:cv.toDataURL('image/png'),avisos});
+    }catch(e){ PECAS.push({nome:NOMES[D.tpl-1],fmt:rotuloFmt[f],erro:e.message}); }
+    renderFeitas();
+  }
+  Object.assign(D,guardado); render();
+
+  st.innerHTML=r.faltou.length
+    ? 'Pronto. Não reconheci: '+esc(r.faltou.join(' · '))
+    : 'Pronto. As peças estão à direita.';
+  b.disabled=false; b.textContent='Gerar';
+}
+
+function renderFeitas(){
+  const g=$('#galeria');
+  if(!PECAS.length){
+    g.innerHTML=`<div class="vazioGal">
+      <b>Cole e receba a arte</b>
+      Você cola o briefing como recebeu, escolhe o perfume e clica em montar. Ele identifica o criativo, distribui os textos e devolve a peça pronta nos dois formatos, com a área de segurança do tráfego respeitada.
+    </div>`;
+    return;
+  }
+  g.innerHTML=`<div class="galTopo"><h2>Peças prontas</h2><span>${PECAS.filter(x=>x.img).length} de ${PECAS.length}</span>
+    ${PECAS.filter(x=>x.img).length>1?'<button class="chipG" id="baixarTudo" style="margin-left:auto">Baixar tudo</button>':''}</div>
+  <div class="grade">${PECAS.map((x,i)=>`
+    <div class="pecaFeita">
+      <div class="img">${x.img?`<img src="${x.img}">`:`<div class="carregando">${x.erro?esc(x.erro):'<div class="girando"></div>'}</div>`}</div>
+      <div class="rod">
+        <div class="nm">${esc(x.nome||'')}<small>${esc(x.fmt||'')}${x.avisos&&x.avisos.length?` · <span style="color:#E6B26B">${x.avisos.length} aviso(s)</span>`:' · <span style="color:#8FC98B">ok</span>'}</small>
+        ${x.avisos&&x.avisos.length?`<small style="color:#C9A87C;letter-spacing:0;margin-top:5px;line-height:1.4">${x.avisos.map(a=>esc(a.t)).join('<br>')}</small>`:''}</div>
+        ${x.img?`<a href="${x.img}" download="DB_C${x.tpl}_${x.slug}_${x.fmt}.png">Baixar</a>`:''}
+      </div>
+    </div>`).join('')}</div>`;
+  const bt=$('#baixarTudo');
+  if(bt) bt.onclick=async()=>{
+    bt.textContent='Compactando…';
+    const zip=new JSZip();
+    PECAS.filter(x=>x.img).forEach(x=>zip.file(`DB_C${x.tpl}_${x.slug}_${x.fmt}.png`,x.img.split(',')[1],{base64:true}));
+    zip.file(`DB_C${D.tpl}_${perf().s}_ficha.txt`,fichaEntrega());
+    const blob=await zip.generateAsync({type:'blob'});
+    const a=document.createElement('a');
+    a.href=URL.createObjectURL(blob); a.download='deobeauty-pecas.zip'; a.click();
+    URL.revokeObjectURL(a.href); bt.textContent='Baixar tudo';
+  };
+}
+
 /* ==================== TELA DE GERAR ==================== */
 const GERADAS=[];
 
 function renderGerarRail(){
-  const p=perf(), foto=LIB[p.s]||drive(p.t);
+  const p=perf(), foto=fotoDe(p);
   const fm={f45:'4:5',f916:'9:16',f11:'1:1'};
   if(G.auto===undefined) G.auto=true;
   if(!G.qtd) G.qtd=3;
@@ -2571,7 +3477,7 @@ function renderGerarRail(){
   $$('#gerarRail [data-clima]').forEach(b=>b.onclick=()=>{G.clima=b.dataset.clima;redesenha();});
   $$('#gerarRail [data-pessoa]').forEach(b=>b.onclick=()=>{G.pessoa=b.dataset.pessoa;redesenha();});
   $('#chipProd').onclick=()=>{G.produto=!G.produto;redesenha();};
-  $$('#gerarRail [data-fmt]').forEach(b=>b.onclick=()=>{D.formato=b.dataset.fmt;salvar();redesenha();});
+  $$('#gerarRail [data-fmt]').forEach(b=>b.onclick=()=>{D.formato=b.dataset.fmt;D.safe=(D.formato==='f916');salvar();redesenha();});
   $('#gAuto').onclick=()=>{ if(G.auto) G.manual=montarPrompt(0); G.auto=!G.auto; redesenha(); };
   $('#gPrompt').oninput=()=>{ if(!G.auto) G.manual=$('#gPrompt').value; };
   $('#gH').oninput=()=>{G.headline=$('#gH').value; if(G.auto) $('#gPrompt').value=montarPrompt(0);};
@@ -2660,17 +3566,19 @@ const GUIA=[
  {n:'Vitrine',d:'A linha inteira em fundo escuro, com brilho dourado. Pra quem já conhece a marca e está escolhendo qual comprar.',
   tags:['público morno','mostra a linha']},
  {n:'Stories espontâneo',d:'Parece stories de pessoa comum, gravado no dia a dia.',
-  tags:['orgânico','precisa de fundo']}
+  tags:['orgânico','precisa de fundo']},
+ {n:'Arte dirigida',d:'A imagem que o diretor criativo produziu vira anúncio: tipografia da marca, logo, preço e CTA por cima, nos dois formatos.',
+  tags:['sai do diretor','peça final']}
 ];
 
 function faltaConfig(){
-  const semFoto=PERFUMES.filter(p=>!LIB[p.s]).length;
+  const semFoto=PERFUMES.filter(p=>!LIB[p.s]&&!REPO_OK[p.s]).length;
   return {semFoto,pronto:semFoto===0};
 }
 
 function renderSimples(){
   const p=perf(), pr=precoDe(D.perfume), f=faltaConfig();
-  const precisaFundo=(D.tpl===4&&!D.bg4)||(D.tpl===6&&!D.bg6);
+  const precisaFundo=(D.tpl===4&&!D.bg4)||(D.tpl===6&&!D.bg6)||(D.tpl===7&&!D.bg7);
 
   let setup='';
   if(!f.pronto){
@@ -2695,9 +3603,9 @@ function renderSimples(){
     <p class="exp">A foto do frasco e o preço entram sozinhos.</p>
     <select id="sPerf">${PERFUMES.map(x=>`<option value="${x.s}"${x.s===D.perfume?' selected':''}>${esc(x.n)}</option>`).join('')}</select>
     <div class="fotoPasso">
-      <div class="mini">${LIB[p.s]?`<img src="${LIB[p.s]}" alt="">`:'<span>sem foto</span>'}</div>
-      <div class="info"><b>Foto do frasco</b>${LIB[p.s]?'guardada neste computador':'envie uma imagem em PNG com fundo transparente ou branco'}</div>
-      <button id="sTrocaFoto">${LIB[p.s]?'trocar':'enviar'}</button>
+      <div class="mini">${fotoDe(p)?`<img src="${fotoDe(p)}" alt="" onerror="this.outerHTML='<span>sem foto</span>'">`:'<span>sem foto</span>'}</div>
+      <div class="info"><b>Foto do frasco</b>${LIB[p.s]?'enviada neste computador':REPO_OK[p.s]?'oficial, do repositório':'envie um PNG com fundo transparente'}</div>
+      <button id="sTrocaFoto">${fotoDe(p)?'trocar':'enviar'}</button>
       <input type="file" id="sFotoInp" accept="image/*" hidden>
     </div>
     <div id="sPreco">
@@ -2729,6 +3637,7 @@ function renderSimples(){
       <span class="chip${D.formato==='f916'?' on':''}" data-ver="f916">ver no stories</span>
     </div>
     <button class="btnGrande" id="sBaixar">Baixar feed + stories</button>
+    <button class="linkTxt" id="sFicha">Baixar a ficha de entrega (textos do anúncio)</button>
     <button class="linkTxt" id="sTextos">Quero mudar os textos</button>
     <button class="linkTxt" id="sLote">Fazer vários perfumes de uma vez</button>
   </div>`;
@@ -2747,13 +3656,14 @@ function renderSimples(){
     try{ await libSalvar(D.perfume, await reduzir(f)); D.fotoCustom=''; pintar(); renderSimples(); toast('Foto guardada'); }
     catch(e){ toast('Não consegui ler essa imagem'); }
   };
-  $('#sBrief').onclick=modalBriefing;
+  $('#sBrief').onclick=()=>trocarModo('colar');
+  $('#sFicha').onclick=baixarFicha;
   $('#sBaixar').onclick=()=>$('#btnPng').click();
   $('#sTextos').onclick=()=>trocarModo('completo');
   $('#sLote').onclick=modalLote;
   const sf=$('#suFrascos'); if(sf) sf.onclick=modalFrascos;
   const sip=$('#sIrPreco'); if(sip) sip.onclick=modalPrecos;
-  lerArquivo('#sFundo','#sFundoInp',d=>{ if(D.tpl===4)D.bg4=d; else D.bg6=d; pintar(); renderSimples(); toast('Fundo aplicado'); });
+  lerArquivo('#sFundo','#sFundoInp',d=>{ if(D.tpl===4)D.bg4=d; else if(D.tpl===7)D.bg7=d; else D.bg6=d; pintar(); renderSimples(); toast('Fundo aplicado'); });
 }
 
 function trocarModo(m){
@@ -2825,8 +3735,8 @@ selP.value=D.perfume;
 $('#fCta').value=D.cta;
 $('#fEscala').value=String(D.escala||1);
 render();
-trocarModo(D.modo||'gerar');
-abrirDB().then(libCarregar).then(()=>{aplicarPreco(D.perfume);pintar();if(D.modo!=='completo')renderSimples();});
+trocarModo(D.modo||'colar');
+abrirDB().then(libCarregar).then(logoCarregar).then(sondarRepo).then(()=>{aplicarPreco(D.perfume);pintar();if(D.modo!=='completo')renderSimples();});
 boasVindas();
 </script>
 </body>
